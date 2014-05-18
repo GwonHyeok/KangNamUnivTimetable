@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000" >
+<!-- #242424 -->
+    <LinearLayout
+        android:id="@+id/eg_linearlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical" >
+
+        <HorizontalScrollView
+            android:id="@+id/eastereggScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" >
+
+            <com.romainpiel.shimmer.ShimmerTextView
+                android:id="@+id/shimmer_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text=""
+                android:textColor="#444"
+                android:textSize="50sp" />
+        </HorizontalScrollView>
+
+        <HorizontalScrollView
+            android:id="@+id/HorizontalScrollView01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" >
+
+            <com.romainpiel.shimmer.ShimmerTextView
+                android:id="@+id/ShimmerTextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text=""
+                android:textColor="#444"
+                android:textSize="50sp" />
+        </HorizontalScrollView>
+
+        <HorizontalScrollView
+            android:id="@+id/HorizontalScrollView02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" >
+
+            <com.romainpiel.shimmer.ShimmerTextView
+                android:id="@+id/ShimmerTextView02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text=""
+                android:textColor="#444"
+                android:textSize="50sp" />
+        </HorizontalScrollView>
+
+        <HorizontalScrollView
+            android:id="@+id/eastereggScrollView03"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" >
+
+            <com.romainpiel.shimmer.ShimmerTextView
+                android:id="@+id/shimmer_tv03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text=""
+                android:textColor="#444"
+                android:textSize="50sp" />
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <com.romainpiel.shimmer.ShimmerTextView
+        android:id="@+id/shimmer_were_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/eg_linearlayout"
+        android:layout_centerHorizontal="true"
+        android:text="컴미공은 하나다.!"
+        android:textColor="#444"
+        android:textSize="30sp" />
+
+</RelativeLayout>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/SETTING_ACCOUT_CATEGORY">
+        <Preference
+            android:key="key_accout_name"
+            android:summary="@string/SETTING_ACCOUT_NULLNAME"
+            android:title="@string/SETTING_ACCOUT_NAME" />
+        <Preference
+            android:key="key_accout_logout"
+            android:title="@string/menu_logout" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/SETTING_TIMETABLE_CATEGORY" />
+    <Preference
+        android:key="key_refresh"
+        android:title="@string/SETTING_RESET_TITLE" />
+    <ListPreference
+        android:key="key_time_table_theme"
+        android:entries="@array/time_table_theme_entries"
+        android:entryValues="@array/time_table_theme_values"
+        android:defaultValue="0"
+        android:title="@string/SETTING_TIMETABLE_THEME_TITLE"
+        android:summary="@string/SETTING_TIMETABLE_THEME_SUMMARY" />
+
+    <EditTextPreference
+        android:key="key_gonggang_message"
+        android:summary="@string/SETTING_TIMETABLE_GONGGANG_MESSAGE_SUMMARY"
+        android:title="@string/SETTING_TIMETABLE_GONGGANG_MESSAGE_TITLE" />
+
+    <com.hyeok.kangnamunivtimetable.DialogSeekBarPreference
+        android:defaultValue="12"
+        android:key="key_time_text_size"
+        android:max="30"
+        android:persistent="false"
+        android:summary="@string/SETTING_TIMETABLE_TEXT_SIZE_SUMMARY"
+        android:title="@string/SETTING_TIMETABLE_TIME_TEXT_SIZE" />
+    <com.hyeok.kangnamunivtimetable.DialogSeekBarPreference
+        android:defaultValue="12"
+        android:key="key_class_text_size"
+        android:max="30"
+        android:persistent="false"
+        android:summary="@string/SETTING_TIMETABLE_TEXT_SIZE_SUMMARY"
+        android:title="@string/SETTING_TIMETABLE_SUBJECT_TEXT_SIZE" />
+    <com.hyeok.kangnamunivtimetable.DialogSeekBarPreference
+        android:defaultValue="12"
+        android:key="key_subject_text_size"
+        android:max="30"
+        android:persistent="false"
+        android:summary="@string/SETTING_TIMETABLE_TEXT_SIZE_SUMMARY"
+        android:title="@string/SETTING_TIMETABLE_CLASS_TEXT_SIZE" />
+
+    <net.margaritov.preference.colorpicker.ColorPickerPreference
+        android:defaultValue="0xFF96AA39"
+        android:key="key_color_mon"
+        android:summary="@string/SETTING_TIMETABLE_COLOR_SUMMARY"
+        android:title="@string/SETTING_TIMETABLE_COLOR_MON" />
+    <net.margaritov.preference.colorpicker.ColorPickerPreference
+        android:defaultValue="0xFFC74B46"
+        android:key="key_color_tue"
+        android:summary="@string/SETTING_TIMETABLE_COLOR_SUMMARY"
+        android:title="@string/SETTING_TIMETABLE_COLOR_TUE" />
+    <net.margaritov.preference.colorpicker.ColorPickerPreference
+        android:defaultValue="0xFFF4842D"
+        android:key="key_color_wen"
+        android:summary="@string/SETTING_TIMETABLE_COLOR_SUMMARY"
+        android:title="@string/SETTING_TIMETABLE_COLOR_WEN" />
+    <net.margaritov.preference.colorpicker.ColorPickerPreference
+        android:defaultValue="0xFF3F9FE0"
+        android:key="key_color_thur"
+        android:summary="@string/SETTING_TIMETABLE_COLOR_SUMMARY"
+        android:title="@string/SETTING_TIMETABLE_COLOR_THUR" />
+    <net.margaritov.preference.colorpicker.ColorPickerPreference
+        android:defaultValue="0xFF5161BC"
+        android:key="key_color_fri"
+        android:summary="@string/SETTING_TIMETABLE_COLOR_SUMMARY"
+        android:title="@string/SETTING_TIMETABLE_COLOR_FIR" />
+    <PreferenceCategory android:title="@string/SETTING_TIMETABLE_WIDGET_CATEGORY">
+        <ListPreference
+            android:entries="@array/widget_update_interval_entries"
+            android:entryValues="@array/widget_update_interval_values"
+            android:key="key_widget_interval"
+            android:title="@string/SETTING_TIMETABLE_WIDGET_INTERVAL" />
+        <com.hyeok.kangnamunivtimetable.SeekBarPreference
+            android:defaultValue="12"
+            android:key="key_widget_text"
+            android:max="30"
+            android:persistent="false"
+            android:title="@string/SETTING_WIDGET_TEXT_SIZE" />
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:defaultValue="0xFF000000"
+            android:key="key_widget_text_color"
+            android:summary="@string/SETTING_WIDGET_TEXT_COLOR_SUMMARY"
+            android:title="@string/SETTING_WIDGET_TEXT_COLOR" />
+        <Preference
+            android:key="key_widget_update_time"
+            android:title="@string/SETTING_WIDGET_UPDATE_TIME_TITLE" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/DEVELOPER_INFO_TITLE">
+        <Preference
+            android:key="Developer_screen_pref"
+            android:summary="@string/DEVELOPER_INFO_SUMMARY"
+            android:title="@string/DEVELOPER_INFO_TITLE" />
+    </PreferenceCategory>
+</PreferenceScreen>

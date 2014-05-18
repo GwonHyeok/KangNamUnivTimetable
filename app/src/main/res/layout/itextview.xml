@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/itv_layout"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:clickable="true" >
+
+<ImageView
+    android:id="@+id/itv_icon"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:layout_marginRight="2dp"
+    android:layout_toLeftOf="@+id/btn_text"
+    android:duplicateParentState="true" />
+
+<TextView
+    android:id="@+id/itv_text"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:layout_centerInParent="true"
+    android:duplicateParentState="true"
+    android:gravity="center_vertical"
+    android:textSize="18sp"
+    android:textColor="#ffffffff" />
+</RelativeLayout>

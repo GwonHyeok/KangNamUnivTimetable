@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background_tab_pressed">#6633B5E5</color>
+    <color name="background_main">#e9e9e9</color>
+    <color name="background_tab">#4488A3</color>
+    <color name="dialog_cancel">#fcb150</color>
+    <color name="dialog_map">#11a8ab</color>
+    <color name="dialog_extratime">#3658ce</color>
+    <color name="listview_background">#e9e9e9</color>
+    <color name="fontcolor_main">#000000</color>
+    <color name="textviewborder_main">#898a8a</color>
+    <color name="actionbar">#B2000000</color>
+    <color name="tab_text">#ff898a8a</color>
+
+
+    <!-- DARK THEME -->
+    <color name="background_main_dark">#FF2E2E2E</color>
+    <color name="listview_background_dark">#000000</color>
+    <color name="fontcolor_main_dark">#ffffff</color>
+    <color name="textviewborder_main_dark">#FFDADADA</color>
+    <color name="tab_text_dark">#FFDADADA</color>
+</resources>

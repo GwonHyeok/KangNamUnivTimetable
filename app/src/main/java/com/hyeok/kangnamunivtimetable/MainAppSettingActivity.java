@@ -86,6 +86,7 @@ public class MainAppSettingActivity extends PreferenceActivity implements Prefer
 	private ControlSharedPref settingpref = new ControlSharedPref(this, "Setting.pref");
 	private ControlSharedPref realpref = new ControlSharedPref(this, "com.hyeok.kangnamunivtimetable_preferences");
     private ControlSharedPref bus_pref = new ControlSharedPref(this, "shuttlebus.pref");
+    private ControlSharedPref MemoDate = new ControlSharedPref(this, "MemoDate");
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -217,7 +218,7 @@ public class MainAppSettingActivity extends PreferenceActivity implements Prefer
         mttbtheme.setValueIndex(settingpref.getValue(TTB_THEME, 0));
         mttbtheme.setOnPreferenceChangeListener(this);
 	}
-	
+
 	@Override
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
 		if(preference.getKey().equals(KEY_ACCOUT_LOGOUT)) {
@@ -230,6 +231,7 @@ public class MainAppSettingActivity extends PreferenceActivity implements Prefer
 					pref.clearAll();
 					timetablepref.clearAll();
                     bus_pref.clearAll();
+                    MemoDate.clearAll();
 					Intent intent = new Intent(MainAppSettingActivity.this, login.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 					startActivity(intent);

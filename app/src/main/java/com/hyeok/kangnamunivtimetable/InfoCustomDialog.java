@@ -12,31 +12,34 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class InfoCustomDialog extends Dialog {
-	 int i =0;
-	int position=0;
-	Button cancelbtn;
-	TextView subject_class_tv;
-	TextView subject_time;
-	TextView title_tv;
-	TextView class_tv;
-	IButton map_btn;
-    IButton extratime_btn;
+	private int position=0;
+    private boolean IS_DARK_THEME;
+	private Button cancelbtn;
+    private RelativeLayout bg_layout;
+	private TextView subject_class_tv, subject_time, title_tv, class_tv;
+	IButton map_btn, extratime_btn;
 
 	final Context mContext;
 	int  Map_index = 0;
 	public InfoCustomDialog(Context context, String Nexttime, final int position) {
 		super(context);
 		mContext = context;
-		this.position = position;
+        ControlSharedPref settingepref = new ControlSharedPref(mContext, "setting.pref");
+        IS_DARK_THEME =  settingepref.getValue(MainAppSettingActivity.TTB_THEME, 0) == 1 ?  true : false;
+        settingepref = null;
+        this.position = position;
         final String NORMAL = mContext.getString(R.string.CUSTOM_DIALOG_SELECT_MAP_NORMAL_MAP);
 		final String CAMPUS = mContext.getString(R.string.CUSTOM_DIALOG_SELECT_MAP_CAMPUS_MAP);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.custom_dialog);
 		super.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		// 배경화면 레이아웃 초기화
+        bg_layout = (RelativeLayout)findViewById(R.id.extratime_main_layout);
 		// 제목 설정
 		title_tv = (TextView)findViewById(R.id.dialog_title_tv);
 		title_tv.setGravity(Gravity.CENTER);
@@ -61,89 +64,98 @@ public class InfoCustomDialog extends Dialog {
             }
         });
 
-		// 지도버튼
-		map_btn = (IButton)findViewById(R.id.dialog_map_button);
-		map_btn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-				final String items[] = { NORMAL, CAMPUS };
-				builder.setSingleChoiceItems(items, 0,
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								Map_index = which;
-							}
-						}).setPositiveButton(mContext.getResources().getString(R.string.CUSTOM_DIALOG_SELECT_MAP_OK_MSG),
-								new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog, int which) {
-										switch(Map_index) {
-										case 0:
-											try {
-												String geo = class_tv.getText().toString().split(": ")[1].substring(0,1);
-												String tmp_uri=null;
-												if ( geo.equals("경")){
-													tmp_uri=Utils.GEO_GYEONCHEON;
-												} else if(geo.equals("이")){
-													tmp_uri=Utils.GEO_EGONG;
-												} else if(geo.equals("천")){
-													tmp_uri=Utils.GEO_CHEONN;
-												} else if(geo.equals("교")){
-													tmp_uri=Utils.GEO_GOYUK;
-												} else if(geo.equals("후")){
-													tmp_uri=Utils.GEO_HUSENG;
-												} else if(geo.equals("우")){
-													tmp_uri=Utils.GEO_WUWON;
-												} else if(geo.equals("예")){
-													tmp_uri=Utils.GEO_YESUL;
-												} else if(geo.equals("목")){
-													tmp_uri=Utils.GEO_MOKYANG;
-												} else if(geo.equals("인")){
-													tmp_uri=Utils.GEO_INSA;
-												} else if(geo.equals("승")){
-													tmp_uri=Utils.GEO_SEUNGLEE;
-												} else if(geo.equals("샬")){
-													tmp_uri=Utils.GEO_SHALROM;
-												} else if(geo.equals("운")){
-                                                    tmp_uri=Utils.GEO_UNDONG;
-                                                }
-                                                Intent intent = new Intent(mContext, MapsActivity.class);
-                                                intent.putExtra("geo", tmp_uri);
-                                                intent.putExtra("class_name", Utils.getFullClassName(geo));
-                                                mContext.startActivity(intent);
-												} catch(NullPointerException e){
-												} catch (ArrayIndexOutOfBoundsException e){
-													Toast.makeText(mContext, mContext.getResources().getString(R.string.CUSTOM_DIALOG_NO_MAP_GEO), Toast.LENGTH_SHORT).show();
-												}
-											break;
-										case 1:
-											mContext.startActivity(new Intent(mContext, CampusMap.class));
-											break;
-										}
-									}
-								}).setNegativeButton(mContext.getResources().getString(R.string.CUSTOM_DIALOG_SELECT_MAP_CANCEL_MSG),
-										new DialogInterface.OnClickListener() {
-											@Override
-											public void onClick(DialogInterface dialog, int which) {
+        // 지도버튼
+        map_btn = (IButton) findViewById(R.id.dialog_map_button);
+        map_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                final String items[] = {NORMAL, CAMPUS};
+                builder.setSingleChoiceItems(items, 0,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Map_index = which;
+                            }
+                        }
+                ).setPositiveButton(mContext.getResources().getString(R.string.CUSTOM_DIALOG_SELECT_MAP_OK_MSG),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (Map_index) {
+                                    case 0:
+                                        try {
+                                            String geo = class_tv.getText().toString().split(": ")[1].substring(0, 1);
+                                            String tmp_uri = null;
+                                            if (geo.equals("경")) {
+                                                tmp_uri = Utils.GEO_GYEONCHEON;
+                                            } else if (geo.equals("이")) {
+                                                tmp_uri = Utils.GEO_EGONG;
+                                            } else if (geo.equals("천")) {
+                                                tmp_uri = Utils.GEO_CHEONN;
+                                            } else if (geo.equals("교")) {
+                                                tmp_uri = Utils.GEO_GOYUK;
+                                            } else if (geo.equals("후")) {
+                                                tmp_uri = Utils.GEO_HUSENG;
+                                            } else if (geo.equals("우")) {
+                                                tmp_uri = Utils.GEO_WUWON;
+                                            } else if (geo.equals("예")) {
+                                                tmp_uri = Utils.GEO_YESUL;
+                                            } else if (geo.equals("목")) {
+                                                tmp_uri = Utils.GEO_MOKYANG;
+                                            } else if (geo.equals("인")) {
+                                                tmp_uri = Utils.GEO_INSA;
+                                            } else if (geo.equals("승")) {
+                                                tmp_uri = Utils.GEO_SEUNGLEE;
+                                            } else if (geo.equals("샬")) {
+                                                tmp_uri = Utils.GEO_SHALROM;
+                                            } else if (geo.equals("운")) {
+                                                tmp_uri = Utils.GEO_UNDONG;
+                                            }
+                                            Intent intent = new Intent(mContext, MapsActivity.class);
+                                            intent.putExtra("geo", tmp_uri);
+                                            intent.putExtra("class_name", Utils.getFullClassName(geo));
+                                            mContext.startActivity(intent);
+                                        } catch (NullPointerException e) {
+                                        } catch (ArrayIndexOutOfBoundsException e) {
+                                            Toast.makeText(mContext, mContext.getResources().getString(R.string.CUSTOM_DIALOG_NO_MAP_GEO), Toast.LENGTH_SHORT).show();
+                                        }
+                                        break;
+                                    case 1:
+                                        mContext.startActivity(new Intent(mContext, CampusMap.class));
+                                        break;
+                                }
+                            }
+                        }
+                ).setNegativeButton(mContext.getResources().getString(R.string.CUSTOM_DIALOG_SELECT_MAP_CANCEL_MSG),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-											}
-										}).show();
-			}
-		});
-		
-		//divider = findViewById(R.id.dialog_divider);
-		//divider.setBackgroundColor(getCurrentColor(position));
+                            }
+                        }
+                ).show();
+            }
+        });
+        cancelbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
-		cancelbtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dismiss();
-			}
-		});
-	}
-	
+        if (IS_DARK_THEME) {
+            setDarkTheme();
+        }
+    }
 
+
+    private void setDarkTheme() {
+        /**
+         * 테마 구현.........
+         * 하게된다면
+         */
+    }
 
 	public void setClass(CharSequence msg) {
 		class_tv.setGravity(Gravity.CENTER);

@@ -11,7 +11,6 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,7 +32,6 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -190,24 +188,14 @@ public class TimeTableMain extends FragmentActivity implements
                 if (T_Month <= MiddleSmonth && T_Day <= (MiddleSday+4) ) {
                     //중간고사 볼드채 사용
                     DDAY_MSG = getResources().getString(R.string.MIDDLE_EXAM) + " " + getResources().getString(R.string.dday_text) + String.valueOf(caldate(Calendar.getInstance().get(Calendar.YEAR), MiddleSmonth - 1, MiddleSday));
-                    //final SpannableStringBuilder sps = new SpannableStringBuilder(DDAY_MSG);
-                    //sps.setSpan(new AbsoluteSizeSpan(60), 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    //sps.setSpan(new AbsoluteSizeSpan(80), 4, DDAY_MSG.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    //sps.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 4, DDAY_MSG.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                     ddaytv.setText(DDAY_MSG);
 
                 } else {
                     DDAY_MSG = getResources().getString(R.string.FINAL_EXAM) + " " + getResources().getString(R.string.dday_text) + String.valueOf(caldate(Calendar.getInstance().get(Calendar.YEAR), FinalSmonth - 1, FinalSday));
-                    //final SpannableStringBuilder sps = new SpannableStringBuilder(DDAY_MSG);
-//                    sps.setSpan(new AbsoluteSizeSpan(60), 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                    sps.setSpan(new AbsoluteSizeSpan(80), 4, DDAY_MSG.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                    sps.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 4, DDAY_MSG.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                     ddaytv.setText(DDAY_MSG);
                 }
             } else {
                 String msg = getResources().getString(R.string.NO_EXAM_DATA);
-                //final SpannableStringBuilder sps = new SpannableStringBuilder(msg);
-                //sps.setSpan(new AbsoluteSizeSpan(60), 0, msg.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 ddaytv.setText(msg);
             }
             // 디데이 텍스트뷰 누르면 학사일정 보여주기

@@ -88,18 +88,25 @@ public class ExtraTime extends Activity implements View.OnClickListener {
             finish();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         } else if(view_id == share_btn.getId()) {
-            /**
-             * subject_tv.getText()
-             * class_tv.getText()
-             * time_tv.getText()
-             * 다음수업까지 extratime_tv.getText() 남았습니다.
-             */
-            String msg = String.format(getResources().getString(R.string.EXTRATIME_SHARE_TEXT),subject_tv.getText(),class_tv.getText(),time_tv.getText(),extratime_tv.getText());
-            Intent i = new Intent(Intent.ACTION_SEND);
-            i.setType("text/plain");
-            i.putExtra(Intent.EXTRA_TEXT, msg);
-            startActivity(i);
+            shareExtraTime();
         }
+    }
+
+    private void shareExtraTime() {
+        /**
+         * subject_tv.getText()
+         * class_tv.getText()
+         * time_tv.getText()
+         * 다음수업까지 extratime_tv.getText() 남았습니다.
+         */
+        String tmp_time_msg = extratime_tv.getText().toString();
+        if(tmp_time_msg.contains("0일")) tmp_time_msg = tmp_time_msg.replace("0일", "");
+        if(tmp_time_msg.contains("0시간")) tmp_time_msg = tmp_time_msg.replace("0시간", "");
+        String msg = String.format(getResources().getString(R.string.EXTRATIME_SHARE_TEXT),subject_tv.getText(),class_tv.getText(),time_tv.getText(),tmp_time_msg);
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("text/plain");
+        i.putExtra(Intent.EXTRA_TEXT, msg);
+        startActivity(i);
     }
 
     public void extraTime(int week) {

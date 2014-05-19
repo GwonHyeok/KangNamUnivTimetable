@@ -45,8 +45,7 @@
                 android:gravity="center"
                 android:text="1일 2시간 26분"
                 android:textColor="@color/fontcolor_main"
-                android:textSize="38sp"
-                android:textStyle="bold" />
+                android:textSize="38sp" />
         </FrameLayout>
 
         <LinearLayout

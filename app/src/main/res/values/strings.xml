@@ -108,4 +108,6 @@
     <string name="MAP_SHARE_TEXT">%1$s\n%2$s</string>
     <string name="EXTRATIME_TEXT">%1$S일 %2$s시간 %3$S분</string>
     <string name="EXTRATIME_SHARE_TEXT">%1$S\n%2$S\n%3$S\n다음 수업까지 %4$S 남았습니다.</string>
+    <string name="MAIN_ALARM_TITLE">Alarm</string>
+    <string name="MAIN_SHUTTLE_TITLE">Shuttle Bus</string>
 </resources>

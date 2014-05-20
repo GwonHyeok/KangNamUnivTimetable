@@ -29,6 +29,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -48,6 +50,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class TimeTableMain extends FragmentActivity implements
@@ -63,13 +66,14 @@ public class TimeTableMain extends FragmentActivity implements
 	private Drawable oldBackground = null;
 	private final Handler handler = new Handler();
 	private int currentColor = 0xFF666666;
-	private boolean m_close_flag = false, extra_thread_check = true, IS_DARK_THEME = false;
+	private boolean m_close_flag = false, extra_thread_check = true, IS_DARK_THEME = false, EXTRATIME_TMP_FLAG = true;
 	private Handler extratime = null;
 	private ControlSharedPref MemoDate = new ControlSharedPref(TimeTableMain.this,
 			"MemoDate");
 	ControlSharedPref timetablepref = new ControlSharedPref(this,
 			"timetable.pref");
 	ControlSharedPref settingepref = new ControlSharedPref(this, "Setting.pref");
+    ControlSharedPref shuttlepref = new ControlSharedPref(this, "shuttlebus.pref");
 	ControlSharedPref pref = new ControlSharedPref(this, null);
 	private long extratime_mills ;
 	private Thread extratimeThread;
@@ -94,6 +98,19 @@ public class TimeTableMain extends FragmentActivity implements
 			finish();
         super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_time_table_main);
+
+        // View Initialize
+        LR_MEMO = (LinearLayout)findViewById(R.id.MAIN_MEMO_LAYOUT);
+        LR_ALARM = (LinearLayout)findViewById(R.id.MAIN_ALARM_LAYOUT);
+        LR_DDAY = (LinearLayout)findViewById(R.id.MAIN_DDAY_LAYOUT);
+        LR_MAIN = (RelativeLayout)findViewById(R.id.MAIN_LAYOUT);
+        LR_TV_MAIN = (LinearLayout)findViewById(R.id.Text_View);
+        TV_MAIN_MEMO_TITLE = (TextView)findViewById(R.id.Main_Memo_Title);
+        TV_MAIN_ALARM_TITLE = (TextView)findViewById(R.id.Main_Alarm_Title);
+        TV_MAIN_DDAY_TITLE = (TextView)findViewById(R.id.Main_Dday_Title);
+        IV_MAIN_MEMO = (ImageView)findViewById(R.id.Main_Memo_Icon);
+        IV_MAIN_ALARM = (ImageView)findViewById(R.id.Main_Alarm_Icon);
+        IV_MAIN_DDAY = (ImageView)findViewById(R.id.Main_Dday_Icon);
 
 		//Hide Icon
 		//Custom ActionBar
@@ -204,6 +221,15 @@ public class TimeTableMain extends FragmentActivity implements
 					startActivity(i);
 				}
 			});
+
+            extratimetv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("KKT", "Click");
+                    changeView();
+                }
+            });
+
 			// 시험 당일 DDAY 처리
             if(ddaytv.getText().toString().contains("D0")){
                 ddaytv.setText("D-Day");
@@ -364,6 +390,7 @@ public class TimeTableMain extends FragmentActivity implements
 //                    }
 
 					extratimetv.setText(extra_time_msg);
+
 				}
 			};
 
@@ -379,19 +406,21 @@ public class TimeTableMain extends FragmentActivity implements
 				@Override
 				public void run() {
 					while(true) {
-						try {
-							extratime.sendEmptyMessage(0);
-							Thread.sleep(1000);
-							extratime_mills = extratime_mills - 1000;
-                            if ( extratime_mills < 0 ) {
-                                extratimeThread.interrupt();
-                                noclass_handler.sendEmptyMessage(0);
-                                break;
+                        if (EXTRATIME_TMP_FLAG) {
+                            try {
+                                extratime.sendEmptyMessage(0);
+                                Thread.sleep(1000);
+                                extratime_mills = extratime_mills - 1000;
+                                if (extratime_mills < 0) {
+                                    extratimeThread.interrupt();
+                                    noclass_handler.sendEmptyMessage(0);
+                                    break;
+                                }
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
                             }
-						} catch (InterruptedException e) {
-                            e.printStackTrace();
-						}
-					}
+                        }
+                    }
 				}
 			};
 
@@ -408,7 +437,89 @@ public class TimeTableMain extends FragmentActivity implements
 
 	}
 
-	public ArrayList getExtraTime_Time(Context mContext, int position) {
+    private void changeView() {
+        Log.d("KKT", "ChangeView");
+        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.slide_in_left);
+        extratimetv.startAnimation(anim);
+        TV_MAIN_ALARM_TITLE.startAnimation(anim);
+        IV_MAIN_ALARM.startAnimation(anim);
+        if(TV_MAIN_ALARM_TITLE.getText().toString().equals(getResources().getString(R.string.MAIN_ALARM_TITLE))) {
+            // 남은시간이 떠있을때 .....
+            TV_MAIN_ALARM_TITLE.setText(getResources().getString(R.string.MAIN_SHUTTLE_TITLE));
+            extratimetv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+            EXTRATIME_TMP_FLAG = false;
+            String msg = getShuttleBusTime();
+            if(msg != null) {
+                extratimetv.setText(msg);
+            }
+        } else if(TV_MAIN_ALARM_TITLE.getText().toString().equals(getResources().getString(R.string.MAIN_SHUTTLE_TITLE))) {
+            // 달구지시간이 떠있을때 .....
+            extratimetv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+            TV_MAIN_ALARM_TITLE.setText(getResources().getString(R.string.MAIN_ALARM_TITLE));
+            EXTRATIME_TMP_FLAG = true;
+            SetExtraTime();
+        }
+    }
+
+    private String getShuttleBusTime() {
+        String msg = null;
+        ArrayList<String> kh_arr = new ArrayList<String>();
+        ArrayList<String> ek_arr = new ArrayList<String>();
+        ArrayList<String> new_kh_arr = new ArrayList<String>();
+        ArrayList<String> new_ek_arr = new ArrayList<String>();
+        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        int minute = Calendar.getInstance().get(Calendar.MINUTE);
+        int i;
+        int shuttle_hour = 0, shuttle_minute = 0;
+        /*
+         * 기흥역 출발 달구지 리스트.
+         */
+        for(i=1; i<=shuttlepref.getAll().size()/2; i++) {
+            shuttle_hour = Integer.parseInt(shuttlepref.getValue("kh_start_"+i, null).split(":")[0]);
+            shuttle_minute = Integer.parseInt(shuttlepref.getValue("kh_start_"+i, null).split(":")[1]);
+            if(shuttle_hour >= hour && shuttle_minute >= minute ) break;
+        }
+        // Index값 가져옴 ....... 거기서 + 3 까지 구해야 하므로
+        try {
+            for (int j = i; j < i + 3; j++) {
+                new_kh_arr.add(shuttlepref.getValue("kh_start_" + j, null).split(":")[0] + ":" + shuttlepref.getValue("kh_start_" + j, null).split(":")[1]);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (NullPointerException e) {
+        }
+        /*
+         * 이공관 출발 달구지 리스트.
+         */
+        for(i=1; i<=shuttlepref.getAll().size()/2; i++) {
+            shuttle_hour = Integer.parseInt(shuttlepref.getValue("ek_start_"+i, null).split(":")[0]);
+            shuttle_minute = Integer.parseInt(shuttlepref.getValue("ek_start_"+i, null).split(":")[1]);
+            if(shuttle_hour >= hour && shuttle_minute >= minute ) break;
+        }
+        try {
+            for (int j = i; j < i + 3; j++) {
+                new_ek_arr.add(shuttlepref.getValue("ek_start_" + j, null).split(":")[0] + ":" + shuttlepref.getValue("ek_start_" + j, null).split(":")[1]);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (NullPointerException e) {
+        }
+        if (new_kh_arr.size() == 0 && new_ek_arr.size() == 0) return "셔틀버스가 없습니다.";
+        /*
+         * 정보 합치기.
+         */
+        int MAXSIZE = new_kh_arr.size();
+        MAXSIZE = 2;
+        msg = "이공관 - 기흥역\n";
+        for(int k=0; k < MAXSIZE; k++) {
+            Log.d("KKT_KINDEX:", ""+k);
+            msg += new_kh_arr.get(k)+" - "+new_ek_arr.get(k)+"\n";
+        }
+        Log.d("KKT_HOUR :", ""+hour);
+        Log.d("KKT_MINUTE :", ""+minute);
+        Log.d("KKT_INDEX ", ""+i);
+        Log.d("KKT_MSG", ""+msg);
+        return msg;
+    }
+	private ArrayList getExtraTime_Time(Context mContext, int position) {
 		ArrayList al = new ArrayList();
 		String week = null;
 		switch(position) {

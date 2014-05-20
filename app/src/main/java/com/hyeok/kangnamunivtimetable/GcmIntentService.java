@@ -91,10 +91,14 @@ public class GcmIntentService extends IntentService {
     // This is just one simple example of what you might choose to do with
     // a GCM message.
     private void sendNotification(Bundle msg) {
+        Notification(msg);
+    }
+
+    // Default Notification
+    private void Notification(Bundle msg) {
         long vib_pattern[] = {500, 1000};
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
-
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, TimeTableMain.class), 0);
 
@@ -109,6 +113,5 @@ public class GcmIntentService extends IntentService {
                         .setVibrate(vib_pattern);
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
-
     }
 }

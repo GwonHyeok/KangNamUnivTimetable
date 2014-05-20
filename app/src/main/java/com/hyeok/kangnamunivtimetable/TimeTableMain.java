@@ -43,9 +43,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -88,7 +86,7 @@ public class TimeTableMain extends FragmentActivity implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		if (ShowSplash) {
+        if (ShowSplash) {
 			startActivity(new Intent(this, Splash.class));
 			ShowSplash = false;
 		}
@@ -145,23 +143,22 @@ public class TimeTableMain extends FragmentActivity implements
 
 		ddaytv = (TextView)findViewById(R.id.dday_textview);
 		extratimetv = (TextView)findViewById(R.id.Extra_Time_Textview);
-		tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-
+        tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         pager = (ViewPager) findViewById(R.id.pager);
 		adapter = new MyPagerAdapter(getSupportFragmentManager());
 		pager.setAdapter(adapter);
 		final int pageMargin = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
+                TypedValue.COMPLEX_UNIT_DIP, 5, getResources()
                 .getDisplayMetrics());
 		pager.setPageMargin(pageMargin);
 		Calendar mCalendar = Calendar.getInstance();
-		int today = mCalendar.get(Calendar.DAY_OF_WEEK);
+		final int today = mCalendar.get(Calendar.DAY_OF_WEEK);
 
         tabs.setTextColor(getResources().getColor(R.color.fontcolor_main));
         tabs.setViewPager(pager);
-		if (today <= 6) {
-			pager.setCurrentItem(today - 2);
-		}
+//		if (today <= 6) {
+//			pager.setCurrentItem(today - 2);
+//		}
 		tabs.setOnPageChangeListener(this);
 
 		currentColor = getCurrentColor(this, pager.getCurrentItem());
@@ -218,9 +215,10 @@ public class TimeTableMain extends FragmentActivity implements
             IS_DARK_THEME = settingepref.getValue(MainAppSettingActivity.TTB_THEME, 0) == 1 ? true : false;
             if (IS_DARK_THEME) {
                 SetDarkTheme();
-
             }
         }
+            tabs.invalidate();
+            tabs.refreshDrawableState();
 
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);
@@ -343,15 +341,6 @@ public class TimeTableMain extends FragmentActivity implements
 			et_cl.set(year, month, day, et_h, et_m, 0);
 			long classtime = et_cl.getTimeInMillis();
 			long currenttime = cl.getTimeInMillis();
-
-			Log.d("K_Time", "year :"+year);
-			Log.d("K_Time", "month :"+month);
-			Log.d("K_Time", "day :"+day);
-			Log.d("K_Time", "et_h :"+et_h);
-			Log.d("K_Time", "et_m :"+et_m);
-
-			Log.d("K_Time", "classtime   :"+classtime);
-			Log.d("K_Time", "currenttime :" + currenttime);
 			extratime_mills = (classtime - currenttime) ;
 
 				extratime = new Handler() {
@@ -573,7 +562,6 @@ public class TimeTableMain extends FragmentActivity implements
         super.onActivityResult(requestcode,resultcode,intent);
         switch (requestcode) {
             case 0:
-                Log.d("kkt_test", "ActivityResult()");
                 TimeTableMain.this.finish();
                 startActivity(new Intent(TimeTableMain.this, TimeTableMain.class));
                 break;
@@ -588,37 +576,22 @@ public class TimeTableMain extends FragmentActivity implements
 		extratime.removeMessages(0);
 		}
 		SetPreviewMemo();
-		// Preference change Reload Date
-		adapter = new MyPagerAdapter(getSupportFragmentManager());
-		pager.setAdapter(adapter);
-
-		final int pageMargin = (int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_DIP, 5, getResources()
-						.getDisplayMetrics());
-		pager.setPageMargin(pageMargin);
 		Calendar mCalendar = Calendar.getInstance();
 		int today = mCalendar.get(Calendar.DAY_OF_WEEK);
-		tabs.setViewPager(pager);
-
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             tabs.setTabsWidth(Configuration.ORIENTATION_LANDSCAPE);
         } else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             tabs.setTabsWidth(Configuration.ORIENTATION_PORTRAIT);
         }
-
-        if (today <= 6) {
-			pager.setCurrentItem(today - 2);
-		}
-		tabs.setOnPageChangeListener(this);
-
+//        if (today <= 6) {
+//			pager.setCurrentItem(today - 2);
+//		}
 		currentColor = getCurrentColor(this, pager.getCurrentItem());
 		changeColor(currentColor);
         int newcolor = getCurrentColor(this, pager.getCurrentItem());
-        Log.i("kkt_test", ""+newcolor);
-        Log.i("kkt_test", ""+pager.getCurrentItem());
         changeColor((newcolor));
         tabs.setCurrentTextColor(pager.getCurrentItem(), newcolor);
-		super.onResume();
+        super.onResume();
 	}
 
 	@Override
@@ -941,9 +914,14 @@ public class TimeTableMain extends FragmentActivity implements
 		}
 	}
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
 	@Override
 	protected void onStop() {
-		super.onStop();
+        super.onStop();
 		backhandler.removeMessages(0);
 	}
 

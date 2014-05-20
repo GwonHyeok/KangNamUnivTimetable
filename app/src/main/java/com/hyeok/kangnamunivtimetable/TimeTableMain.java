@@ -467,6 +467,9 @@ public class TimeTableMain extends FragmentActivity implements
         ArrayList<String> ek_arr = new ArrayList<String>();
         ArrayList<String> new_kh_arr = new ArrayList<String>();
         ArrayList<String> new_ek_arr = new ArrayList<String>();
+        Calendar now_calendar = Calendar.getInstance();
+        Calendar shuttle_calendar = Calendar.getInstance();
+        long now_time_mills = Calendar.getInstance().getTimeInMillis();
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         int minute = Calendar.getInstance().get(Calendar.MINUTE);
         int i;
@@ -477,7 +480,8 @@ public class TimeTableMain extends FragmentActivity implements
         for(i=1; i<=shuttlepref.getAll().size()/2; i++) {
             shuttle_hour = Integer.parseInt(shuttlepref.getValue("kh_start_"+i, null).split(":")[0]);
             shuttle_minute = Integer.parseInt(shuttlepref.getValue("kh_start_"+i, null).split(":")[1]);
-            if(shuttle_hour >= hour && shuttle_minute >= minute ) break;
+            shuttle_calendar.set(now_calendar.get(Calendar.YEAR), now_calendar.get(Calendar.MONTH), now_calendar.get(Calendar.DAY_OF_MONTH), shuttle_hour, shuttle_minute);
+            if(now_time_mills <= shuttle_calendar.getTimeInMillis()) break;
         }
         // Index값 가져옴 ....... 거기서 + 3 까지 구해야 하므로
         try {
@@ -493,7 +497,8 @@ public class TimeTableMain extends FragmentActivity implements
         for(i=1; i<=shuttlepref.getAll().size()/2; i++) {
             shuttle_hour = Integer.parseInt(shuttlepref.getValue("ek_start_"+i, null).split(":")[0]);
             shuttle_minute = Integer.parseInt(shuttlepref.getValue("ek_start_"+i, null).split(":")[1]);
-            if(shuttle_hour >= hour && shuttle_minute >= minute ) break;
+            shuttle_calendar.set(now_calendar.get(Calendar.YEAR), now_calendar.get(Calendar.MONTH), now_calendar.get(Calendar.DAY_OF_MONTH), shuttle_hour, shuttle_minute);
+            if(now_time_mills <= shuttle_calendar.getTimeInMillis()) break;
         }
         try {
             for (int j = i; j < i + 3; j++) {

@@ -337,49 +337,53 @@ public class TimeTableMain extends FragmentActivity implements
 
     }
 
-	public void SetExtraTime() {
-		Calendar cl = Calendar.getInstance();
-		Date cl_date = cl.getTime();
-		int today = cl.get(Calendar.DAY_OF_WEEK);
-		int year = 1900+cl_date.getYear();
-		int month = cl_date.getMonth();
-		int day = Integer.parseInt(new SimpleDateFormat("dd").format(cl_date));
-		int hour = cl_date.getHours();
-		int minute = cl_date.getMonth();
-		int second = cl_date.getSeconds();
-		today = today -2;
-		try {
-		ArrayList timelist = getExtraTime_Time(this, today);
-		String H_tmptime;
-		int et_h = 0;
-		int et_m = 0;
+    public void SetExtraTime() {
+        Calendar cl = Calendar.getInstance();
+        Date cl_date = cl.getTime();
+        int today = cl.get(Calendar.DAY_OF_WEEK);
+        int year = cl.get(Calendar.YEAR);
+        int month = cl.get(Calendar.MONTH);
+        int day = cl.get(Calendar.DAY_OF_MONTH);
+        int hour = cl.get(Calendar.HOUR_OF_DAY);
+        int minute = cl.get(Calendar.MINUTE);
+        int second = cl.get(Calendar.SECOND);
+        today = today - 2;
+        try {
+            ArrayList timelist = getExtraTime_Time(this, today);
+            String H_tmptime;
+            int et_h = 0;
+            int et_m = 0;
 
-		try {
-		int tmp_i;
-		for ( tmp_i=0; tmp_i != timelist.size(); tmp_i++ ) {
-			if ( hour <= Integer.parseInt(timelist.get(tmp_i).toString().split(":")[0]) && minute <= Integer.parseInt(timelist.get(tmp_i).toString().split(":")[1])) {
-				break;
-			}
-		}
-		 et_h = Integer.parseInt(timelist.get(tmp_i).toString().split(":")[0]);
-		 et_m = Integer.parseInt(timelist.get(tmp_i).toString().split(":")[1]);
-		 Calendar et_cl = Calendar.getInstance();
-			et_cl.set(year, month, day, et_h, et_m, 0);
-			long classtime = et_cl.getTimeInMillis();
-			long currenttime = cl.getTimeInMillis();
-			extratime_mills = (classtime - currenttime) ;
+            try {
+                Calendar tmp_cl = Calendar.getInstance();
+                int tmp_i;
+                for (tmp_i = 0; tmp_i != timelist.size(); tmp_i++) {
+                    int tmp_hour = Integer.parseInt(timelist.get(tmp_i).toString().split(":")[0]);
+                    int tmp_minute = Integer.parseInt(timelist.get(tmp_i).toString().split(":")[1]);
+                    tmp_cl.set(year, month, day, tmp_hour, tmp_minute, 0);
+                    if (cl.getTimeInMillis() < tmp_cl.getTimeInMillis()) {
+                        break;
+                    }
+                }
+                et_h = Integer.parseInt(timelist.get(tmp_i).toString().split(":")[0]);
+                et_m = Integer.parseInt(timelist.get(tmp_i).toString().split(":")[1]);
+                Calendar et_cl = Calendar.getInstance();
+                et_cl.set(year, month, day, et_h, et_m, 0);
+                long classtime = et_cl.getTimeInMillis();
+                long currenttime = cl.getTimeInMillis();
+                extratime_mills = (classtime - currenttime);
 
-				extratime = new Handler() {
-				@Override
-				public void handleMessage(Message msg) {
-					int etsc = (int)(TimeUnit.MILLISECONDS.toSeconds(extratime_mills));
-					int Hour = etsc / 3600;
-					int minute = (etsc - ( Hour * 3600))/ 60;
-					int second = (etsc - (Hour * 3600) - ( minute * 60 ));
-					String extra_time_msg = "";
-					if(Hour != 0) extra_time_msg += Hour+"시간 ";
-					if (minute != 0) extra_time_msg += minute+"분 ";
-                    extra_time_msg +="남음...";
+                extratime = new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        int etsc = (int) (TimeUnit.MILLISECONDS.toSeconds(extratime_mills));
+                        int Hour = etsc / 3600;
+                        int minute = (etsc - (Hour * 3600)) / 60;
+                        int second = (etsc - (Hour * 3600) - (minute * 60));
+                        String extra_time_msg = "";
+                        if (Hour != 0) extra_time_msg += Hour + "시간 ";
+                        if (minute != 0) extra_time_msg += minute + "분 ";
+                        extra_time_msg += "남음...";
 //                    final SpannableStringBuilder sps = new SpannableStringBuilder(extra_time_msg);
 //                    sps.setSpan(new AbsoluteSizeSpan(60), 0, extra_time_msg.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 //                    if (Hour != 0) {
@@ -389,53 +393,53 @@ public class TimeTableMain extends FragmentActivity implements
 //                        sps.setSpan(new AbsoluteSizeSpan(80), 3+String.valueOf(Hour).length(), 3+String.valueOf(Hour).length()+String.valueOf(minute).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 //                    }
 
-					extratimetv.setText(extra_time_msg);
+                        extratimetv.setText(extra_time_msg);
 
-				}
-			};
+                    }
+                };
 
-            // 스레드에서 뷰 접근 못해서 핸들러로 접근.
-            final Handler noclass_handler = new Handler() {
-              @Override
-            public void handleMessage(Message msg) {
-                  extratimetv.setText(getResources().getString(R.string.NO_CLASS_MSG));
-              }
-            };
+                // 스레드에서 뷰 접근 못해서 핸들러로 접근.
+                final Handler noclass_handler = new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        extratimetv.setText(getResources().getString(R.string.NO_CLASS_MSG));
+                    }
+                };
 
-			extratimeThread = new Thread() {
-				@Override
-				public void run() {
-					while(true) {
-                        if (EXTRATIME_TMP_FLAG) {
-                            try {
-                                extratime.sendEmptyMessage(0);
-                                Thread.sleep(1000);
-                                extratime_mills = extratime_mills - 1000;
-                                if (extratime_mills < 0) {
-                                    extratimeThread.interrupt();
-                                    noclass_handler.sendEmptyMessage(0);
-                                    break;
+                extratimeThread = new Thread() {
+                    @Override
+                    public void run() {
+                        while (true) {
+                            if (EXTRATIME_TMP_FLAG) {
+                                try {
+                                    extratime.sendEmptyMessage(0);
+                                    Thread.sleep(1000);
+                                    extratime_mills = extratime_mills - 1000;
+                                    if (extratime_mills < 0) {
+                                        extratimeThread.interrupt();
+                                        noclass_handler.sendEmptyMessage(0);
+                                        break;
+                                    }
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
                             }
                         }
                     }
-				}
-			};
+                };
 
-            if(extra_thread_check){
-			    extratimeThread.start();
-                extra_thread_check = false;
+                if (extra_thread_check) {
+                    extratimeThread.start();
+                    extra_thread_check = false;
+                }
+            } catch (IndexOutOfBoundsException e) {
+                extratimetv.setText(getResources().getString(R.string.NO_CLASS_MSG));
             }
-		} catch(IndexOutOfBoundsException e) {
-			extratimetv.setText(getResources().getString(R.string.NO_CLASS_MSG));
-		}
-		} catch(NullPointerException e) {
-			extratimetv.setText(getResources().getString(R.string.NO_CLASS_MSG));
-		}
+        } catch (NullPointerException e) {
+            extratimetv.setText(getResources().getString(R.string.NO_CLASS_MSG));
+        }
 
-	}
+    }
 
     private void changeView() {
         Log.d("KKT", "ChangeView");

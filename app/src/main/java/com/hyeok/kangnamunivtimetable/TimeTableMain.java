@@ -264,18 +264,6 @@ public class TimeTableMain extends FragmentActivity implements
     }
 
     private void SetDarkTheme() {
-        LR_MEMO = (LinearLayout)findViewById(R.id.MAIN_MEMO_LAYOUT);
-        LR_ALARM = (LinearLayout)findViewById(R.id.MAIN_ALARM_LAYOUT);
-        LR_DDAY = (LinearLayout)findViewById(R.id.MAIN_DDAY_LAYOUT);
-        LR_MAIN = (RelativeLayout)findViewById(R.id.MAIN_LAYOUT);
-        LR_TV_MAIN = (LinearLayout)findViewById(R.id.Text_View);
-        TV_MAIN_MEMO_TITLE = (TextView)findViewById(R.id.Main_Memo_Title);
-        TV_MAIN_ALARM_TITLE = (TextView)findViewById(R.id.Main_Alarm_Title);
-        TV_MAIN_DDAY_TITLE = (TextView)findViewById(R.id.Main_Dday_Title);
-        IV_MAIN_MEMO = (ImageView)findViewById(R.id.Main_Memo_Icon);
-        IV_MAIN_ALARM = (ImageView)findViewById(R.id.Main_Alarm_Icon);
-        IV_MAIN_DDAY = (ImageView)findViewById(R.id.Main_Dday_Icon);
-
         if (Build.VERSION.SDK_INT < 16) {
             LR_MEMO.setBackgroundDrawable(getResources().getDrawable(R.drawable.textview_border_dark));
             LR_ALARM.setBackgroundDrawable(getResources().getDrawable(R.drawable.textview_border_dark));

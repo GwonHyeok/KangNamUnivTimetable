@@ -440,6 +440,11 @@ public class TimeTableMain extends FragmentActivity implements
             TV_MAIN_ALARM_TITLE.setText(getResources().getString(R.string.MAIN_SHUTTLE_TITLE));
             extratimetv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
             EXTRATIME_TMP_FLAG = false;
+            if(IS_DARK_THEME == true) {
+                IV_MAIN_ALARM.setImageResource(R.drawable.ic_bus_main_dark);
+            } else {
+                IV_MAIN_ALARM.setImageResource(R.drawable.ic_alarm_main);
+            }
             String msg = getShuttleBusTime();
             if(msg != null) {
                 extratimetv.setText(msg);
@@ -449,6 +454,11 @@ public class TimeTableMain extends FragmentActivity implements
             extratimetv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
             TV_MAIN_ALARM_TITLE.setText(getResources().getString(R.string.MAIN_ALARM_TITLE));
             EXTRATIME_TMP_FLAG = true;
+            if(IS_DARK_THEME == true) {
+                IV_MAIN_ALARM.setImageResource(R.drawable.ic_alarm_main_dark);
+            } else {
+                IV_MAIN_ALARM.setImageResource(R.drawable.ic_alarm_main);
+            }
             SetExtraTime();
         }
     }

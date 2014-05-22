@@ -52,6 +52,12 @@ public class Memo extends Activity {
 		}
 	}
 
+    @Override
+    public void onBackPressed() {
+            SaveMemo();
+            super.onBackPressed();
+    }
+
 	public void SetPreviewMemo() {
 		String Text = MemoDate.getValue(MEMO_DATE_KEY, "null");
 		if (!Text.equals("null")) {

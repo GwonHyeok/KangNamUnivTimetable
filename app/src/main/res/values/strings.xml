@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">강남대학교 시간표</string>
     <string name="action_settings">설정</string>
     <string name="id">아이디</string>
@@ -30,13 +29,13 @@
     <string name="SETTING_ACCOUT_NAME">학생 이름</string>
     <string name="SETTING_ACCOUT_NULLNAME">NULL</string>
     <string name="SETTING_TIMETABLE_CATEGORY">시간표 설정</string>
-    <string name="SETTING_TIMETABLE_STARTDAY_TITLE">어플 실행시 현제 요일의 시간표 보기.</string>
+    <string name="SETTING_TIMETABLE_STARTDAY_TITLE">어플 실행시 현재 요일의 시간표 보기.</string>
     <string name="SETTING_TIMETABLE_COLOR_MON">월요일 색상</string>
     <string name="SETTING_TIMETABLE_COLOR_TUE">화요일 색상</string>
     <string name="SETTING_TIMETABLE_COLOR_WEN">수요일 색상</string>
     <string name="SETTING_TIMETABLE_COLOR_THUR">목요일 색상</string>
     <string name="SETTING_TIMETABLE_COLOR_FIR">금요일 색상</string>
-    <string name="SETTING_TIMETABLE_COLOR_SUMMARY">요일마다 변하는 액션바 색상을 설정합니다.</string>
+    <string name="SETTING_TIMETABLE_COLOR_SUMMARY">요일마다 변하는 색상을 설정합니다.</string>
     <string name="SETTING_TIMETABLE_GONGGANG_MESSAGE_TITLE">공강메세지 설정</string>
     <string name="SETTING_TIMETABLE_GONGGANG_MESSAGE_SUMMARY">공강일떄 뜨는 메세지를 설정합니다.</string>
     <string name="SETTING_TIMETABLE_WIDGET_CATEGORY">위젯 설정</string>

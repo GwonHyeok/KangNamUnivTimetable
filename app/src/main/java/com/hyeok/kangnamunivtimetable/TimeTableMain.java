@@ -443,7 +443,7 @@ public class TimeTableMain extends FragmentActivity implements
             if(IS_DARK_THEME == true) {
                 IV_MAIN_ALARM.setImageResource(R.drawable.ic_bus_main_dark);
             } else {
-                IV_MAIN_ALARM.setImageResource(R.drawable.ic_alarm_main);
+                IV_MAIN_ALARM.setImageResource(R.drawable.ic_bus_main);
             }
             String msg = getShuttleBusTime();
             if(msg != null) {

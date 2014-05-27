@@ -458,7 +458,7 @@ public class MainAppSettingActivity extends PreferenceActivity implements Prefer
             Document a = Jsoup.connect("http://web.kangnam.ac.kr/edu/edu_schedule/edu_schedule.jsp").get();
             int size = a.getElementsByClass("contTable").size();
             Calendar clr = Calendar.getInstance();
-            if (Calendar.getInstance().getTime().getMonth() + 1 < 5) {
+            if (clr.get(Calendar.MONTH) + 1 < 6) {
                 for (int i = 0; i < size; i++) {
                     al.add(a.getElementsByClass("contTable").get(i));
                     if (i == 5) break;
@@ -480,7 +480,6 @@ public class MainAppSettingActivity extends PreferenceActivity implements Prefer
                     }
                 }
             }
-
             /**
              * Shuttle Bus Part
              */

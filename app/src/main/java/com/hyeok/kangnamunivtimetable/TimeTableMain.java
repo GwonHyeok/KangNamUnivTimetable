@@ -49,8 +49,6 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class TimeTableMain extends FragmentActivity implements
@@ -113,17 +111,17 @@ public class TimeTableMain extends FragmentActivity implements
         IV_MAIN_DDAY = (ImageView)findViewById(R.id.Main_Dday_Icon);
 
 		//Hide Icon
-		//Custom ActionBar
-		getActionBar().setTitle("");
-		getActionBar().setDisplayShowHomeEnabled(false);
-		View mview = getLayoutInflater().inflate(R.layout.action_bar, null);
-		ActionBar.LayoutParams layout = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-		getActionBar().setCustomView(mview, layout);
-		getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.background_main)));
-
-		ImageButton ActionBarSettingBtn = (ImageButton)mview.findViewById(R.id.ActionBar_settingbutton);
-		ImageButton ActionBarShareBtn = (ImageButton)mview.findViewById(R.id.ActionBar_ShareButton);
+        //Custom ActionBar
+        ActionBar actionbar = getActionBar();
+        actionbar.setTitle("");
+        actionbar.setDisplayShowHomeEnabled(false);
+        View mview = getLayoutInflater().inflate(R.layout.action_bar, null);
+        ActionBar.LayoutParams layout = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+        actionbar.setCustomView(mview, layout);
+        actionbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.background_main)));
+        ImageButton ActionBarSettingBtn = (ImageButton) mview.findViewById(R.id.ActionBar_settingbutton);
+        ImageButton ActionBarShareBtn = (ImageButton) mview.findViewById(R.id.ActionBar_ShareButton);
 
 		MemoPrevewText = (TextView)findViewById(R.id.Main_Memo_Preview);
 		final AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.3F);
@@ -133,13 +131,13 @@ public class TimeTableMain extends FragmentActivity implements
 				v.startAnimation(buttonClick);
                 Intent i = new Intent(TimeTableMain.this, MainAppSettingActivity.class);
                 startActivityForResult(i, 0);
-            }
+                  }
 		});
 		ActionBarShareBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				v.startAnimation(buttonClick)
-;				ShareTimeTable();
+				v.startAnimation(buttonClick);
+                ShareTimeTable();
 			}
 		});
 
@@ -168,14 +166,8 @@ public class TimeTableMain extends FragmentActivity implements
                 TypedValue.COMPLEX_UNIT_DIP, 5, getResources()
                 .getDisplayMetrics());
 		pager.setPageMargin(pageMargin);
-		Calendar mCalendar = Calendar.getInstance();
-		final int today = mCalendar.get(Calendar.DAY_OF_WEEK);
-
         tabs.setTextColor(getResources().getColor(R.color.fontcolor_main));
         tabs.setViewPager(pager);
-//		if (today <= 6) {
-//			pager.setCurrentItem(today - 2);
-//		}
 		tabs.setOnPageChangeListener(this);
 
 		currentColor = getCurrentColor(this, pager.getCurrentItem());
@@ -327,7 +319,6 @@ public class TimeTableMain extends FragmentActivity implements
 
     public void SetExtraTime() {
         Calendar cl = Calendar.getInstance();
-        Date cl_date = cl.getTime();
         int today = cl.get(Calendar.DAY_OF_WEEK);
         int year = cl.get(Calendar.YEAR);
         int month = cl.get(Calendar.MONTH);
@@ -372,15 +363,6 @@ public class TimeTableMain extends FragmentActivity implements
                         if (Hour != 0) extra_time_msg += Hour + "시간 ";
                         if (minute != 0) extra_time_msg += minute + "분 ";
                         extra_time_msg += "남음...";
-//                    final SpannableStringBuilder sps = new SpannableStringBuilder(extra_time_msg);
-//                    sps.setSpan(new AbsoluteSizeSpan(60), 0, extra_time_msg.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                    if (Hour != 0) {
-//                        sps.setSpan(new AbsoluteSizeSpan(80), 0, String.valueOf(Hour).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                    }
-//                    if (minute != 0) {
-//                        sps.setSpan(new AbsoluteSizeSpan(80), 3+String.valueOf(Hour).length(), 3+String.valueOf(Hour).length()+String.valueOf(minute).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                    }
-
                         extratimetv.setText(extra_time_msg);
 
                     }
@@ -596,47 +578,7 @@ public class TimeTableMain extends FragmentActivity implements
 
 	private void changeColor(int newColor) {
 		tabs.setIndicatorColor(newColor);
-
-//		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-//
-//			Drawable colorDrawable = new ColorDrawable(newColor);
-//			Drawable bottomDrawable = getResources().getDrawable(
-//					R.drawable.actionbar_bottom);
-//			LayerDrawable ld = new LayerDrawable(new Drawable[] {
-//					colorDrawable, bottomDrawable });
-//
-//			if (oldBackground == null) {
-//
-//				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-//					ld.setCallback(drawableCallback);
-//				} else {
-//					getActionBar().setBackgroundDrawable(ld);
-//				}
-//
-//			} else {
-//
-//				TransitionDrawable td = new TransitionDrawable(new Drawable[] {
-//						oldBackground, ld });
-//
-//				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-//					td.setCallback(drawableCallback);
-//				} else {
-//					getActionBar().setBackgroundDrawable(td);
-//				}
-//
-//				td.startTransition(200);
-//
-//			}
-//
-//			oldBackground = ld;
-//
-//			getActionBar().setDisplayShowTitleEnabled(false);
-//			getActionBar().setDisplayShowTitleEnabled(true);
-//
-//		}
-
 		currentColor = newColor;
-
 	}
 
     private float pxFromDp(float dp) {
@@ -694,16 +636,11 @@ public class TimeTableMain extends FragmentActivity implements
 		extratime.removeMessages(0);
 		}
 		SetPreviewMemo();
-		Calendar mCalendar = Calendar.getInstance();
-		int today = mCalendar.get(Calendar.DAY_OF_WEEK);
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             tabs.setTabsWidth(Configuration.ORIENTATION_LANDSCAPE);
         } else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             tabs.setTabsWidth(Configuration.ORIENTATION_PORTRAIT);
         }
-//        if (today <= 6) {
-//			pager.setCurrentItem(today - 2);
-//		}
 		currentColor = getCurrentColor(this, pager.getCurrentItem());
 		changeColor(currentColor);
         int newcolor = getCurrentColor(this, pager.getCurrentItem());

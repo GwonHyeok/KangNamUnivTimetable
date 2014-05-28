@@ -16,10 +16,7 @@
 
 package com.hyeok.kangnamunivtimetable;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -28,7 +25,8 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
+
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 /**
  * This {@code IntentService} does the actual handling of the GCM message.
@@ -73,7 +71,7 @@ public class GcmIntentService extends IntentService {
                     Log.i(TAG, "Working... " + (i + 1)
                             + "/5 @ " + SystemClock.elapsedRealtime());
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                     }
                 }

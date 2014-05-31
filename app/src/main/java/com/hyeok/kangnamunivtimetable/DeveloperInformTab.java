@@ -92,8 +92,8 @@ public class DeveloperInformTab extends Activity implements View.OnClickListener
 		 * Get Profile Image In FaceBook
 		 */
 		class SetProfileimage extends AsyncTask<String, Integer, Boolean> {
-			private Bitmap myBitmap0;
-			private Bitmap myBitmap1;
+			private Bitmap myBitmap0 = null;
+			private Bitmap myBitmap1 = null;
 
 			@Override
 			protected Boolean doInBackground(String... arg0) {
@@ -141,8 +141,16 @@ public class DeveloperInformTab extends Activity implements View.OnClickListener
 			protected void onPostExecute(Boolean success) {
 				super.onPostExecute(success);
 				if (Utils.NetWorkState(DeveloperInformTab.this)) {
-					iv1.setImageBitmap(myBitmap0);
-					iv2.setImageBitmap(myBitmap1);
+					if(myBitmap0 == null) {
+                        iv1.setImageResource(R.drawable.hyeok);
+                    } else {
+                        iv1.setImageBitmap(myBitmap0);
+                    }
+                    if(myBitmap1 == null) {
+                        iv2.setImageResource(R.drawable.mhwan);
+                    } else {
+                        iv2.setImageBitmap(myBitmap1);
+                    }
 				} else {
 					Toast.makeText(
 							DeveloperInformTab.this,

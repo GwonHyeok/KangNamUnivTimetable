@@ -84,9 +84,9 @@ public class DeveloperInformTab extends Activity implements View.OnClickListener
 				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 		tv1.append(mSpannableStringBuilder);
-		tv1_1.setText("- 위 학생은 멍청하고요.\n- 멍청합니다.\n- 만사가 귀찮고.\n- 모든것이 귀찮습니다.");
+		tv1_1.setText("- 컴퓨터 미디어 정보 공학부 14학번.\n- 안드로이드 펌웨어 개발\n");
 		tv2.append(mSpannableStringBuilder1);
-		tv2_1.setText("- 위 학생은 멍청하고요.\n- 멍청합니다.\n- 만사가 귀찮고.\n- 모든것이 귀찮습니다.");
+		tv2_1.setText("- 컴퓨터 미디어 정보 공학부 14학번.\n- 수많은 디자인 들을 해옴\n");
 
 		/*
 		 * Get Profile Image In FaceBook
@@ -225,7 +225,7 @@ public class DeveloperInformTab extends Activity implements View.OnClickListener
 		toast.setText(shake_num+"/3");
 		toast.show();
 		if (shake_num >= 3) {
-			toast.setText("조건을 만족했다.");
+			toast.setText("조건을 만족하셨습니다.");
 			startActivity(new Intent(this, easteregg.class));
 			toast.cancel();
 			shake_num=0;

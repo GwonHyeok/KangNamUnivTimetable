@@ -61,6 +61,9 @@
     <string name="SETTING_RESET_MSG">정말로 설정을 초기화 하시겠습니까?\n계정은 로그아웃 되지 않습니다.</string>
     <string name="SETTING_OK">예</string>
     <string name="SETTING_NO">아니요</string>
+    <string name="SETTING_DEVELOPER_FEEDBACK_TITLE">어플리케이션 피드백</string>
+    <string name="SETTING_DEVELOPER_FEEDBACK_SUMMARY">개발자에게 버그혹은 건의사항을 메일로 보냅니다.</string>
+    <string name="SETTING_DEVELOPER_FEEDBACK_SUBJECT">강남대학교 시간표 피드백</string>
     <string name="SETTING_TIMETABLE_THEME_TITLE">테마설정</string>
     <string name="SETTING_TIMETABLE_THEME_SUMMARY">기본으로 제공하는 테마를 설정합니다.</string>
     <string name="DOUBLE_BACK_KILL_APP">뒤로가기키를 한번 더 눌러 종료해주세요.</string>

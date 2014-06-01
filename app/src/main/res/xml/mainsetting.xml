@@ -100,5 +100,9 @@
             android:key="Developer_screen_pref"
             android:summary="@string/DEVELOPER_INFO_SUMMARY"
             android:title="@string/DEVELOPER_INFO_TITLE" />
+        <Preference
+            android:key="Developer_feedback"
+            android:title="@string/SETTING_DEVELOPER_FEEDBACK_TITLE"
+            android:summary="@string/SETTING_DEVELOPER_FEEDBACK_SUMMARY" />
     </PreferenceCategory>
 </PreferenceScreen>

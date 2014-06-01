@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
@@ -55,31 +56,32 @@ public class MainAppSettingActivity extends PreferenceActivity implements Prefer
     public static String WIDGET_UPDATE_TIME = "widgetupdatetime";
     public static String TTB_THEME = "ttbtheme";
 
-    private static final String KEY_ACCOUT_NAME = "key_accout_name";
-    private static final String KEY_ACCOUT_LOGOUT = "key_accout_logout";
-    private static final String KEY_WIDGET_INTERVAL = "key_widget_interval";
-    private static final String KEY_REFRESH = "key_refresh";
-    private static final String KEY_TTB_COLOR_MON = "key_color_mon";
-    private static final String KEY_TTB_COLOR_TUE = "key_color_tue";
-    private static final String KEY_TTB_COLOR_WEN = "key_color_wen";
-    private static final String KEY_TTB_COLOR_THUR = "key_color_thur";
-    private static final String KEY_TTB_COLOR_FRI = "key_color_fri";
-    private static final String KEY_GONGGANG_MESSAGE = "key_gonggang_message";
-    private static final String KEY_WIDGET_TEXT_SIZE = "key_widget_text";
-    private static final String KEY_WIDGET_TEXT_COLOR = "key_widget_text_color";
-    private static final String KEY_WIDGET_UPDATE_TIME = "key_widget_update_time";
-    private static final String KEY_TTB_TIME_SIZE = "key_time_text_size";
-    private static final String KEY_TTB_SUBJECT_SIZE = "key_class_text_size";
-    private static final String KEY_TTB_CLASS_SIZE = "key_subject_text_size";
-    private static final String KEY_DEVELOPER_SCREEN = "Developer_screen_pref";
-    private static final String KEY_TTB_THEME = "key_time_table_theme";
+    private final String KEY_ACCOUT_NAME = "key_accout_name";
+    private final String KEY_ACCOUT_LOGOUT = "key_accout_logout";
+    private final String KEY_WIDGET_INTERVAL = "key_widget_interval";
+    private final String KEY_REFRESH = "key_refresh";
+    private final String KEY_TTB_COLOR_MON = "key_color_mon";
+    private final String KEY_TTB_COLOR_TUE = "key_color_tue";
+    private final String KEY_TTB_COLOR_WEN = "key_color_wen";
+    private final String KEY_TTB_COLOR_THUR = "key_color_thur";
+    private final String KEY_TTB_COLOR_FRI = "key_color_fri";
+    private final String KEY_GONGGANG_MESSAGE = "key_gonggang_message";
+    private final String KEY_WIDGET_TEXT_SIZE = "key_widget_text";
+    private final String KEY_WIDGET_TEXT_COLOR = "key_widget_text_color";
+    private final String KEY_WIDGET_UPDATE_TIME = "key_widget_update_time";
+    private final String KEY_TTB_TIME_SIZE = "key_time_text_size";
+    private final String KEY_TTB_SUBJECT_SIZE = "key_class_text_size";
+    private final String KEY_TTB_CLASS_SIZE = "key_subject_text_size";
+    private final String KEY_DEVELOPER_SCREEN = "Developer_screen_pref";
+    private final String KEY_TTB_THEME = "key_time_table_theme";
+    private final String KEY_BUGREPORT = "Developer_feedback";
 
     ListPreference mintervalpreference, mttbtheme;
     ColorPickerPreference mColorpickerpref_mon, mColorpickerpref_tue, mColorpickerpref_wen, mColorpickerpref_thur, mColorpickerpref_fri, mColorpicker_widget_text_color;
     EditTextPreference mgonggangmsg;
     SeekBarPreference mwidgettext;
     DialogSeekBarPreference mttbTimeSize, mttbClassSize, mttbSubjectSize;
-    Preference mDeveloperScreen;
+    Preference mDeveloperScreen, mBugReport;
 
     private ControlSharedPref pref = new ControlSharedPref(this, null);
     private ControlSharedPref timetablepref = new ControlSharedPref(this, "timetable.pref");
@@ -114,6 +116,7 @@ public class MainAppSettingActivity extends PreferenceActivity implements Prefer
          * Set Developer Screen Click
          */
         mDeveloperScreen = findPreference(KEY_DEVELOPER_SCREEN);
+        mBugReport = findPreference(KEY_BUGREPORT);
 
         /**
          * Time table Text Size
@@ -255,6 +258,10 @@ public class MainAppSettingActivity extends PreferenceActivity implements Prefer
             return true;
         } else if (preference.getKey().equals(KEY_DEVELOPER_SCREEN)) {
             startActivity(new Intent(this, DeveloperInformTab.class));
+        } else if(preference.getKey().equals(KEY_BUGREPORT)) {
+            Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:kh4975@gmail.com"));
+            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.SETTING_DEVELOPER_FEEDBACK_SUBJECT));
+            startActivity(Intent.createChooser(intent, null));
         }
         return false;
 
@@ -458,7 +465,7 @@ public class MainAppSettingActivity extends PreferenceActivity implements Prefer
             Document a = Jsoup.connect("http://web.kangnam.ac.kr/edu/edu_schedule/edu_schedule.jsp").get();
             int size = a.getElementsByClass("contTable").size();
             Calendar clr = Calendar.getInstance();
-            if (clr.get(Calendar.MONTH) + 1 < 6) {
+            if (clr.get(Calendar.MONTH) + 1 < 7) {
                 for (int i = 0; i < size; i++) {
                     al.add(a.getElementsByClass("contTable").get(i));
                     if (i == 5) break;

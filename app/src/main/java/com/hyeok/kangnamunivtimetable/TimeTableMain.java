@@ -177,8 +177,7 @@ public class TimeTableMain extends FragmentActivity implements
 				&& timetablepref.getValue("time1", null) != null) {
 			//DDAY 설정
 			Calendar cl = Calendar.getInstance();
-
-			int T_Month = cl.getTime().getMonth()+1;
+			int T_Month = cl.get(Calendar.MONTH)+1;
 			int T_Day = Integer.parseInt(new SimpleDateFormat("dd").format(cl.getTime()));
 			String MiddleTime = pref.getValue(login.MIDDLE_EXAM_PREF, null);
 			String FinalTime = pref.getValue(login.FINAL_EXAM_PREF, null);
@@ -344,8 +343,8 @@ public class TimeTableMain extends FragmentActivity implements
                         break;
                     }
                 }
-                et_h = Integer.parseInt(timelist.get(tmp_i).toString().split(":")[0]);
-                et_m = Integer.parseInt(timelist.get(tmp_i).toString().split(":")[1]);
+                et_h = Integer.parseInt(timelist.get(tmp_i).toString().split(":")[0].replaceAll(" ", ""));
+                et_m = Integer.parseInt(timelist.get(tmp_i).toString().split(":")[1].replaceAll(" ", ""));
                 Calendar et_cl = Calendar.getInstance();
                 et_cl.set(year, month, day, et_h, et_m, 0);
                 long classtime = et_cl.getTimeInMillis();

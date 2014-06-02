@@ -125,9 +125,9 @@ public class ExtraTime extends Activity implements View.OnClickListener {
             String starttime = null;
             starttime = time_tv.getText().toString().split(": ")[1].split("-")[0];
             // 시간
-            int hour = Integer.parseInt(starttime.split(":")[0]);
+            int hour = Integer.parseInt(starttime.split(":")[0].replaceAll(" ", ""));
             // 분
-            int minute = Integer.parseInt(starttime.split(":")[1]);
+            int minute = Integer.parseInt(starttime.split(":")[1].replaceAll(" ", ""));
             // 캘린더 시간지정
             Calendar calendar1 = Calendar.getInstance();
             calendar1.set(calendar.get(Calendar.YEAR), (calendar.get(Calendar.MONTH)), calendar.get(Calendar.DATE), hour, minute, 0);

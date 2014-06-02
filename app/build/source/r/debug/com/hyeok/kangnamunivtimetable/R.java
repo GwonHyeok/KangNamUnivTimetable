@@ -1514,7 +1514,7 @@ containing a value of this type.
         public static final int Main_Memo_Icon=0x7f090050;
         public static final int Main_Memo_Preview=0x7f090052;
         public static final int Main_Memo_Title=0x7f090051;
-        public static final int MemoEditText=0x7f090097;
+        public static final int MemoEditText=0x7f090098;
         public static final int ShimmerTextView01=0x7f090078;
         public static final int ShimmerTextView02=0x7f09007a;
         public static final int Text_View=0x7f09004e;
@@ -1529,9 +1529,9 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f09001b;
         public static final int action_menu_presenter=0x7f09001c;
         public static final int action_mode_close_button=0x7f09002a;
-        public static final int action_reset=0x7f0900a3;
-        public static final int action_settings=0x7f0900a0;
-        public static final int action_share=0x7f0900a1;
+        public static final int action_reset=0x7f0900a4;
+        public static final int action_settings=0x7f0900a1;
+        public static final int action_share=0x7f0900a2;
         public static final int activity_chooser_view_content=0x7f09002b;
         public static final int always=0x7f090015;
         public static final int beginning=0x7f09000a;
@@ -1583,11 +1583,11 @@ containing a value of this type.
         public static final int icon=0x7f090030;
         public static final int ifRoom=0x7f090014;
         public static final int image=0x7f09002d;
-        public static final int imageView1=0x7f090096;
+        public static final int imageView1=0x7f090097;
         public static final int itv_icon=0x7f09008b;
         public static final int itv_layout=0x7f09008a;
         public static final int itv_text=0x7f09008c;
-        public static final int linearLayout1=0x7f090092;
+        public static final int linearLayout1=0x7f090093;
         public static final int listMode=0x7f090001;
         public static final int list_item=0x7f09002f;
         public static final int listview_ColorView=0x7f090091;
@@ -1595,13 +1595,14 @@ containing a value of this type.
         public static final int listview_textview_class=0x7f09008f;
         public static final int listview_textview_subject=0x7f090090;
         public static final int listview_textview_time=0x7f09008e;
-        public static final int login_id=0x7f090093;
-        public static final int login_loginbtn1=0x7f090095;
-        public static final int login_pw=0x7f090094;
+        public static final int login_id=0x7f090094;
+        public static final int login_layout=0x7f090092;
+        public static final int login_loginbtn1=0x7f090096;
+        public static final int login_pw=0x7f090095;
         public static final int map=0x7f090046;
         public static final int map_classname_tv=0x7f090047;
         public static final int mapview_spaceview=0x7f090045;
-        public static final int memo_save=0x7f0900a2;
+        public static final int memo_save=0x7f0900a3;
         public static final int middle=0x7f09000b;
         public static final int miter=0x7f09000d;
         public static final int never=0x7f090013;
@@ -1626,13 +1627,13 @@ containing a value of this type.
         public static final int search_plate=0x7f09003c;
         public static final int search_src_text=0x7f09003d;
         public static final int search_voice_btn=0x7f090041;
-        public static final int seekBarPrefBarContainer=0x7f09009b;
-        public static final int seekBarPrefUnitsLeft=0x7f09009a;
-        public static final int seekBarPrefUnitsRight=0x7f090098;
-        public static final int seekBarPrefValue=0x7f090099;
-        public static final int selectmap_btn1=0x7f09009c;
-        public static final int selectmap_btn2=0x7f09009e;
-        public static final int selectmap_divider=0x7f09009d;
+        public static final int seekBarPrefBarContainer=0x7f09009c;
+        public static final int seekBarPrefUnitsLeft=0x7f09009b;
+        public static final int seekBarPrefUnitsRight=0x7f090099;
+        public static final int seekBarPrefValue=0x7f09009a;
+        public static final int selectmap_btn1=0x7f09009d;
+        public static final int selectmap_btn2=0x7f09009f;
+        public static final int selectmap_divider=0x7f09009e;
         public static final int shimmer_tv=0x7f090076;
         public static final int shimmer_tv03=0x7f09007c;
         public static final int shimmer_were_tv=0x7f09007d;
@@ -1650,7 +1651,7 @@ containing a value of this type.
         public static final int top_action_bar=0x7f090026;
         public static final int up=0x7f090027;
         public static final int useLogo=0x7f090003;
-        public static final int widget_timetable_textlabel=0x7f09009f;
+        public static final int widget_timetable_textlabel=0x7f0900a0;
         public static final int withText=0x7f090016;
     }
     public static final class integer {

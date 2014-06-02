@@ -6,13 +6,18 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import org.json.simple.JSONArray;
@@ -47,6 +52,7 @@ public class login extends Activity {
     public static String MIDDLE_EXAM_PREF = "Middle_exam";
     public static String FINAL_EXAM_PREF = "Final_exam";
     private boolean m_close_flag = false;
+    private RelativeLayout login_layout;
 
     @Override
     public void onConfigurationChanged(Configuration cfg) {
@@ -63,6 +69,8 @@ public class login extends Activity {
         tvid = (EditText) findViewById(R.id.login_id);
         tvpw = (EditText) findViewById(R.id.login_pw);
         btn = (IButton) findViewById(R.id.login_loginbtn1);
+        login_layout = (RelativeLayout) findViewById(R.id.login_layout);
+        setBackGround(login_layout, R.drawable.loginback);
         tvid.setNextFocusDownId(R.id.login_pw);
         tvpw.setNextFocusDownId(R.id.login_loginbtn1);
         Drawable ic_st_symbol = getResources().getDrawable(R.drawable.ic_st_login);
@@ -114,6 +122,19 @@ public class login extends Activity {
         } else {
             System.exit(0);
             super.onBackPressed();
+        }
+    }
+
+    private void setBackGround(RelativeLayout layout, int resid) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
+        options.inSampleSize = 1;
+        options.inPurgeable = true;
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resid, options);
+        if (Build.VERSION.SDK_INT < 16) {
+            layout.setBackgroundDrawable(new BitmapDrawable(bitmap));
+        } else {
+            layout.setBackground(new BitmapDrawable(bitmap));
         }
     }
 

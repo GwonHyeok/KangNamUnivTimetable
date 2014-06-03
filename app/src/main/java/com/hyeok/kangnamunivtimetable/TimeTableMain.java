@@ -336,8 +336,8 @@ public class TimeTableMain extends FragmentActivity implements
                 Calendar tmp_cl = Calendar.getInstance();
                 int tmp_i;
                 for (tmp_i = 0; tmp_i != timelist.size(); tmp_i++) {
-                    int tmp_hour = Integer.parseInt(timelist.get(tmp_i).toString().split(":")[0]);
-                    int tmp_minute = Integer.parseInt(timelist.get(tmp_i).toString().split(":")[1]);
+                    int tmp_hour = Integer.parseInt(timelist.get(tmp_i).toString().split(":")[0].replaceAll(" ", ""));
+                    int tmp_minute = Integer.parseInt(timelist.get(tmp_i).toString().split(":")[1].replaceAll(" ", ""));
                     tmp_cl.set(year, month, day, tmp_hour, tmp_minute, 0);
                     if (cl.getTimeInMillis() < tmp_cl.getTimeInMillis()) {
                         break;
@@ -828,7 +828,7 @@ public class TimeTableMain extends FragmentActivity implements
 
 	private StringBuilder Share_TTB(int day) {
 		StringBuilder date = new StringBuilder();
-		int prefsize = timetablepref.getAll().size() / 5 - 3;
+		int prefsize = timetablepref.getAll().size() / 5;
 		int tmp;
 		String time;
 		switch (day) {

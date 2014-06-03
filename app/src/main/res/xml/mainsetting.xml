@@ -91,6 +91,11 @@
             android:key="key_widget_text_color"
             android:summary="@string/SETTING_WIDGET_TEXT_COLOR_SUMMARY"
             android:title="@string/SETTING_WIDGET_TEXT_COLOR" />
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:defaultValue="0x00FFFFFF"
+            android:key="key_widget_background_color"
+            android:summary="위젯 배경 색상을 설정합니다."
+            android:title="위젯 배경 색상"/>
         <Preference
             android:key="key_widget_update_time"
             android:title="@string/SETTING_WIDGET_UPDATE_TIME_TITLE" />

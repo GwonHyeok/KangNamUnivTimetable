@@ -87,7 +87,7 @@ public class SuperAwesomeCardFragment extends Fragment {
         IS_DARK_THEME = settingpref.getValue(MainAppSettingActivity.TTB_THEME, 0) == 1 ? true : false;
         final ArrayList<ListViewData> list = new ArrayList<ListViewData>();
 		String gonggangmsg = settingpref.getValue(MainAppSettingActivity.GONGGANG_MESSAGE_data, getResources().getString(R.string.DAY_GONGGANG));
-		int prefsize = pref.getAll().size()/5 -3;
+		int prefsize = pref.getAll().size()/5;
 		int tmp;
 		String time;
         int color = TimeTableMain.getCurrentColor(getActivity(), position);

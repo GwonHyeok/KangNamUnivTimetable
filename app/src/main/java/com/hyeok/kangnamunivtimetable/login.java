@@ -270,7 +270,7 @@ public class login extends Activity {
                         timetablepref.put("wends" + rep, "" + jo2.get("time_day3"));
                         timetablepref.put("thur" + rep, "" + jo2.get("time_day4"));
                         timetablepref.put("fri" + rep, "" + jo2.get("time_day5"));
-                        timetablepref.put("time" + rep, "" + jo2.get("real_time"));
+                        timetablepref.put("time" + rep, "" + jo2.get("real_time").toString().replaceAll(" ", ""));
                     }
                     /**
                      * Get Exam Time Part

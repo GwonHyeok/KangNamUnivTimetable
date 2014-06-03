@@ -53,6 +53,7 @@ public class MainAppSettingActivity extends PreferenceActivity implements Prefer
     public static String GONGGANG_MESSAGE_data = "gonggangmsg";
     public static String WIDGET_TEXT_SIZE = "widgettextsize";
     public static String WIDGET_TEXT_COLOR = "widgettextcolor";
+    public static String WIDGET_BACKGROUND_COLOR = "widgetbgcolor";
     public static String WIDGET_UPDATE_TIME = "widgetupdatetime";
     public static String TTB_THEME = "ttbtheme";
 
@@ -75,9 +76,10 @@ public class MainAppSettingActivity extends PreferenceActivity implements Prefer
     private final String KEY_DEVELOPER_SCREEN = "Developer_screen_pref";
     private final String KEY_TTB_THEME = "key_time_table_theme";
     private final String KEY_BUGREPORT = "Developer_feedback";
+    private final String KEY_WIDGET_BG_COLOR = "key_widget_background_color";
 
     ListPreference mintervalpreference, mttbtheme;
-    ColorPickerPreference mColorpickerpref_mon, mColorpickerpref_tue, mColorpickerpref_wen, mColorpickerpref_thur, mColorpickerpref_fri, mColorpicker_widget_text_color;
+    ColorPickerPreference mColorpickerpref_mon, mColorpickerpref_tue, mColorpickerpref_wen, mColorpickerpref_thur, mColorpickerpref_fri, mColorpicker_widget_text_color, mColorpicker_widget_bg_color;
     EditTextPreference mgonggangmsg;
     SeekBarPreference mwidgettext;
     DialogSeekBarPreference mttbTimeSize, mttbClassSize, mttbSubjectSize;
@@ -155,6 +157,14 @@ public class MainAppSettingActivity extends PreferenceActivity implements Prefer
         mColorpicker_widget_text_color.setHexValueEnabled(true);
         mColorpicker_widget_text_color.setAlphaSliderEnabled(true);
         mColorpicker_widget_text_color.setOnPreferenceChangeListener(this);
+
+        /**
+         * Widget Background Color
+         */
+        mColorpicker_widget_bg_color = (ColorPickerPreference)findPreference(KEY_WIDGET_BG_COLOR);
+        mColorpicker_widget_bg_color.setHexValueEnabled(true);
+        mColorpicker_widget_bg_color.setAlphaSliderEnabled(true);
+        mColorpicker_widget_bg_color.setOnPreferenceChangeListener(this);
 
         /**
          *  WIDGET UPDATE INVERVAL
@@ -393,6 +403,13 @@ public class MainAppSettingActivity extends PreferenceActivity implements Prefer
             String updatetimesummary = settingpref.getValue(WIDGET_UPDATE_TIME, getResources().getString(R.string.SETTING_WIDGET_UPDATE_TIME_NODATA));
             SetSummary(KEY_WIDGET_UPDATE_TIME, updatetimesummary);
             return true;
+        } else if (preference == mColorpicker_widget_bg_color) {
+            settingpref.put(WIDGET_BACKGROUND_COLOR, Integer.parseInt(newvalue.toString()));
+            Intent intent = new Intent(this, TimeTableWidget.class);
+            sendBroadcast(intent);
+            String updatetimesummary = settingpref.getValue(WIDGET_UPDATE_TIME, getResources().getString(R.string.SETTING_WIDGET_UPDATE_TIME_NODATA));
+            SetSummary(KEY_WIDGET_UPDATE_TIME, updatetimesummary);
+            return true;
         } else if (preference == mttbTimeSize) {
             settingpref.put(TTB_TIME_SIZE_data, Integer.parseInt(newvalue.toString()));
             //mttbTimeSize.setProgress(Integer.parseInt(newvalue.toString()));
@@ -456,7 +473,7 @@ public class MainAppSettingActivity extends PreferenceActivity implements Prefer
                 timetablepref.put("wends" + rep, "" + jo2.get("time_day3"));
                 timetablepref.put("thur" + rep, "" + jo2.get("time_day4"));
                 timetablepref.put("fri" + rep, "" + jo2.get("time_day5"));
-                timetablepref.put("time" + rep, "" + jo2.get("real_time"));
+                timetablepref.put("time" + rep, "" + jo2.get("real_time").toString().replaceAll(" ", ""));
             }
             /**
              * Get Exam Time Part

@@ -70,7 +70,7 @@
             android:layout_marginTop="20dp"
             android:weightSum="2">
 
-            <com.hyeok.kangnamunivtimetable.IButton xmlns:ibutton="http://schemas.android.com/apk/res/com.hyeok.kangnamunivtimetable"
+            <com.hyeok.kangnamunivtimetable.CustomViews.IButton xmlns:ibutton="http://schemas.android.com/apk/res/com.hyeok.kangnamunivtimetable"
                 android:id="@+id/dialog_map_button"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -83,7 +83,7 @@
                 ibutton:button_text="@string/CUSTOM_DIALOG_MAP"
                 ibutton:button_text_color="@color/dialog_map" />
 
-            <com.hyeok.kangnamunivtimetable.IButton xmlns:ibutton="http://schemas.android.com/apk/res/com.hyeok.kangnamunivtimetable"
+            <com.hyeok.kangnamunivtimetable.CustomViews.IButton xmlns:ibutton="http://schemas.android.com/apk/res/com.hyeok.kangnamunivtimetable"
                 android:id="@+id/dialog_extratime_button"
                 android:layout_width="0dp"
                 android:layout_height="40dp"

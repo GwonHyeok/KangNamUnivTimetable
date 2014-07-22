@@ -43,10 +43,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:layout_marginBottom="4dp"
-                android:layout_marginTop="14dp"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
-                tools:context="com.hyeok.kangnamunivtimetable.MapsActivity" />
+                android:layout_marginTop="14dp"
+                tools:context="com.hyeok.kangnamunivtimetable.Activity.MapsActivity" />
         </LinearLayout>
 
         <TextView

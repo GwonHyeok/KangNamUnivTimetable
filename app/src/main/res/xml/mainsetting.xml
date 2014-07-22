@@ -15,33 +15,33 @@
         android:key="key_refresh"
         android:title="@string/SETTING_RESET_TITLE" />
     <ListPreference
-        android:key="key_time_table_theme"
+        android:defaultValue="0"
         android:entries="@array/time_table_theme_entries"
         android:entryValues="@array/time_table_theme_values"
-        android:defaultValue="0"
-        android:title="@string/SETTING_TIMETABLE_THEME_TITLE"
-        android:summary="@string/SETTING_TIMETABLE_THEME_SUMMARY" />
+        android:key="key_time_table_theme"
+        android:summary="@string/SETTING_TIMETABLE_THEME_SUMMARY"
+        android:title="@string/SETTING_TIMETABLE_THEME_TITLE" />
 
     <EditTextPreference
         android:key="key_gonggang_message"
         android:summary="@string/SETTING_TIMETABLE_GONGGANG_MESSAGE_SUMMARY"
         android:title="@string/SETTING_TIMETABLE_GONGGANG_MESSAGE_TITLE" />
 
-    <com.hyeok.kangnamunivtimetable.DialogSeekBarPreference
+    <com.hyeok.kangnamunivtimetable.CustomViews.DialogSeekBarPreference
         android:defaultValue="12"
         android:key="key_time_text_size"
         android:max="30"
         android:persistent="false"
         android:summary="@string/SETTING_TIMETABLE_TEXT_SIZE_SUMMARY"
         android:title="@string/SETTING_TIMETABLE_TIME_TEXT_SIZE" />
-    <com.hyeok.kangnamunivtimetable.DialogSeekBarPreference
+    <com.hyeok.kangnamunivtimetable.CustomViews.DialogSeekBarPreference
         android:defaultValue="12"
         android:key="key_class_text_size"
         android:max="30"
         android:persistent="false"
         android:summary="@string/SETTING_TIMETABLE_TEXT_SIZE_SUMMARY"
         android:title="@string/SETTING_TIMETABLE_SUBJECT_TEXT_SIZE" />
-    <com.hyeok.kangnamunivtimetable.DialogSeekBarPreference
+    <com.hyeok.kangnamunivtimetable.CustomViews.DialogSeekBarPreference
         android:defaultValue="12"
         android:key="key_subject_text_size"
         android:max="30"
@@ -80,7 +80,7 @@
             android:entryValues="@array/widget_update_interval_values"
             android:key="key_widget_interval"
             android:title="@string/SETTING_TIMETABLE_WIDGET_INTERVAL" />
-        <com.hyeok.kangnamunivtimetable.SeekBarPreference
+        <com.hyeok.kangnamunivtimetable.CustomViews.SeekBarPreference
             android:defaultValue="12"
             android:key="key_widget_text"
             android:max="30"
@@ -94,8 +94,8 @@
         <net.margaritov.preference.colorpicker.ColorPickerPreference
             android:defaultValue="0x00FFFFFF"
             android:key="key_widget_background_color"
-            android:summary="위젯 배경 색상을 설정합니다."
-            android:title="위젯 배경 색상"/>
+            android:summary="@string/SETTING_WIDGET_BACKGROUND_COLOR_MSG"
+            android:title="@string/SETTING_WIDGET_BACKGROUND_COLOR" />
         <Preference
             android:key="key_widget_update_time"
             android:title="@string/SETTING_WIDGET_UPDATE_TIME_TITLE" />
@@ -107,7 +107,7 @@
             android:title="@string/DEVELOPER_INFO_TITLE" />
         <Preference
             android:key="Developer_feedback"
-            android:title="@string/SETTING_DEVELOPER_FEEDBACK_TITLE"
-            android:summary="@string/SETTING_DEVELOPER_FEEDBACK_SUMMARY" />
+            android:summary="@string/SETTING_DEVELOPER_FEEDBACK_SUMMARY"
+            android:title="@string/SETTING_DEVELOPER_FEEDBACK_TITLE" />
     </PreferenceCategory>
 </PreferenceScreen>

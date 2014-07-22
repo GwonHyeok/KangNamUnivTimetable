@@ -2,21 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000" >
-<!-- #242424 -->
+    android:background="#000000">
+    <!-- #242424 -->
     <LinearLayout
         android:id="@+id/eg_linearlayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <HorizontalScrollView
             android:id="@+id/eastereggScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none" >
+            android:scrollbars="none">
 
             <com.romainpiel.shimmer.ShimmerTextView
                 android:id="@+id/shimmer_tv"
@@ -32,7 +32,7 @@
             android:id="@+id/HorizontalScrollView01"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none" >
+            android:scrollbars="none">
 
             <com.romainpiel.shimmer.ShimmerTextView
                 android:id="@+id/ShimmerTextView01"
@@ -48,7 +48,7 @@
             android:id="@+id/HorizontalScrollView02"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none" >
+            android:scrollbars="none">
 
             <com.romainpiel.shimmer.ShimmerTextView
                 android:id="@+id/ShimmerTextView02"
@@ -64,7 +64,7 @@
             android:id="@+id/eastereggScrollView03"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none" >
+            android:scrollbars="none">
 
             <com.romainpiel.shimmer.ShimmerTextView
                 android:id="@+id/shimmer_tv03"

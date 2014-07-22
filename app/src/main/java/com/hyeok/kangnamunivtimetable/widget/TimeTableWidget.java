@@ -12,10 +12,10 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.hyeok.kangnamunivtimetable.ControlSharedPref;
-import com.hyeok.kangnamunivtimetable.MainAppSettingActivity;
+import com.hyeok.kangnamunivtimetable.Utils.ControlSharedPref;
+import com.hyeok.kangnamunivtimetable.Activity.MainAppSettingActivity;
 import com.hyeok.kangnamunivtimetable.R;
-import com.hyeok.kangnamunivtimetable.TimeTableMain;
+import com.hyeok.kangnamunivtimetable.Activity.TimeTableMain;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,10 +30,8 @@ public class TimeTableWidget extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
                          int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
-
-        final int N = appWidgetIds.length;
-        for (int i = 0; i < N; i++) {
-            updateAppWidget(context, appWidgetManager, appWidgetIds[i]);
+        for (int appWidgetId : appWidgetIds) {
+            updateAppWidget(context, appWidgetManager, appWidgetId);
         }
     }
 
@@ -41,11 +39,12 @@ public class TimeTableWidget extends AppWidgetProvider {
     public void onDeleted(Context context, int[] appWidgetIds) {
         // When the user deletes the widget, delete the preference associated
         // with it.
-        final int N = appWidgetIds.length;
-        for (int i = 0; i < N; i++) {
-            //NewAppWidgetConfigureActivity.deleteTitlePref(context,
-            //	appWidgetIds[i]);
-        }
+//        final int N = appWidgetIds.length;
+        //noinspection StatementWithEmptyBody
+//        for (int appWidgetId : appWidgetIds) {
+        //NewAppWidgetConfigureActivity.deleteTitlePref(context,
+        //	appWidgetIds[i]);
+//        }
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
     }
@@ -74,6 +73,7 @@ public class TimeTableWidget extends AppWidgetProvider {
         alarmManager.cancel(pendingIntent_12);
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(context.getClass().getName(), "Widget Update!");
@@ -91,7 +91,7 @@ public class TimeTableWidget extends AppWidgetProvider {
 
         //	if ( pref.getValue(key, dftValue))
         final StringBuilder list = new StringBuilder();
-        String gonggangmsg = context.getResources().getString(R.string.DAY_GONGGANG);
+//        String gonggangmsg = context.getResources().getString(R.string.DAY_GONGGANG);
         int prefsize = pref.getAll().size() / 5;
         Calendar mCalendar = Calendar.getInstance();
         int position = mCalendar.get(Calendar.DAY_OF_WEEK) - 2;
@@ -107,7 +107,7 @@ public class TimeTableWidget extends AppWidgetProvider {
                         tmp--;
                     }
                     time = TIME(context, tmp, i);
-                    list.append(time + ":" + pref.getValue("mon_" + i, "").replace("null", "") + "\n");
+                    list.append(time).append(":").append(pref.getValue("mon_" + i, "").replace("null", "")).append("\n");
                 }
             }
         } else if (position == 1) {
@@ -120,7 +120,7 @@ public class TimeTableWidget extends AppWidgetProvider {
                         tmp--;
                     }
                     time = TIME(context, tmp, i);
-                    list.append(time + ":" + pref.getValue("tues" + i, "").replace("null", "") + "\n");
+                    list.append(time).append(":").append(pref.getValue("tues" + i, "").replace("null", "")).append("\n");
                 }
             }
         } else if (position == 2) {
@@ -133,7 +133,7 @@ public class TimeTableWidget extends AppWidgetProvider {
                         tmp--;
                     }
                     time = TIME(context, tmp, i);
-                    list.append(time + ":" + pref.getValue("wends" + i, "").replace("null", "") + "\n");
+                    list.append(time).append(":").append(pref.getValue("wends" + i, "").replace("null", "")).append("\n");
                 }
             }
         } else if (position == 3) {
@@ -146,7 +146,7 @@ public class TimeTableWidget extends AppWidgetProvider {
                         tmp--;
                     }
                     time = TIME(context, tmp, i);
-                    list.append(time + ":" + pref.getValue("thur" + i, "").replace("null", "") + "\n");
+                    list.append(time).append(":").append(pref.getValue("thur" + i, "").replace("null", "")).append("\n");
                 }
             }
         } else if (position == 4) {
@@ -159,7 +159,7 @@ public class TimeTableWidget extends AppWidgetProvider {
                         tmp--;
                     }
                     time = TIME(context, tmp, i);
-                    list.append(time + ":" + pref.getValue("fri" + i, "").replace("null", "") + "\n");
+                    list.append(time).append(":").append(pref.getValue("fri" + i, "").replace("null", "")).append("\n");
                 }
             }
         }
@@ -170,8 +170,7 @@ public class TimeTableWidget extends AppWidgetProvider {
         ControlSharedPref pref = new ControlSharedPref(mContext, "timetable.pref");
         String Starttime = pref.getValue("time" + tmp, "").split("-")[0];
         String Lasttime = pref.getValue("time" + i, "").split("-")[1];
-        String time = Starttime + "-" + Lasttime;
-        return time;
+        return Starttime + "-" + Lasttime;
     }
 
     private void updateAppWidget(Context context,
@@ -206,7 +205,7 @@ public class TimeTableWidget extends AppWidgetProvider {
             widgetText = settingpref.getValue(MainAppSettingActivity.GONGGANG_MESSAGE_data, context.getString(R.string.DAY_GONGGANG));
         }
         // Widget Touch Event
-        PendingIntent appMainActivityIntent = PendingIntent.getActivity(context,0, new Intent(context, TimeTableMain.class), 0);
+        PendingIntent appMainActivityIntent = PendingIntent.getActivity(context, 0, new Intent(context, TimeTableMain.class), 0);
         views.setOnClickPendingIntent(R.id.widget_layout, appMainActivityIntent);
 
         views.setTextViewText(R.id.widget_timetable_textlabel, widgetText);

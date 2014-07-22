@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/memo_save"
         android:icon="@drawable/ic_action_save"
         android:showAsAction="always"
-        android:title="@string/MEMO_SAVE_MENU_TEXT"/>
-
+        android:title="@string/MEMO_SAVE_MENU_TEXT" />
 </menu>

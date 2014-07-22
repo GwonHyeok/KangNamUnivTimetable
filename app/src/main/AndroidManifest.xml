@@ -4,10 +4,6 @@
     android:versionCode="103"
     android:versionName="1.03" >
 
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="18" />
-
     <application
         android:debuggable="false"
         android:allowBackup="true"
@@ -15,7 +11,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <receiver android:name="com.hyeok.kangnamunivtimetable.TimeTableWidget" >
+        <receiver android:name=".widget.TimeTableWidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -27,7 +23,7 @@
         </receiver>
 
         <activity
-            android:name="com.hyeok.kangnamunivtimetable.TimeTableMain"
+            android:name=".Activity.TimeTableMain"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" >
             <intent-filter>
@@ -37,35 +33,35 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.hyeok.kangnamunivtimetable.Splash"
+            android:name=".Activity.Splash"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
-            android:name="com.hyeok.kangnamunivtimetable.login"
+            android:name=".Activity.login"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.hyeok.kangnamunivtimetable.CampusMap" >
+        <activity android:name=".Activity.CampusMap" >
         </activity>
         <activity
-            android:name="com.hyeok.kangnamunivtimetable.DeveloperInformTab"
+            android:name=".Activity.DeveloperInformTab"
             android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
-        <activity android:name="com.hyeok.kangnamunivtimetable.Memo" >
+        <activity android:name=".Activity.Memo" >
         </activity>
-        <activity android:name="com.hyeok.kangnamunivtimetable.easteregg" >
-        </activity>
-        <activity
-            android:name="com.hyeok.kangnamunivtimetable.MainAppSettingActivity"
-            android:parentActivityName="com.hyeok.kangnamunivtimetable.TimeTableMain" >
+        <activity android:name=".Activity.easteregg" >
         </activity>
         <activity
-            android:name="com.hyeok.kangnamunivtimetable.ExtraTime"
+            android:name=".Activity.MainAppSettingActivity"
+            android:parentActivityName=".Activity.TimeTableMain" >
+        </activity>
+        <activity
+            android:name=".Activity.ExtraTime"
             android:label="@string/title_activity_extra_time" >
         </activity>
         <activity
-            android:name="com.hyeok.kangnamunivtimetable.MapsActivity"
+            android:name=".Activity.MapsActivity"
             android:label="@string/app_name" >
         </activity>
 
@@ -77,7 +73,7 @@
             android:value="AIzaSyC7IcJhVU6JVG3fPjoO3uPDw4THqXU3O5g" />
 
         <receiver
-            android:name=".GcmBroadcastReceiver"
+            android:name=".Gcm.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <!-- Receives the actual messages. -->
@@ -87,13 +83,12 @@
                 <category android:name="com.google.android.gcm.demo.app" />
             </intent-filter>
         </receiver>
-        <service android:name=".GcmIntentService" />
+        <service android:name=".Gcm.GcmIntentService" />
 
     </application>
 
     <permission android:name="com.hyeok.kangnamunivtimetable.permission.C2D_MESSAGE" android:protectionLevel="signature" />
     <uses-permission android:name="com.hyeok.kangnamunivtimetable.permission.C2D_MESSAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />

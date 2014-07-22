@@ -57,6 +57,8 @@
     <string name="SETTING_WIDGET_UPDATE_TIME_FORMAT">yyyy년 MM월 dd일 HH시 mm분</string>
     <string name="SETTING_WIDGET_UPDATE_TIME_NODATA">위젯이 업데이트 된 적이 없습니다.</string>
     <string name="SETTING_WIDGET_UPDATE_TIME_TITLE">위젯 업데이트 시간</string>
+    <string name="SETTING_WIDGET_BACKGROUND_COLOR">위젯 배경 색상</string>
+    <string name="SETTING_WIDGET_BACKGROUND_COLOR_MSG">위젯 배경 색상을 설정합니다.</string>
     <string name="SETTING_RESET_TITLE">설정 초기화</string>
     <string name="SETTING_RESET_MSG">정말로 설정을 초기화 하시겠습니까?\n계정은 로그아웃 되지 않습니다.</string>
     <string name="SETTING_OK">예</string>

@@ -17,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.hyeok.kangnamunivtimetable.widget.TimeTableWidget;
+
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 import org.json.simple.JSONArray;

@@ -173,11 +173,6 @@ public class TimeTableMain extends FragmentActivity implements
             int FinalSmonth = Integer.parseInt(FinalTime.split("~")[0].substring(0, 2));
             int FinalSday = Integer.parseInt(FinalTime.split("~")[0].substring(3, 5));
             String DDAY_MSG;
-            Log.d("KKTAG", "" + T_Year);
-            Log.d("KKTAG", "" + T_Month); //7
-            Log.d("KKTAG", "" + T_Day); //25
-            Log.d("KKTAG", "" + MiddleSday); //20
-            Log.d("KKTAG", "" + MiddleSmonth); //10
             examcalendar.set(T_Year, MiddleSmonth - 1, MiddleSday);
 
             if (cl.getTimeInMillis() <= examcalendar.getTimeInMillis()) {

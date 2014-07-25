@@ -45,6 +45,7 @@ import com.hyeok.kangnamunivtimetable.Utils.ControlSharedPref;
 import com.hyeok.kangnamunivtimetable.R;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -759,14 +760,17 @@ public class TimeTableMain extends FragmentActivity implements
 
     private void sendRegistrationIdToBackend() {
         try {
-            URL url = new URL("http://kh4975.iptime.org/kangnam_ttb/GCM_REGID.php" +
-                    "?regid=" + regid +
-                    "&identifier=identifier" +
-                    "&appver=" + getAppVersion(this));
-            HttpURLConnection connect = (HttpURLConnection) url.openConnection();
-            connect.connect();
-            connect.getInputStream();
-            connect.disconnect();
+            URL url = new URL("http://kh4975.iptime.org/KangNamUnivTTB/GcmRegister.jsp");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput(true);
+            connection.setRequestMethod("POST");
+            OutputStream ops = (connection.getOutputStream());
+            ops.write(("GCMID=" + regid + "&").getBytes());
+            ops.write(("IDENTIFIER=" + Build.MODEL + "&").getBytes());
+            ops.write(("APPVERSION=" + getAppVersion(this)).getBytes());
+            ops.flush();
+            ops.close();
+            Log.d(getClass().getSimpleName(), connection.getResponseCode() == 200 ? "Gcm Register Sucess" : "Gcm Register Fail");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -94,6 +94,7 @@
     <string name="MIDDLE_EXAM">중간고사</string>
     <string name="FINAL_EXAM">기말고사</string>
     <string name="dday_text">D</string>
+    <string name="DDAY_TIME_TO_EXAM">시험기간 입니다</string>
     <string name="UNIV_SCHEDULE_WEBVIEW_TITLE">학사일정</string>
     <string name="MEMO_SAVE_MENU_TEXT">메모저장</string>
     <string name="MEMO_MAIN_TITLE">메모</string>

@@ -104,35 +104,8 @@ public class TimeTableMain extends FragmentActivity implements
 
         if (pref.getValue("name", null) != null
                 && timetablepref.getValue("time1", null) != null) {
-            //DDAY 설정
-            Calendar cl = Calendar.getInstance();
-            int T_Month = cl.get(Calendar.MONTH) + 1;
-            int T_Day = Integer.parseInt(new SimpleDateFormat("dd").format(cl.getTime()));
-            String MiddleTime = pref.getValue(login.MIDDLE_EXAM_PREF, null);
-            String FinalTime = pref.getValue(login.FINAL_EXAM_PREF, null);
+            setDDayTextView();
 
-            if (MiddleTime != null || FinalTime != null) {
-                assert MiddleTime != null;
-                MiddleTime = MiddleTime.split("~")[0];
-                FinalTime = FinalTime.split("~")[0];
-                int MiddleSmonth = Integer.parseInt(MiddleTime.split("~")[0].substring(0, 2));
-                int MiddleSday = Integer.parseInt(MiddleTime.split("~")[0].substring(3, 5));
-                int FinalSmonth = Integer.parseInt(FinalTime.split("~")[0].substring(0, 2));
-                int FinalSday = Integer.parseInt(FinalTime.split("~")[0].substring(3, 5));
-                String DDAY_MSG;
-                if (T_Month <= MiddleSmonth && T_Day <= (MiddleSday + 4)) {
-                    //중간고사 볼드채 사용
-                    DDAY_MSG = getResources().getString(R.string.MIDDLE_EXAM) + " " + getResources().getString(R.string.dday_text) + String.valueOf(caldate(Calendar.getInstance().get(Calendar.YEAR), MiddleSmonth - 1, MiddleSday));
-                    ddaytv.setText(DDAY_MSG);
-
-                } else {
-                    DDAY_MSG = getResources().getString(R.string.FINAL_EXAM) + " " + getResources().getString(R.string.dday_text) + String.valueOf(caldate(Calendar.getInstance().get(Calendar.YEAR), FinalSmonth - 1, FinalSday));
-                    ddaytv.setText(DDAY_MSG);
-                }
-            } else {
-                String msg = getResources().getString(R.string.NO_EXAM_DATA);
-                ddaytv.setText(msg);
-            }
             // 디데이 텍스트뷰 누르면 학사일정 보여주기
             ddaytv.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -178,6 +151,54 @@ public class TimeTableMain extends FragmentActivity implements
             Log.i("K_TIME_GCM", "No valid Google Play Services APK found.");
         }
 
+    }
+
+    @SuppressWarnings("ResourceType")
+    private void setDDayTextView() {
+        //DDAY 설정
+        Calendar cl = Calendar.getInstance();
+        Calendar examcalendar = Calendar.getInstance();
+        int T_Month = cl.get(Calendar.MONTH) + 1;
+        int T_Day = Integer.parseInt(new SimpleDateFormat("dd").format(cl.getTime()));
+        int T_Year = cl.get(Calendar.YEAR);
+        String MiddleTime = pref.getValue(login.MIDDLE_EXAM_PREF, null);
+        String FinalTime = pref.getValue(login.FINAL_EXAM_PREF, null);
+
+        if (MiddleTime != null || FinalTime != null) {
+            assert MiddleTime != null;
+            MiddleTime = MiddleTime.split("~")[0];
+            FinalTime = FinalTime.split("~")[0];
+            int MiddleSmonth = Integer.parseInt(MiddleTime.split("~")[0].substring(0, 2));
+            int MiddleSday = Integer.parseInt(MiddleTime.split("~")[0].substring(3, 5));
+            int FinalSmonth = Integer.parseInt(FinalTime.split("~")[0].substring(0, 2));
+            int FinalSday = Integer.parseInt(FinalTime.split("~")[0].substring(3, 5));
+            String DDAY_MSG;
+            Log.d("KKTAG", "" + T_Year);
+            Log.d("KKTAG", "" + T_Month); //7
+            Log.d("KKTAG", "" + T_Day); //25
+            Log.d("KKTAG", "" + MiddleSday); //20
+            Log.d("KKTAG", "" + MiddleSmonth); //10
+            examcalendar.set(T_Year, MiddleSmonth - 1, MiddleSday);
+
+            if (cl.getTimeInMillis() <= examcalendar.getTimeInMillis()) {
+                //중간고사 볼드채 사용
+                DDAY_MSG = getResources().getString(R.string.MIDDLE_EXAM) + " " + getResources().getString(R.string.dday_text) + String.valueOf(caldate(Calendar.getInstance().get(Calendar.YEAR), MiddleSmonth - 1, MiddleSday));
+                ddaytv.setText(DDAY_MSG);
+                if (examcalendar.getTimeInMillis() < cl.getTimeInMillis() && cl.getTimeInMillis() <= examcalendar.getTimeInMillis() + 604800000) {
+                    ddaytv.setText(getResources().getString(R.string.DDAY_TIME_TO_EXAM));
+                }
+            } else {
+                examcalendar.set(T_Year, FinalSmonth - 1, FinalSday);
+                DDAY_MSG = getResources().getString(R.string.FINAL_EXAM) + " " + getResources().getString(R.string.dday_text) + String.valueOf(caldate(Calendar.getInstance().get(Calendar.YEAR), FinalSmonth - 1, FinalSday));
+                ddaytv.setText(DDAY_MSG);
+                if (examcalendar.getTimeInMillis() < cl.getTimeInMillis() && cl.getTimeInMillis() <= examcalendar.getTimeInMillis() + 604800000) {
+                    ddaytv.setText(getResources().getString(R.string.DDAY_TIME_TO_EXAM));
+                }
+            }
+        } else {
+            String msg = getResources().getString(R.string.NO_EXAM_DATA);
+            ddaytv.setText(msg);
+        }
     }
 
     private void actionbarInit() {

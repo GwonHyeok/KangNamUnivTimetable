@@ -38,6 +38,12 @@
         revision="20.0.0"
         sha1="f21927d22fe31889ecce94dd697a2e75b137e0ef"/>
     <item
+        dex="/Users/GwonHyeok/Documents/AndroidStudioProjects/KangNamUnivTimetable/app/build/intermediates/pre-dexed/debug/json-simple-1.1.1-a08b5b13023a8a6e1ff400c26f282351c707f292.jar"
+        jar="/Users/GwonHyeok/Documents/AndroidStudioProjects/KangNamUnivTimetable/app/libs/json-simple-1.1.1.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="5d6f9b6a9ddca2a28c0216cc44efb2e20d9c23b5"/>
+    <item
         dex="/Users/GwonHyeok/Documents/AndroidStudioProjects/KangNamUnivTimetable/app/build/intermediates/pre-dexed/debug/support-annotations-20.0.0-bca9cd8c8082330ef7549e0398af852faae531fd.jar"
         jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar"
         jumboMode="false"
@@ -47,7 +53,7 @@
         dex="/Users/GwonHyeok/Documents/AndroidStudioProjects/KangNamUnivTimetable/app/build/intermediates/pre-dexed/debug/json-simple-1.1.1-a08b5b13023a8a6e1ff400c26f282351c707f292.jar"
         jar="/Users/GwonHyeok/Documents/AndroidStudioProjects/KangNamUnivTimetable/app/libs/json-simple-1.1.1.jar"
         jumboMode="false"
-        revision="19.1.0"
+        revision="20.0.0"
         sha1="5d6f9b6a9ddca2a28c0216cc44efb2e20d9c23b5"/>
     <item
         dex="/Users/GwonHyeok/Documents/AndroidStudioProjects/KangNamUnivTimetable/app/build/intermediates/pre-dexed/debug/jsoup-1.7.3-c587ee7193c8b0ee9e629d056d98f4c74d3a1347.jar"
@@ -56,23 +62,17 @@
         revision="20.0.0"
         sha1="ab1f22cadc2f8b514e55ba368f5128056fe304da"/>
     <item
-        dex="/Users/GwonHyeok/Documents/AndroidStudioProjects/KangNamUnivTimetable/app/build/intermediates/pre-dexed/debug/json-simple-1.1.1-a08b5b13023a8a6e1ff400c26f282351c707f292.jar"
-        jar="/Users/GwonHyeok/Documents/AndroidStudioProjects/KangNamUnivTimetable/app/libs/json-simple-1.1.1.jar"
+        dex="/Users/GwonHyeok/Documents/AndroidStudioProjects/KangNamUnivTimetable/app/build/intermediates/pre-dexed/debug/jsoup-1.7.3-c587ee7193c8b0ee9e629d056d98f4c74d3a1347.jar"
+        jar="/Users/GwonHyeok/Documents/AndroidStudioProjects/KangNamUnivTimetable/app/libs/jsoup-1.7.3.jar"
         jumboMode="false"
-        revision="20.0.0"
-        sha1="5d6f9b6a9ddca2a28c0216cc44efb2e20d9c23b5"/>
+        revision="19.1.0"
+        sha1="ab1f22cadc2f8b514e55ba368f5128056fe304da"/>
     <item
         dex="/Users/GwonHyeok/Documents/AndroidStudioProjects/KangNamUnivTimetable/app/build/intermediates/pre-dexed/debug/classes-27ff9abd57a891ce51da3e4303b8fe61585efe47.jar"
         jar="/Users/GwonHyeok/Documents/AndroidStudioProjects/KangNamUnivTimetable/app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/classes.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
-    <item
-        dex="/Users/GwonHyeok/Documents/AndroidStudioProjects/KangNamUnivTimetable/app/build/intermediates/pre-dexed/debug/jsoup-1.7.3-c587ee7193c8b0ee9e629d056d98f4c74d3a1347.jar"
-        jar="/Users/GwonHyeok/Documents/AndroidStudioProjects/KangNamUnivTimetable/app/libs/jsoup-1.7.3.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="ab1f22cadc2f8b514e55ba368f5128056fe304da"/>
     <item
         dex="/Users/GwonHyeok/Documents/AndroidStudioProjects/KangNamUnivTimetable/app/build/intermediates/pre-dexed/debug/classes-6b973188620c76b4051e1a3135ee27726d72c8bd.jar"
         jar="/Users/GwonHyeok/Documents/AndroidStudioProjects/KangNamUnivTimetable/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/classes.jar"

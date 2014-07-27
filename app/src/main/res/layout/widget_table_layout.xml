@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow>
+
+            <TextView
+                android:layout_gravity="center"
+                android:text="강의시간" />
+
+            <TextView android:text="월" />
+
+            <TextView android:text="화" />
+
+            <TextView android:text="수" />
+
+            <TextView android:text="목" />
+
+            <TextView android:text="금" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="09:00-09:50" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="09:55-10:50" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="10:50-11:45" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="11:50-12:40" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="12:45-13:40" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="13:40-14:35" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="14:40-15:30" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="15:35-16:30" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="16:30-17:25" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="17:00-17:25" />
+        </TableRow>
+    </TableLayout>
+</RelativeLayout>

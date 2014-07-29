@@ -79,6 +79,10 @@ public class IButton extends RelativeLayout {
         layout.setOnClickListener(l);
     }
 
+    public void setImageResource(int id) {
+        image.setImageResource(id);
+    }
+
     public void setDrawable(int resId) {
         image.setImageResource(resId);
     }

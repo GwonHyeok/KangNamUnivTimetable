@@ -9,7 +9,6 @@
         android:id="@+id/MainLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/DeveloperView2"
         android:layout_alignParentTop="true"
         android:orientation="vertical"
         android:weightSum="2">

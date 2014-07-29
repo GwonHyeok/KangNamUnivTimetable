@@ -20,6 +20,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
@@ -41,6 +42,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.hyeok.kangnamunivtimetable.CustomViews.IButton;
 import com.hyeok.kangnamunivtimetable.Utils.ControlSharedPref;
 import com.hyeok.kangnamunivtimetable.R;
 
@@ -48,7 +50,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -62,6 +63,7 @@ public class TimeTableMain extends FragmentActivity implements
     private RelativeLayout LR_MAIN;
     private PagerSlidingTabStrip tabs;
     private ViewPager pager;
+    private IButton main_full_time_table_btn;
     @SuppressWarnings("FieldCanBeLocal")
     private MyPagerAdapter adapter;
     private int currentColor = 0xFF666666;
@@ -158,8 +160,8 @@ public class TimeTableMain extends FragmentActivity implements
         //DDAY 설정
         Calendar cl = Calendar.getInstance();
         Calendar examcalendar = Calendar.getInstance();
-        int T_Month = cl.get(Calendar.MONTH) + 1;
-        int T_Day = Integer.parseInt(new SimpleDateFormat("dd").format(cl.getTime()));
+//        int T_Month = cl.get(Calendar.MONTH) + 1;
+//        int T_Day = Integer.parseInt(new SimpleDateFormat("dd").format(cl.getTime()));
         int T_Year = cl.get(Calendar.YEAR);
         String MiddleTime = pref.getValue(login.MIDDLE_EXAM_PREF, null);
         String FinalTime = pref.getValue(login.FINAL_EXAM_PREF, null);
@@ -231,6 +233,7 @@ public class TimeTableMain extends FragmentActivity implements
 
     private void viewInit() {
         // View Initialize
+        main_full_time_table_btn = (IButton)findViewById(R.id.main_full_time_table_btn);
         LR_MEMO = (LinearLayout) findViewById(R.id.MAIN_MEMO_LAYOUT);
         LR_ALARM = (LinearLayout) findViewById(R.id.MAIN_ALARM_LAYOUT);
         LR_DDAY = (LinearLayout) findViewById(R.id.MAIN_DDAY_LAYOUT);
@@ -261,6 +264,15 @@ public class TimeTableMain extends FragmentActivity implements
         currentColor = getCurrentColor(this, pager.getCurrentItem());
         changeColor(currentColor);
 
+        main_full_time_table_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.anim_slide_up, R.anim.anim_slide_down);
+                transaction.replace(R.id.MainLayout, new FullTimetableFragment());
+                transaction.commit();
+            }
+        });
 
 		/*
          * Memo Click Listener
@@ -287,6 +299,7 @@ public class TimeTableMain extends FragmentActivity implements
             LR_DDAY.setBackgroundDrawable(getResources().getDrawable(R.drawable.textview_border_dark));
         }
 
+        main_full_time_table_btn.setImageResource(R.drawable.ic_btn_point_open_dark);
         TV_MAIN_MEMO_TITLE.setTextColor(getResources().getColor(R.color.fontcolor_main_dark));
         TV_MAIN_ALARM_TITLE.setTextColor(getResources().getColor(R.color.fontcolor_main_dark));
         TV_MAIN_DDAY_TITLE.setTextColor(getResources().getColor(R.color.fontcolor_main_dark));

@@ -58,6 +58,13 @@ public class appUtils {
         }
     }
 
+    public static String TIME(Context mContext, int tmp, int i) {
+        ControlSharedPref pref = new ControlSharedPref(mContext, "timetable.pref");
+        String Starttime = pref.getValue("time" + tmp, "").split("-")[0];
+        String Lasttime = pref.getValue("time" + i, "").split("-")[1];
+        return Starttime + "-" + Lasttime;
+    }
+
     public static boolean NetWorkState(Context context) {
         ConnectivityManager cManager;
         NetworkInfo mobile;

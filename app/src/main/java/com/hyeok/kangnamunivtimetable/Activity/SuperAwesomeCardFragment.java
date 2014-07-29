@@ -39,6 +39,7 @@ import android.widget.TextView;
 import com.hyeok.kangnamunivtimetable.Utils.ControlSharedPref;
 import com.hyeok.kangnamunivtimetable.CustomViews.InfoCustomDialog;
 import com.hyeok.kangnamunivtimetable.R;
+import com.hyeok.kangnamunivtimetable.Utils.appUtils;
 
 import java.util.ArrayList;
 
@@ -106,7 +107,7 @@ public class SuperAwesomeCardFragment extends Fragment {
                             break;
                         tmp--;
                     }
-                    time = TIME(getActivity(), tmp, i);
+                    time = appUtils.TIME(getActivity(), tmp, i);
                     list.add(new ListViewData(time, pref.getValue("mon_" + i, "").replace("null", "").split(" ")[0], pref.getValue("mon_" + i, "").replace("null", "").split(" ")[1], color));
                 }
 
@@ -122,7 +123,7 @@ public class SuperAwesomeCardFragment extends Fragment {
                             break;
                         tmp--;
                     }
-                    time = TIME(getActivity(), tmp, i);
+                    time = appUtils.TIME(getActivity(), tmp, i);
                     list.add(new ListViewData(time, pref.getValue("tues" + i, "").replace("null", "").split(" ")[0], pref.getValue("tues" + i, "").replace("null", "").split(" ")[1], color));
                 }
             }
@@ -136,7 +137,7 @@ public class SuperAwesomeCardFragment extends Fragment {
                             break;
                         tmp--;
                     }
-                    time = TIME(getActivity(), tmp, i);
+                    time = appUtils.TIME(getActivity(), tmp, i);
                     list.add(new ListViewData(time, pref.getValue("wends" + i, "").replace("null", "").split(" ")[0], pref.getValue("wends" + i, "").replace("null", "").split(" ")[1], color));
                 }
             }
@@ -150,7 +151,7 @@ public class SuperAwesomeCardFragment extends Fragment {
                             break;
                         tmp--;
                     }
-                    time = TIME(getActivity(), tmp, i);
+                    time = appUtils.TIME(getActivity(), tmp, i);
                     list.add(new ListViewData(time, pref.getValue("thur" + i, "").replace("null", "").split(" ")[0], pref.getValue("thur" + i, "").replace("null", "").split(" ")[1], color));
                 }
             }
@@ -164,7 +165,7 @@ public class SuperAwesomeCardFragment extends Fragment {
                             break;
                         tmp--;
                     }
-                    time = TIME(getActivity(), tmp, i);
+                    time = appUtils.TIME(getActivity(), tmp, i);
                     list.add(new ListViewData(time, pref.getValue("fri" + i, "").replace("null", "").split(" ")[0], pref.getValue("fri" + i, "").replace("null", "").split(" ")[1], color));
                 }
             }
@@ -206,12 +207,7 @@ public class SuperAwesomeCardFragment extends Fragment {
         return fl;
     }
 
-    public String TIME(Context mContext, int tmp, int i) {
-        ControlSharedPref pref = new ControlSharedPref(mContext, "timetable.pref");
-        String Starttime = pref.getValue("time" + tmp, "").split("-")[0];
-        String Lasttime = pref.getValue("time" + i, "").split("-")[1];
-        return Starttime + "-" + Lasttime;
-    }
+
 }
 
 class CustomListAdapter extends ArrayAdapter<ListViewData> {

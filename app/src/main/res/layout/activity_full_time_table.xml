@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/FULL_TIME_TABLE_MAIN"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_main">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/FULL_TIME_TABLE_LAYOUT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/FULL_TABLE_TIME_0"
+                        android:gravity="center"
+                        android:text="강의시간" />
+
+                    <TextView
+                        android:id="@+id/FULL_TABLE_MON_0"
+                        android:gravity="center"
+                        android:text="월" />
+
+                    <TextView
+                        android:id="@+id/FULL_TABLE_TUE_0"
+                        android:gravity="center"
+                        android:text="화" />
+
+                    <TextView
+                        android:id="@+id/FULL_TABLE_WEN_0"
+                        android:gravity="center"
+                        android:text="수" />
+
+                    <TextView
+                        android:id="@+id/FULL_TABLE_THU_0"
+                        android:gravity="center"
+                        android:text="목" />
+
+                    <TextView
+                        android:id="@+id/FULL_TABLE_FRI_0"
+                        android:gravity="center"
+                        android:text="금" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/FULL_TABLE_TIME_1"
+                        android:text="09:00-09:50" />
+
+                    <TextView android:id="@+id/FULL_TABLE_MON_1" />
+
+                    <TextView android:id="@+id/FULL_TABLE_TUE_1" />
+
+                    <TextView android:id="@+id/FULL_TABLE_WEN_1" />
+
+                    <TextView android:id="@+id/FULL_TABLE_THU_1" />
+
+                    <TextView android:id="@+id/FULL_TABLE_FRI_1" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/FULL_TABLE_TIME_2"
+                        android:text="09:55-10:50" />
+
+                    <TextView android:id="@+id/FULL_TABLE_MON_2" />
+
+                    <TextView android:id="@+id/FULL_TABLE_TUE_2" />
+
+                    <TextView android:id="@+id/FULL_TABLE_WEN_2" />
+
+                    <TextView android:id="@+id/FULL_TABLE_THU_2" />
+
+                    <TextView android:id="@+id/FULL_TABLE_FRI_2" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/FULL_TABLE_TIME_3"
+                        android:text="10:50-11:45" />
+
+                    <TextView android:id="@+id/FULL_TABLE_MON_3" />
+
+                    <TextView android:id="@+id/FULL_TABLE_TUE_3" />
+
+                    <TextView android:id="@+id/FULL_TABLE_WEN_3" />
+
+                    <TextView android:id="@+id/FULL_TABLE_THU_3" />
+
+                    <TextView android:id="@+id/FULL_TABLE_FRI_3" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/FULL_TABLE_TIME_4"
+                        android:text="11:50-12:40" />
+
+                    <TextView android:id="@+id/FULL_TABLE_MON_4" />
+
+                    <TextView android:id="@+id/FULL_TABLE_TUE_4" />
+
+                    <TextView android:id="@+id/FULL_TABLE_WEN_4" />
+
+                    <TextView android:id="@+id/FULL_TABLE_THU_4" />
+
+                    <TextView android:id="@+id/FULL_TABLE_FRI_4" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/FULL_TABLE_TIME_5"
+                        android:text="12:45-13:40" />
+
+                    <TextView android:id="@+id/FULL_TABLE_MON_5" />
+
+                    <TextView android:id="@+id/FULL_TABLE_TUE_5" />
+
+                    <TextView android:id="@+id/FULL_TABLE_WEN_5" />
+
+                    <TextView android:id="@+id/FULL_TABLE_THU_5" />
+
+                    <TextView android:id="@+id/FULL_TABLE_FRI_5" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/FULL_TABLE_TIME_6"
+                        android:text="13:40-14:35" />
+
+                    <TextView android:id="@+id/FULL_TABLE_MON_6" />
+
+                    <TextView android:id="@+id/FULL_TABLE_TUE_6" />
+
+                    <TextView android:id="@+id/FULL_TABLE_WEN_6" />
+
+                    <TextView android:id="@+id/FULL_TABLE_THU_6" />
+
+                    <TextView android:id="@+id/FULL_TABLE_FRI_6" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/FULL_TABLE_TIME_7"
+
+                        android:text="14:40-15:30" />
+
+                    <TextView android:id="@+id/FULL_TABLE_MON_7" />
+
+                    <TextView android:id="@+id/FULL_TABLE_TUE_7" />
+
+                    <TextView android:id="@+id/FULL_TABLE_WEN_7" />
+
+                    <TextView android:id="@+id/FULL_TABLE_THU_7" />
+
+                    <TextView android:id="@+id/FULL_TABLE_FRI_7" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/FULL_TABLE_TIME_8"
+                        android:text="15:35-16:30" />
+
+                    <TextView android:id="@+id/FULL_TABLE_MON_8" />
+
+                    <TextView android:id="@+id/FULL_TABLE_TUE_8" />
+
+                    <TextView android:id="@+id/FULL_TABLE_WEN_8" />
+
+                    <TextView android:id="@+id/FULL_TABLE_THU_8" />
+
+                    <TextView android:id="@+id/FULL_TABLE_FRI_8" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/FULL_TABLE_TIME_9"
+                        android:text="16:30-17:25" />
+
+                    <TextView android:id="@+id/FULL_TABLE_MON_9" />
+
+                    <TextView android:id="@+id/FULL_TABLE_TUE_9" />
+
+                    <TextView android:id="@+id/FULL_TABLE_WEN_9" />
+
+                    <TextView android:id="@+id/FULL_TABLE_THU_9" />
+
+                    <TextView android:id="@+id/FULL_TABLE_FRI_9" />
+                </TableRow>
+            </TableLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <com.hyeok.kangnamunivtimetable.CustomViews.IButton xmlns:ibutton="http://schemas.android.com/apk/res/com.hyeok.kangnamunivtimetable"
+        android:id="@+id/FullTTBButton"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:paddingLeft="8dp"
+        ibutton:button_center="true"
+        ibutton:button_icon="@drawable/ic_btn_point_close"
+        ibutton:button_text_bold="true" />
+
+</RelativeLayout>

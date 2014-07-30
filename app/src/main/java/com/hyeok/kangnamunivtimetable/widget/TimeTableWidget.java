@@ -16,6 +16,7 @@ import com.hyeok.kangnamunivtimetable.Utils.ControlSharedPref;
 import com.hyeok.kangnamunivtimetable.Activity.MainAppSettingActivity;
 import com.hyeok.kangnamunivtimetable.R;
 import com.hyeok.kangnamunivtimetable.Activity.TimeTableMain;
+import com.hyeok.kangnamunivtimetable.Utils.appUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -106,7 +107,7 @@ public class TimeTableWidget extends AppWidgetProvider {
                             break;
                         tmp--;
                     }
-                    time = TIME(context, tmp, i);
+                    time = appUtils.TIME(context, tmp, i);
                     list.append(time).append(":").append(pref.getValue("mon_" + i, "").replace("null", "")).append("\n");
                 }
             }
@@ -119,7 +120,7 @@ public class TimeTableWidget extends AppWidgetProvider {
                             break;
                         tmp--;
                     }
-                    time = TIME(context, tmp, i);
+                    time = appUtils.TIME(context, tmp, i);
                     list.append(time).append(":").append(pref.getValue("tues" + i, "").replace("null", "")).append("\n");
                 }
             }
@@ -132,7 +133,7 @@ public class TimeTableWidget extends AppWidgetProvider {
                             break;
                         tmp--;
                     }
-                    time = TIME(context, tmp, i);
+                    time = appUtils.TIME(context, tmp, i);
                     list.append(time).append(":").append(pref.getValue("wends" + i, "").replace("null", "")).append("\n");
                 }
             }
@@ -145,7 +146,7 @@ public class TimeTableWidget extends AppWidgetProvider {
                             break;
                         tmp--;
                     }
-                    time = TIME(context, tmp, i);
+                    time = appUtils.TIME(context, tmp, i);
                     list.append(time).append(":").append(pref.getValue("thur" + i, "").replace("null", "")).append("\n");
                 }
             }
@@ -158,19 +159,12 @@ public class TimeTableWidget extends AppWidgetProvider {
                             break;
                         tmp--;
                     }
-                    time = TIME(context, tmp, i);
+                    time = appUtils.TIME(context, tmp, i);
                     list.append(time).append(":").append(pref.getValue("fri" + i, "").replace("null", "")).append("\n");
                 }
             }
         }
         return list;
-    }
-
-    public String TIME(Context mContext, int tmp, int i) {
-        ControlSharedPref pref = new ControlSharedPref(mContext, "timetable.pref");
-        String Starttime = pref.getValue("time" + tmp, "").split("-")[0];
-        String Lasttime = pref.getValue("time" + i, "").split("-")[1];
-        return Starttime + "-" + Lasttime;
     }
 
     private void updateAppWidget(Context context,

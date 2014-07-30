@@ -12,10 +12,10 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.hyeok.kangnamunivtimetable.Utils.ControlSharedPref;
 import com.hyeok.kangnamunivtimetable.Activity.MainAppSettingActivity;
-import com.hyeok.kangnamunivtimetable.R;
 import com.hyeok.kangnamunivtimetable.Activity.TimeTableMain;
+import com.hyeok.kangnamunivtimetable.R;
+import com.hyeok.kangnamunivtimetable.Utils.ControlSharedPref;
 import com.hyeok.kangnamunivtimetable.Utils.appUtils;
 
 import java.text.SimpleDateFormat;
@@ -87,81 +87,44 @@ public class TimeTableWidget extends AppWidgetProvider {
         onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
-    private StringBuilder SetWidgetText(Context context) {
-        ControlSharedPref pref = new ControlSharedPref(context, "timetable.pref");
-
-        //	if ( pref.getValue(key, dftValue))
+    private StringBuilder SetWidgetText(Context mContext) {
         final StringBuilder list = new StringBuilder();
-//        String gonggangmsg = context.getResources().getString(R.string.DAY_GONGGANG);
-        int prefsize = pref.getAll().size() / 5;
+        ControlSharedPref pref = new ControlSharedPref(mContext, "timetable.pref");
         Calendar mCalendar = Calendar.getInstance();
         int position = mCalendar.get(Calendar.DAY_OF_WEEK) - 2;
-        int tmp;
-        String time;
-        if (position == 0) {
-            for (int i = 0; prefsize != i; i++) {
-                if (!pref.getValue("mon_" + i, "null").equals("null") && !pref.getValue("mon_" + i, "").equals(pref.getValue("mon_" + (i + 1), ""))) {
-                    tmp = i;
-                    while (tmp != 0) {
-                        if (!pref.getValue("mon_" + tmp, "").equals(pref.getValue("mon_" + (tmp - 1), "")))
-                            break;
-                        tmp--;
-                    }
-                    time = appUtils.TIME(context, tmp, i);
-                    list.append(time).append(":").append(pref.getValue("mon_" + i, "").replace("null", "")).append("\n");
+        int prefsize = pref.getAll().size() / 5;
+        String TimeTableValueKey;
+
+        switch (position) {
+            case 0:
+                TimeTableValueKey = "mon_";
+                break;
+            case 1:
+                TimeTableValueKey = "tues";
+                break;
+            case 2:
+                TimeTableValueKey = "wends";
+                break;
+            case 3:
+                TimeTableValueKey = "thur";
+                break;
+            case 4:
+                TimeTableValueKey = "fri";
+                break;
+            default:
+                TimeTableValueKey = "";
+                break;
+        }
+        for (int i = 0; prefsize != i; i++) {
+            if (!pref.getValue(TimeTableValueKey + i, "null").equals("null") && !pref.getValue(TimeTableValueKey + i, "").equals(pref.getValue(TimeTableValueKey + (i + 1), ""))) {
+                int tmp = i;
+                while (tmp != 0) {
+                    if (!pref.getValue(TimeTableValueKey + tmp, "").equals(pref.getValue(TimeTableValueKey + (tmp - 1), "")))
+                        break;
+                    tmp--;
                 }
-            }
-        } else if (position == 1) {
-            for (int i = 0; prefsize != i; i++) {
-                if (!pref.getValue("tues" + i, "null").equals("null") && !pref.getValue("tues" + i, "").equals(pref.getValue("tues" + (i + 1), ""))) {
-                    tmp = i;
-                    while (tmp != 0) {
-                        if (!pref.getValue("tues" + tmp, "").equals(pref.getValue("tues" + (tmp - 1), "")))
-                            break;
-                        tmp--;
-                    }
-                    time = appUtils.TIME(context, tmp, i);
-                    list.append(time).append(":").append(pref.getValue("tues" + i, "").replace("null", "")).append("\n");
-                }
-            }
-        } else if (position == 2) {
-            for (int i = 0; prefsize != i; i++) {
-                if (!pref.getValue("wends" + i, "null").equals("null") && !pref.getValue("wends" + i, "").equals(pref.getValue("wends" + (i + 1), ""))) {
-                    tmp = i;
-                    while (tmp != 0) {
-                        if (!pref.getValue("wends" + tmp, "").equals(pref.getValue("wends" + (tmp - 1), "")))
-                            break;
-                        tmp--;
-                    }
-                    time = appUtils.TIME(context, tmp, i);
-                    list.append(time).append(":").append(pref.getValue("wends" + i, "").replace("null", "")).append("\n");
-                }
-            }
-        } else if (position == 3) {
-            for (int i = 0; prefsize != i; i++) {
-                if (!pref.getValue("thur" + i, "null").equals("null") && !pref.getValue("thur" + i, "").equals(pref.getValue("thur" + (i + 1), ""))) {
-                    tmp = i;
-                    while (tmp != 0) {
-                        if (!pref.getValue("thur" + tmp, "").equals(pref.getValue("thur" + (tmp - 1), "")))
-                            break;
-                        tmp--;
-                    }
-                    time = appUtils.TIME(context, tmp, i);
-                    list.append(time).append(":").append(pref.getValue("thur" + i, "").replace("null", "")).append("\n");
-                }
-            }
-        } else if (position == 4) {
-            for (int i = 0; prefsize != i; i++) {
-                if (!pref.getValue("fri" + i, "null").equals("null") && !pref.getValue("fri" + i, "").equals(pref.getValue("fri" + (i + 1), ""))) {
-                    tmp = i;
-                    while (tmp != 0) {
-                        if (!pref.getValue("fri" + tmp, "").equals(pref.getValue("fri" + (tmp - 1), "")))
-                            break;
-                        tmp--;
-                    }
-                    time = appUtils.TIME(context, tmp, i);
-                    list.append(time).append(":").append(pref.getValue("fri" + i, "").replace("null", "")).append("\n");
-                }
+                String time = appUtils.TIME(mContext, tmp, i);
+                list.append(time).append(":").append(pref.getValue(TimeTableValueKey + i, "").replace("null", "")).append("\n");
             }
         }
         return list;

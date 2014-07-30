@@ -9,4 +9,3 @@
         android:scaleType="fitXY"
         android:src="@drawable/loading" />
 </LinearLayout>
-	

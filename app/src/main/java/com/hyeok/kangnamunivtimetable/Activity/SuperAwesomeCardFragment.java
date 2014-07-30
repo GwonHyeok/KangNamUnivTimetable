@@ -36,9 +36,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.hyeok.kangnamunivtimetable.Utils.ControlSharedPref;
 import com.hyeok.kangnamunivtimetable.CustomViews.InfoCustomDialog;
 import com.hyeok.kangnamunivtimetable.R;
+import com.hyeok.kangnamunivtimetable.Utils.ControlSharedPref;
 import com.hyeok.kangnamunivtimetable.Utils.appUtils;
 
 import java.util.ArrayList;
@@ -95,82 +95,41 @@ public class SuperAwesomeCardFragment extends Fragment {
         final ArrayList<ListViewData> list = new ArrayList<ListViewData>();
         String gonggangmsg = settingpref.getValue(MainAppSettingActivity.GONGGANG_MESSAGE_data, getResources().getString(R.string.DAY_GONGGANG));
         int prefsize = pref.getAll().size() / 5;
-        int tmp;
-        String time;
         int color = TimeTableMain.getCurrentColor(getActivity(), position);
-        if (position == 0) {
-            for (int i = 0; prefsize != i; i++) {
-                if (!pref.getValue("mon_" + i, "null").equals("null") && !pref.getValue("mon_" + i, "").equals(pref.getValue("mon_" + (i + 1), ""))) {
-                    tmp = i;
-                    while (tmp != 0) {
-                        if (!pref.getValue("mon_" + tmp, "").equals(pref.getValue("mon_" + (tmp - 1), "")))
-                            break;
-                        tmp--;
-                    }
-                    time = appUtils.TIME(getActivity(), tmp, i);
-                    list.add(new ListViewData(time, pref.getValue("mon_" + i, "").replace("null", "").split(" ")[0], pref.getValue("mon_" + i, "").replace("null", "").split(" ")[1], color));
-                }
-
-
-            }
-            if (list.size() == 0) list.add(new ListViewData(null, gonggangmsg, null, color));
-        } else if (position == 1) {
-            for (int i = 0; prefsize != i; i++) {
-                if (!pref.getValue("tues" + i, "null").equals("null") && !pref.getValue("tues" + i, "").equals(pref.getValue("tues" + (i + 1), ""))) {
-                    tmp = i;
-                    while (tmp != 0) {
-                        if (!pref.getValue("tues" + tmp, "").equals(pref.getValue("tues" + (tmp - 1), "")))
-                            break;
-                        tmp--;
-                    }
-                    time = appUtils.TIME(getActivity(), tmp, i);
-                    list.add(new ListViewData(time, pref.getValue("tues" + i, "").replace("null", "").split(" ")[0], pref.getValue("tues" + i, "").replace("null", "").split(" ")[1], color));
-                }
-            }
-            if (list.size() == 0) list.add(new ListViewData(null, gonggangmsg, null, color));
-        } else if (position == 2) {
-            for (int i = 0; prefsize != i; i++) {
-                if (!pref.getValue("wends" + i, "null").equals("null") && !pref.getValue("wends" + i, "").equals(pref.getValue("wends" + (i + 1), ""))) {
-                    tmp = i;
-                    while (tmp != 0) {
-                        if (!pref.getValue("wends" + tmp, "").equals(pref.getValue("wends" + (tmp - 1), "")))
-                            break;
-                        tmp--;
-                    }
-                    time = appUtils.TIME(getActivity(), tmp, i);
-                    list.add(new ListViewData(time, pref.getValue("wends" + i, "").replace("null", "").split(" ")[0], pref.getValue("wends" + i, "").replace("null", "").split(" ")[1], color));
-                }
-            }
-            if (list.size() == 0) list.add(new ListViewData(null, gonggangmsg, null, color));
-        } else if (position == 3) {
-            for (int i = 0; prefsize != i; i++) {
-                if (!pref.getValue("thur" + i, "null").equals("null") && !pref.getValue("thur" + i, "").equals(pref.getValue("thur" + (i + 1), ""))) {
-                    tmp = i;
-                    while (tmp != 0) {
-                        if (!pref.getValue("thur" + tmp, "").equals(pref.getValue("thur" + (tmp - 1), "")))
-                            break;
-                        tmp--;
-                    }
-                    time = appUtils.TIME(getActivity(), tmp, i);
-                    list.add(new ListViewData(time, pref.getValue("thur" + i, "").replace("null", "").split(" ")[0], pref.getValue("thur" + i, "").replace("null", "").split(" ")[1], color));
-                }
-            }
-            if (list.size() == 0) list.add(new ListViewData(null, gonggangmsg, null, color));
-        } else if (position == 4) {
-            for (int i = 0; prefsize != i; i++) {
-                if (!pref.getValue("fri" + i, "null").equals("null") && !pref.getValue("fri" + i, "").equals(pref.getValue("fri" + (i + 1), ""))) {
-                    tmp = i;
-                    while (tmp != 0) {
-                        if (!pref.getValue("fri" + tmp, "").equals(pref.getValue("fri" + (tmp - 1), "")))
-                            break;
-                        tmp--;
-                    }
-                    time = appUtils.TIME(getActivity(), tmp, i);
-                    list.add(new ListViewData(time, pref.getValue("fri" + i, "").replace("null", "").split(" ")[0], pref.getValue("fri" + i, "").replace("null", "").split(" ")[1], color));
-                }
-            }
-            if (list.size() == 0) list.add(new ListViewData(null, gonggangmsg, null, color));
+        String TimeTableValueKey;
+        switch (position) {
+            case 0:
+                TimeTableValueKey = "mon_";
+                break;
+            case 1:
+                TimeTableValueKey = "tues";
+                break;
+            case 2:
+                TimeTableValueKey = "wends";
+                break;
+            case 3:
+                TimeTableValueKey = "thur";
+                break;
+            case 4:
+                TimeTableValueKey = "fri";
+                break;
+            default:
+                TimeTableValueKey = "";
+                break;
         }
+        for (int i = 0; prefsize != i; i++) {
+            if (!pref.getValue(TimeTableValueKey + i, "null").equals("null") && !pref.getValue(TimeTableValueKey + i, "").equals(pref.getValue(TimeTableValueKey + (i + 1), ""))) {
+                int tmp = i;
+                while (tmp != 0) {
+                    if (!pref.getValue(TimeTableValueKey + tmp, "").equals(pref.getValue(TimeTableValueKey + (tmp - 1), "")))
+                        break;
+                    tmp--;
+                }
+                String time = appUtils.TIME(getActivity(), tmp, i);
+                list.add(new ListViewData(time, pref.getValue(TimeTableValueKey + i, "").replace(TimeTableValueKey, "").split(" ")[0], pref.getValue(TimeTableValueKey + i, "").replace("null", "").split(" ")[1], color));
+            }
+        }
+        if (list.size() == 0) list.add(new ListViewData(null, gonggangmsg, null, color));
 
         CustomListAdapter adapter = new CustomListAdapter(getActivity(), R.layout.listview_layout, list);
 

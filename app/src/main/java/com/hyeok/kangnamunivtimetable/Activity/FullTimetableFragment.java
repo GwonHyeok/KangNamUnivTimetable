@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,10 +26,9 @@ import com.hyeok.kangnamunivtimetable.CustomViews.IButton;
 import com.hyeok.kangnamunivtimetable.R;
 import com.hyeok.kangnamunivtimetable.Utils.ControlSharedPref;
 
-import java.lang.reflect.Type;
 import java.util.Random;
 
-/**
+/*
  * Created by GwonHyeok on 14. 7. 28..
  */
 public class FullTimetableFragment extends Fragment implements View.OnClickListener {

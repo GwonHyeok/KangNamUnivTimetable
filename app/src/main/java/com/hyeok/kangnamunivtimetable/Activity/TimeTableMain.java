@@ -43,8 +43,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.hyeok.kangnamunivtimetable.CustomViews.IButton;
-import com.hyeok.kangnamunivtimetable.Utils.ControlSharedPref;
 import com.hyeok.kangnamunivtimetable.R;
+import com.hyeok.kangnamunivtimetable.Utils.ControlSharedPref;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -233,7 +233,7 @@ public class TimeTableMain extends FragmentActivity implements
 
     private void viewInit() {
         // View Initialize
-        main_full_time_table_btn = (IButton)findViewById(R.id.main_full_time_table_btn);
+        main_full_time_table_btn = (IButton) findViewById(R.id.main_full_time_table_btn);
         LR_MEMO = (LinearLayout) findViewById(R.id.MAIN_MEMO_LAYOUT);
         LR_ALARM = (LinearLayout) findViewById(R.id.MAIN_ALARM_LAYOUT);
         LR_DDAY = (LinearLayout) findViewById(R.id.MAIN_DDAY_LAYOUT);
@@ -610,11 +610,35 @@ public class TimeTableMain extends FragmentActivity implements
     public void onConfigurationChanged(Configuration newconfiguration) {
         if (newconfiguration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             tabs.setTabsWidth(Configuration.ORIENTATION_LANDSCAPE);
+            LR_TV_MAIN.setVisibility(View.INVISIBLE);
+            Animation hideanim = AnimationUtils.loadAnimation(this, R.anim.anim_slide_down);
+            hideanim.setAnimationListener(hideAnimlistener);
+            main_full_time_table_btn.bringToFront();
+            main_full_time_table_btn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.anim_slide_down));
+            LR_TV_MAIN.startAnimation(hideanim);
         } else if (newconfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             tabs.setTabsWidth(Configuration.ORIENTATION_PORTRAIT);
+            main_full_time_table_btn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.anim_slide_up));
+            LR_TV_MAIN.startAnimation(AnimationUtils.loadAnimation(this, R.anim.anim_slide_up));
+            LR_TV_MAIN.setVisibility(View.VISIBLE);
         }
         super.onConfigurationChanged(newconfiguration);
     }
+
+    private Animation.AnimationListener hideAnimlistener = new Animation.AnimationListener() {
+        @Override
+        public void onAnimationStart(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            LR_TV_MAIN.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+        }
+    };
 
     @Override
     public void onActivityResult(int requestcode, int resultcode, Intent intent) {

@@ -5,14 +5,15 @@
     android:layout_height="fill_parent">
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/login_linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <EditText
             android:id="@+id/login_id"
@@ -57,12 +58,11 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/lgoin_imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/ic_kangnam_logo" />
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp" />
 
 </RelativeLayout>

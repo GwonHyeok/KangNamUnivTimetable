@@ -18,24 +18,24 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <ImageButton
-        android:id="@+id/ActionBar_ShareButton"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/ActionBar_settingbutton"
-        android:background="@null"
-        android:paddingRight="16dp"
-        android:src="@drawable/ic_action_share" />
+    <!--<ImageButton-->
+        <!--android:id="@+id/ActionBar_ShareButton"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_toLeftOf="@+id/ActionBar_settingbutton"-->
+        <!--android:background="@null"-->
+        <!--android:paddingRight="16dp"-->
+        <!--android:src="@drawable/ic_action_share" />-->
 
     <ImageButton
-        android:id="@+id/ActionBar_settingbutton"
+        android:id="@+id/ActionBar_drawerbutton"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@null"
         android:paddingRight="14dp"
-        android:src="@drawable/ic_settingbutton" />
+        android:src="@drawable/ic_menu_black_24dp" />
 
 </RelativeLayout>

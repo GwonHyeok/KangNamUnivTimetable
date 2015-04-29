@@ -14,15 +14,20 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.hyeok.kangnamunivtimetable.Utils.ControlSharedPref;
 import com.hyeok.kangnamunivtimetable.CustomViews.IButton;
 import com.hyeok.kangnamunivtimetable.R;
+import com.hyeok.kangnamunivtimetable.Utils.ControlSharedPref;
 import com.hyeok.kangnamunivtimetable.Utils.appUtils;
 
 import org.json.simple.JSONArray;
@@ -36,6 +41,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -50,9 +56,11 @@ import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class login extends Activity {
+public class login extends ActionBarActivity {
     String TAG = "KangNam.Univ.TB";
-    ProgressDialog dialog;
+    private ProgressDialog dialog;
+    private ImageView iconLogo;
+    private LinearLayout loginMain;
     public static String jsession, idno, mjco, name, name_e, pass, auto, gubn;
     public static String MIDDLE_EXAM_PREF = "Middle_exam";
     public static String FINAL_EXAM_PREF = "Final_exam";
@@ -86,7 +94,7 @@ public class login extends Activity {
         ic_login_symbol.setBounds(0, 0, 80, 80);
         tvid.setCompoundDrawables(ic_st_symbol, null, null, null);
         tvpw.setCompoundDrawables(ic_pw_symbol, null, null, null);
-
+        viewAnimation();
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -115,6 +123,69 @@ public class login extends Activity {
         }
     };
 
+    private void viewAnimation() {
+        iconLogo = (ImageView) findViewById(R.id.lgoin_imageView1);
+        loginMain = (LinearLayout) findViewById(R.id.login_linearLayout1);
+        final Drawable drawable = getResources().getDrawable(R.drawable.ic_kangnam_logo);
+        Drawable drawable1 = getResources().getDrawable(R.drawable.ic_kangnam_logo_2);
+        iconLogo.setImageDrawable(drawable);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                Animation fade = AnimationUtils.loadAnimation(login.this, R.anim.anim_login_fade);
+//                fade.setAnimationListener(new Animation.AnimationListener() {
+//                    @Override
+//                    public void onAnimationStart(Animation animation) {
+//                        iconLogo.setImageDrawable(drawable);
+//
+//                    }
+//
+//                    @Override
+//                    public void onAnimationEnd(Animation animation) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onAnimationRepeat(Animation animation) {
+//
+//                    }
+//                });
+//                iconLogo.startAnimation(fade);
+//            }
+//        }, 1000);
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                ControlSharedPref pref = new ControlSharedPref(login.this, null);
+                if (pref.getValue("name", null) != null) {
+                    finish();
+                    startActivity(new Intent(login.this, TimeTableMain.class));
+                    return;
+                }
+                Animation transition = AnimationUtils.loadAnimation(login.this, R.anim.anim_login_translate);
+                transition.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        Animation fade = AnimationUtils.loadAnimation(login.this, R.anim.anim_login_fade);
+                        loginMain.setVisibility(View.VISIBLE);
+                        loginMain.startAnimation(fade);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                iconLogo.startAnimation(transition);
+            }
+        }, 1500);
+    }
+
     @Override
     public void onBackPressed() {
         if (!m_close_flag) {
@@ -124,15 +195,14 @@ public class login extends Activity {
             m_close_flag = true;
             backhandler.sendEmptyMessageDelayed(0, 1000);
         } else {
-            System.exit(0);
             super.onBackPressed();
         }
     }
 
     private void setBackGround(RelativeLayout layout, int resid) {
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig = Bitmap.Config.RGB_565;
-        options.inSampleSize = 1;
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        options.inSampleSize = 2;
         options.inPurgeable = true;
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resid, options);
         if (Build.VERSION.SDK_INT >= 16) {
@@ -258,15 +328,9 @@ public class login extends Activity {
                     request1.setInstanceFollowRedirects(true);
                     request1.setRequestMethod("GET");
                     System.out.println(request1.getConnectTimeout());
-                    InputStream inputStream = request1.getInputStream();
-                    Scanner scanner = new Scanner(inputStream);
-                    StringBuilder stringBuilder = new StringBuilder();
-                    while (scanner.hasNextLine()) {
-                        stringBuilder.append(scanner.nextLine());
-                    }
+                    InputStreamReader reader = new InputStreamReader(request1.getInputStream());
                     JSONParser jp = new JSONParser();
-                    Object oj = jp.parse(stringBuilder.toString());
-                    JSONObject jo = (JSONObject) oj;
+                    JSONObject jo = (JSONObject) jp.parse(reader);
                     JSONArray ja = (JSONArray) jo.get("data");
                     for (int rep = 0; rep < ja.size(); rep++) {
                         JSONObject jo2 = (JSONObject) ja.get(rep);

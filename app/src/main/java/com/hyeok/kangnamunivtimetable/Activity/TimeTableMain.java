@@ -3,6 +3,7 @@ package com.hyeok.kangnamunivtimetable.Activity;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,12 +18,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -31,9 +32,11 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,9 +45,11 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.hyeok.kangnamunivtimetable.CustomViews.IButton;
 import com.hyeok.kangnamunivtimetable.R;
+import com.hyeok.kangnamunivtimetable.Ui.NavigationDrawerAdapter;
 import com.hyeok.kangnamunivtimetable.Utils.ControlSharedPref;
+import com.hyeok.kangnamunivtimetable.Utils.GetTimetableUtils;
+import com.hyeok.kangnamunivtimetable.Utils.appUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -54,8 +59,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
-public class TimeTableMain extends FragmentActivity implements
-        OnPageChangeListener {
+public class TimeTableMain extends ActionBarActivity implements
+        OnPageChangeListener, View.OnClickListener, AdapterView.OnItemClickListener {
 
     private TextView ddaytv, extratimetv, MemoPrevewText, TV_MAIN_MEMO_TITLE, TV_MAIN_ALARM_TITLE, TV_MAIN_DDAY_TITLE;
     private LinearLayout LR_MEMO, LR_ALARM, LR_DDAY, LR_TV_MAIN;
@@ -63,9 +68,6 @@ public class TimeTableMain extends FragmentActivity implements
     private RelativeLayout LR_MAIN;
     private PagerSlidingTabStrip tabs;
     private ViewPager pager;
-    private IButton main_full_time_table_btn;
-    @SuppressWarnings("FieldCanBeLocal")
-    private MyPagerAdapter adapter;
     private int currentColor = 0xFF666666;
     private boolean m_close_flag = false, extra_thread_check = true, IS_DARK_THEME = false, EXTRATIME_TMP_FLAG = true;
     private Handler extratime = null;
@@ -77,6 +79,7 @@ public class TimeTableMain extends FragmentActivity implements
     ControlSharedPref shuttlepref = new ControlSharedPref(this, "shuttlebus.pref");
     ControlSharedPref pref = new ControlSharedPref(this, null);
     private long extratime_mills;
+    private int ThemeListIndex, StyleListIndex;
     private Thread extratimeThread;
     static boolean ShowSplash = true;
 
@@ -92,7 +95,7 @@ public class TimeTableMain extends FragmentActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (ShowSplash) {
-            startActivity(new Intent(this, Splash.class));
+            startActivity(new Intent(this, login.class));
             ShowSplash = false;
         }
         if (pref.getValue("name", "null").equals("null"))
@@ -210,30 +213,27 @@ public class TimeTableMain extends FragmentActivity implements
         actionbar.setCustomView(mview, layout);
         actionbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.background_main)));
-        ImageButton ActionBarSettingBtn = (ImageButton) mview.findViewById(R.id.ActionBar_settingbutton);
-        ImageButton ActionBarShareBtn = (ImageButton) mview.findViewById(R.id.ActionBar_ShareButton);
 
+        ImageButton ActionBarDrawer_btn = (ImageButton) mview.findViewById(R.id.ActionBar_drawerbutton);
         final AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.3F);
-        ActionBarSettingBtn.setOnClickListener(new View.OnClickListener() {
+        ActionBarDrawer_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 v.startAnimation(buttonClick);
-                Intent i = new Intent(TimeTableMain.this, MainAppSettingActivity.class);
-                startActivityForResult(i, 0);
-            }
-        });
-        ActionBarShareBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.startAnimation(buttonClick);
-                ShareTimeTable();
+                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+                View drawerView = findViewById(R.id.drawerView);
+                if (drawerLayout.isDrawerOpen(drawerView)) {
+                    drawerLayout.closeDrawers();
+                } else {
+                    drawerLayout.openDrawer(drawerView);
+                }
+
             }
         });
     }
 
     private void viewInit() {
         // View Initialize
-        main_full_time_table_btn = (IButton) findViewById(R.id.main_full_time_table_btn);
         LR_MEMO = (LinearLayout) findViewById(R.id.MAIN_MEMO_LAYOUT);
         LR_ALARM = (LinearLayout) findViewById(R.id.MAIN_ALARM_LAYOUT);
         LR_DDAY = (LinearLayout) findViewById(R.id.MAIN_DDAY_LAYOUT);
@@ -250,7 +250,7 @@ public class TimeTableMain extends FragmentActivity implements
         extratimetv = (TextView) findViewById(R.id.Extra_Time_Textview);
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         pager = (ViewPager) findViewById(R.id.pager);
-        adapter = new MyPagerAdapter(getSupportFragmentManager());
+        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
         final int pageMargin = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 5, getResources()
@@ -264,17 +264,7 @@ public class TimeTableMain extends FragmentActivity implements
         currentColor = getCurrentColor(this, pager.getCurrentItem());
         changeColor(currentColor);
 
-        main_full_time_table_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.anim_slide_up, R.anim.anim_slide_down);
-                transaction.replace(R.id.MainLayout, new FullTimetableFragment());
-                transaction.commit();
-            }
-        });
-
-		/*
+        /*
          * Memo Click Listener
 		 */
         MemoPrevewText.setOnClickListener(new View.OnClickListener() {
@@ -284,6 +274,28 @@ public class TimeTableMain extends FragmentActivity implements
             }
         });
 
+        /*
+        * Set TimeTable Type
+        */
+        if (settingepref.getValue("ttbtype", 0) != 0) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.MainLayout, new FullTimetableFragment()).commit();
+        }
+
+        /*
+         * Navigation Drawer View Init
+         */
+        ListView mDrawerListview = (ListView) findViewById(R.id.drawer_listview);
+        NavigationDrawerAdapter drawerAdapter = new NavigationDrawerAdapter(this, android.R.layout.simple_list_item_1, getDrawerList());
+        mDrawerListview.setAdapter(drawerAdapter);
+        TextView mDrawerShare = (TextView) findViewById(R.id.drawer_share);
+        TextView mDrawerSetting = (TextView) findViewById(R.id.drawer_setting);
+        TextView mDrawerStudentName = (TextView) findViewById(R.id.drawer_studentname);
+        ImageView mDrawerRefresh = (ImageView) findViewById(R.id.drawer_refresh);
+        mDrawerStudentName.setText(getStudentName());
+        mDrawerSetting.setOnClickListener(this);
+        mDrawerShare.setOnClickListener(this);
+        mDrawerRefresh.setOnClickListener(this);
+        mDrawerListview.setOnItemClickListener(this);
     }
 
     @SuppressWarnings("deprecation")
@@ -299,7 +311,6 @@ public class TimeTableMain extends FragmentActivity implements
             LR_DDAY.setBackgroundDrawable(getResources().getDrawable(R.drawable.textview_border_dark));
         }
 
-        main_full_time_table_btn.setImageResource(R.drawable.ic_btn_point_open_dark);
         TV_MAIN_MEMO_TITLE.setTextColor(getResources().getColor(R.color.fontcolor_main_dark));
         TV_MAIN_ALARM_TITLE.setTextColor(getResources().getColor(R.color.fontcolor_main_dark));
         TV_MAIN_DDAY_TITLE.setTextColor(getResources().getColor(R.color.fontcolor_main_dark));
@@ -314,33 +325,28 @@ public class TimeTableMain extends FragmentActivity implements
         tabs.setTextColor(getResources().getColor(R.color.fontcolor_main_dark));
         View mview = getLayoutInflater().inflate(R.layout.action_bar, null);
         TextView ActionBarTitle = (TextView) mview.findViewById(R.id.Actionbar_Title);
-        ImageButton ActionBarShare_btn = (ImageButton) mview.findViewById(R.id.ActionBar_ShareButton);
-        ImageButton ActionBarSetting_btn = (ImageButton) mview.findViewById(R.id.ActionBar_settingbutton);
+        ImageButton ActionBarDrawer_btn = (ImageButton) mview.findViewById(R.id.ActionBar_drawerbutton);
         ActionBarTitle.setTextColor(getResources().getColor(R.color.fontcolor_main_dark));
         ActionBar.LayoutParams layout = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
         //noinspection ConstantConditions
         getActionBar().setCustomView(mview, layout);
         getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.background_main_dark)));
-        ImageButton ActionBarSettingBtn = (ImageButton) mview.findViewById(R.id.ActionBar_settingbutton);
-        ImageButton ActionBarShareBtn = (ImageButton) mview.findViewById(R.id.ActionBar_ShareButton);
         final AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.3F);
-        ActionBarSettingBtn.setOnClickListener(new View.OnClickListener() {
+        ActionBarDrawer_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 v.startAnimation(buttonClick);
-                Intent i = new Intent(TimeTableMain.this, MainAppSettingActivity.class);
-                startActivityForResult(i, 0);
+                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+                View drawerView = findViewById(R.id.drawerView);
+                if (drawerLayout.isDrawerOpen(drawerView)) {
+                    drawerLayout.closeDrawers();
+                } else {
+                    drawerLayout.openDrawer(drawerView);
+                }
+
             }
         });
-        ActionBarShareBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.startAnimation(buttonClick);
-                ShareTimeTable();
-            }
-        });
-        ActionBarShare_btn.setImageResource(R.drawable.ic_action_share_dark);
-        ActionBarSetting_btn.setImageResource(R.drawable.ic_settingbutton_dark);
+        ActionBarDrawer_btn.setImageResource(R.drawable.ic_menu_white_24dp);
         IV_MAIN_MEMO.setImageResource(R.drawable.ic_memo_main_dark);
         IV_MAIN_ALARM.setImageResource(R.drawable.ic_alarm_main_dark);
         IV_MAIN_DDAY.setImageResource(R.drawable.ic_cal_main_dark);
@@ -578,6 +584,15 @@ public class TimeTableMain extends FragmentActivity implements
         return al;
     }
 
+    private String getStudentName() {
+        try {
+            String tmp_realname = appUtils.getName(pref.getValue("name_e", null).split(";")[0].substring(12).replaceAll("\"", ""));
+            return appUtils.getURLDecode(tmp_realname);
+        } catch (NullPointerException e) {
+            return "";
+        }
+    }
+
     public void SetPreviewMemo() {
         String PreviewText = MemoDate.getValue(Memo.MEMO_DATE_KEY, "null");
         MemoPrevewText.setText("");
@@ -613,12 +628,9 @@ public class TimeTableMain extends FragmentActivity implements
             LR_TV_MAIN.setVisibility(View.INVISIBLE);
             Animation hideanim = AnimationUtils.loadAnimation(this, R.anim.anim_slide_down);
             hideanim.setAnimationListener(hideAnimlistener);
-            main_full_time_table_btn.bringToFront();
-            main_full_time_table_btn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.anim_slide_down));
             LR_TV_MAIN.startAnimation(hideanim);
         } else if (newconfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             tabs.setTabsWidth(Configuration.ORIENTATION_PORTRAIT);
-            main_full_time_table_btn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.anim_slide_up));
             LR_TV_MAIN.startAnimation(AnimationUtils.loadAnimation(this, R.anim.anim_slide_up));
             LR_TV_MAIN.setVisibility(View.VISIBLE);
         }
@@ -672,23 +684,25 @@ public class TimeTableMain extends FragmentActivity implements
         super.onResume();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = new MenuInflater(this);
+//        inflater.inflate(R.menu.mainmenu, menu);
+//        return true;
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                startActivity(new Intent(this, MainAppSettingActivity.class));
-                break;
-            case R.id.action_share:
-                ShareTimeTable();
-                break;
-        }
-        return false;
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.action_drawer:
+//                startActivity(new Intent(this, MainAppSettingActivity.class));
+//                break;
+//            case R.id.action_share:
+//                ShareTimeTable();
+//                break;
+//        }
+//        return false;
+//    }
 
     int Share_index = 0;
 
@@ -779,6 +793,14 @@ public class TimeTableMain extends FragmentActivity implements
         final ControlSharedPref prefs = new ControlSharedPref(context, "gcm.pref");
         prefs.put(PROPERTY_REG_ID, regId);
         prefs.put(PROPERTY_APP_VERSION, getAppVersion(context));
+    }
+
+    private ArrayList<String> getDrawerList() {
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("시간표 타입");
+        list.add("테마 바꾸기");
+        list.add("위젯 설정");
+        return list;
     }
 
     private static int getAppVersion(Context context) {
@@ -938,6 +960,82 @@ public class TimeTableMain extends FragmentActivity implements
         return date;
     }
 
+    private void showSetTimeTableTypeDialog() {
+        final ControlSharedPref settingpref = new ControlSharedPref(this, "Setting.pref");
+        CharSequence[] sequences = getResources().getStringArray(R.array.time_table_type_entries);
+        new AlertDialog.Builder(this).setSingleChoiceItems(sequences, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                StyleListIndex = i;
+            }
+        }).setPositiveButton(getResources().getString(R.string.SETTING_LOTOUT_OK), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                settingpref.put("ttbtype", StyleListIndex);
+                TimeTableMain.this.finish();
+                startActivity(new Intent(TimeTableMain.this, TimeTableMain.class));
+                ThemeListIndex = -1;
+            }
+        }).setNegativeButton(getResources().getString(R.string.SETTING_LOGOUT_CANCEL), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ThemeListIndex = -1;
+            }
+        }).setTitle(getResources().getString(R.string.SETTING_TIMETABLE_STYLE_TITLE)).show().getListView().setItemChecked(settingpref.getValue("ttbtype", 0), true);
+    }
+
+    private void showSetThemeDialog() {
+        final ControlSharedPref settingpref = new ControlSharedPref(this, "Setting.pref");
+        CharSequence[] sequences = getResources().getStringArray(R.array.time_table_theme_entries);
+        new AlertDialog.Builder(this).setSingleChoiceItems(sequences, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ThemeListIndex = i;
+            }
+        }).setPositiveButton(getResources().getString(R.string.SETTING_LOTOUT_OK), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                settingpref.put("ttbtheme", ThemeListIndex);
+                TimeTableMain.this.finish();
+                startActivity(new Intent(TimeTableMain.this, TimeTableMain.class));
+                ThemeListIndex = -1;
+            }
+        }).setNegativeButton(getResources().getString(R.string.SETTING_LOGOUT_CANCEL), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ThemeListIndex = -1;
+            }
+
+        }).setTitle(getResources().getString(R.string.SETTING_TIMETABLE_THEME_TITLE)).show().getListView().setItemChecked(settingpref.getValue("ttbtheme", 0), true);
+    }
+
+    private void refreshTimeTableData() {
+        new AsyncTask<Void, Void, Void>() {
+            private ProgressDialog dialog;
+
+            @Override
+            protected void onPreExecute() {
+                dialog = new ProgressDialog(TimeTableMain.this);
+                dialog.setTitle("작업중");
+                dialog.setMessage("시간표정보를 새로고침 중입니다");
+                dialog.show();
+            }
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                GetTimetableUtils.RefreshTimeTable(TimeTableMain.this);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void result) {
+                dialog.cancel();
+                TimeTableMain.this.finish();
+                startActivity(new Intent(TimeTableMain.this, TimeTableMain.class));
+            }
+        }.execute();
+    }
+
     public String TIME(Context mContext, int tmp, int i) {
         ControlSharedPref pref = new ControlSharedPref(mContext, "timetable.pref");
         String Starttime = pref.getValue("time" + tmp, "").split("-")[0];
@@ -1030,29 +1128,57 @@ public class TimeTableMain extends FragmentActivity implements
         }
         return newcolor;
     }
-}
 
-class MyPagerAdapter extends FragmentPagerAdapter {
-
-    private final String[] TITLES = {"월", "화", "수", "목", "금"};
-
-    public MyPagerAdapter(FragmentManager fm) {
-        super(fm);
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.drawer_setting:
+                startActivityForResult(new Intent(this, MainAppSettingActivity.class), 0);
+                break;
+            case R.id.drawer_share:
+                ShareTimeTable();
+                break;
+            case R.id.drawer_refresh:
+                refreshTimeTableData();
+                break;
+        }
     }
 
     @Override
-    public CharSequence getPageTitle(int position) {
-        return TITLES[position];
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        switch (i) {
+            case 0:
+                showSetTimeTableTypeDialog();
+                break;
+            case 1:
+                showSetThemeDialog();
+                break;
+            case 2:
+                break;
+        }
     }
 
-    @Override
-    public int getCount() {
-        return TITLES.length;
-    }
+    private class MyPagerAdapter extends FragmentPagerAdapter {
 
-    @Override
-    public Fragment getItem(int position) {
-        return SuperAwesomeCardFragment.newInstance(position);
-    }
+        private final String[] TITLES = {"월", "화", "수", "목", "금"};
 
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return TITLES[position];
+        }
+
+        @Override
+        public int getCount() {
+            return TITLES.length;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return SuperAwesomeCardFragment.newInstance(position);
+        }
+    }
 }

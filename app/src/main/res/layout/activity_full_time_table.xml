@@ -208,16 +208,4 @@
             </TableLayout>
         </RelativeLayout>
     </ScrollView>
-
-    <com.hyeok.kangnamunivtimetable.CustomViews.IButton xmlns:ibutton="http://schemas.android.com/apk/res/com.hyeok.kangnamunivtimetable"
-        android:id="@+id/FullTTBButton"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:paddingLeft="8dp"
-        ibutton:button_center="true"
-        ibutton:button_icon="@drawable/ic_btn_point_close"
-        ibutton:button_text_bold="true" />
-
 </RelativeLayout>

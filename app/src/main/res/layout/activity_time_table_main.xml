@@ -1,205 +1,296 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/MAIN_LAYOUT"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_main">
+    android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/MainLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/Text_View"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true">
-
-        <com.astuetz.PagerSlidingTabStrip xmlns:PagerSlidingTabStrip="http://schemas.android.com/apk/res/com.hyeok.kangnamunivtimetable"
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="48dip"
-            android:background="@color/background_main"
-            PagerSlidingTabStrip:pstsDividerColor="@color/background_main"
-            PagerSlidingTabStrip:pstsIndicatorHeight="4dp"
-            PagerSlidingTabStrip:pstsUnderlineColor="#898a8a" />
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tabs"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginTop="4dp"
-            tools:context=".TimeTableMain" />
-
-        <com.hyeok.kangnamunivtimetable.CustomViews.IButton xmlns:ibutton="http://schemas.android.com/apk/res/com.hyeok.kangnamunivtimetable"
-            android:id="@+id/main_full_time_table_btn"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
-            ibutton:button_center="true"
-            android:paddingLeft="8dp"
-            ibutton:button_icon="@drawable/ic_btn_point_open"
-            ibutton:button_text_bold="true" />
-
-    </RelativeLayout>
-    <!--android:background="@drawable/textview_border" -->
-
-    <LinearLayout
-        android:id="@+id/Text_View"
+        android:id="@+id/MAIN_LAYOUT"
         android:layout_width="match_parent"
-        android:layout_height="165dip"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dip"
-        android:layout_marginRight="0dip"
-        android:background="@color/background_main"
-        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:background="@color/background_main">
+
+        <RelativeLayout
+            android:id="@+id/MainLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/Text_View"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true">
+
+            <com.astuetz.PagerSlidingTabStrip xmlns:PagerSlidingTabStrip="http://schemas.android.com/apk/res/com.hyeok.kangnamunivtimetable"
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="48dip"
+                android:background="@color/background_main"
+                PagerSlidingTabStrip:pstsDividerColor="@color/background_main"
+                PagerSlidingTabStrip:pstsIndicatorHeight="4dp"
+                PagerSlidingTabStrip:pstsUnderlineColor="#898a8a" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tabs"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="4dp"
+                tools:context=".TimeTableMain" />
+        </RelativeLayout>
+        <!--android:background="@drawable/textview_border" -->
+
+        <LinearLayout
+            android:id="@+id/Text_View"
+            android:layout_width="match_parent"
+            android:layout_height="165dip"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="0dip"
+            android:layout_marginRight="0dip"
+            android:background="@color/background_main"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <LinearLayout
+                android:id="@+id/MAIN_MEMO_LAYOUT"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="4dip"
+                android:layout_weight="50"
+                android:background="@drawable/textview_border"
+                android:orientation="vertical"
+                android:weightSum="10">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:id="@+id/Main_Memo_Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingTop="8dp"
+                        android:src="@drawable/ic_memo_main" />
+
+                    <TextView
+                        android:id="@+id/Main_Memo_Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:paddingTop="8dp"
+                        android:text="Memo"
+                        android:textColor="@color/fontcolor_main"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/Main_Memo_Preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="8"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="8dp"
+                    android:text="오빠는 풍각쟁이야"
+                    android:textColor="@color/fontcolor_main" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="50"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+
+                <LinearLayout
+                    android:id="@+id/MAIN_DDAY_LAYOUT"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/textview_border"
+                    android:orientation="vertical"
+                    android:paddingTop="8dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <ImageView
+                            android:id="@+id/Main_Dday_Icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_cal_main" />
+
+                        <TextView
+                            android:id="@+id/Main_Dday_Title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingLeft="4dp"
+                            android:text="D-Day"
+                            android:textColor="@color/fontcolor_main"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/dday_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:textColor="@color/fontcolor_main"
+                        android:textSize="22sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/MAIN_ALARM_LAYOUT"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/textview_border"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical"
+                    android:paddingTop="8dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <ImageView
+                            android:id="@+id/Main_Alarm_Icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_alarm_main" />
+
+                        <TextView
+                            android:id="@+id/Main_Alarm_Title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingLeft="4dp"
+                            android:text="@string/MAIN_ALARM_TITLE"
+                            android:textColor="@color/fontcolor_main"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/Extra_Time_Textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:singleLine="false"
+                        android:text="EXTRA TIME View"
+                        android:textColor="@color/fontcolor_main"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Drawer Layout -->
+    <LinearLayout
+        android:id="@+id/drawerView"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="#FF4C4E54"
+        android:orientation="vertical"
         android:weightSum="100">
 
-        <LinearLayout
-            android:id="@+id/MAIN_MEMO_LAYOUT"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="4dip"
-            android:layout_weight="50"
-            android:background="@drawable/textview_border"
-            android:orientation="vertical"
-            android:weightSum="10">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="30"
+            android:background="#FF47494F">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/drawer_refresh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:layout_above="@+id/imageView3"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="18dp"
+                android:layout_marginTop="18dp"
+                android:src="@drawable/ic_action_refresh" />
 
-                <ImageView
-                    android:id="@+id/Main_Memo_Icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingTop="8dp"
-                    android:src="@drawable/ic_memo_main" />
-
-                <TextView
-                    android:id="@+id/Main_Memo_Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:paddingTop="8dp"
-                    android:text="Memo"
-                    android:textColor="@color/fontcolor_main"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_drawer_profile" />
 
             <TextView
-                android:id="@+id/Main_Memo_Preview"
+                android:id="@+id/drawer_studentname"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="8"
-                android:gravity="center_horizontal"
-                android:paddingTop="8dp"
-                android:text="오빠는 풍각쟁이야"
-                android:textColor="@color/fontcolor_main" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/imageView3"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="권혁"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp" />
+        </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="50"
-            android:orientation="vertical"
-            android:weightSum="2">
-
-
-            <LinearLayout
-                android:id="@+id/MAIN_DDAY_LAYOUT"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:background="@drawable/textview_border"
-                android:orientation="vertical"
-                android:paddingTop="8dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center">
-
-                    <ImageView
-                        android:id="@+id/Main_Dday_Icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_cal_main" />
-
-                    <TextView
-                        android:id="@+id/Main_Dday_Title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingLeft="4dp"
-                        android:text="D-Day"
-                        android:textColor="@color/fontcolor_main"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/dday_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
-                    android:gravity="center"
-                    android:textColor="@color/fontcolor_main"
-                    android:textSize="22sp" />
-            </LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="5"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/MAIN_ALARM_LAYOUT"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:background="@drawable/textview_border"
-                android:focusableInTouchMode="true"
-                android:orientation="vertical"
-                android:paddingTop="8dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center">
-
-                    <ImageView
-                        android:id="@+id/Main_Alarm_Icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_alarm_main" />
-
-                    <TextView
-                        android:id="@+id/Main_Alarm_Title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingLeft="4dp"
-                        android:text="@string/MAIN_ALARM_TITLE"
-                        android:textColor="@color/fontcolor_main"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center">
 
                 <TextView
-                    android:id="@+id/Extra_Time_Textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
+                    android:id="@+id/drawer_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_drawer_btn_01"
                     android:gravity="center"
-                    android:singleLine="false"
-                    android:text="EXTRA TIME View"
-                    android:textColor="@color/fontcolor_main"
-                    android:textSize="18sp" />
-            </LinearLayout>
+                    android:text="@string/DRAWER_SHARE"
+                    android:textColor="@android:color/white" />
 
+                <TextView
+                    android:id="@+id/drawer_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_drawer_btn_02"
+                    android:gravity="center"
+                    android:text="@string/DRAWER_SETTING"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-</RelativeLayout>
+        <ListView
+            android:id="@+id/drawer_listview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="50"
+            android:divider="@null" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="15"
+            android:src="@drawable/ic_drawer_knulogo" />
+
+
+    </LinearLayout>
+</android.support.v4.widget.DrawerLayout>

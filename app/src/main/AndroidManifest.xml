@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hyeok.kangnamunivtimetable"
-    android:versionCode="103"
-    android:versionName="1.03" >
+    android:versionCode="110"
+    android:versionName="1.10">
 
     <application
-        android:debuggable="false"
         android:allowBackup="true"
         android:configChanges="orientation|keyboardHidden"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <receiver android:name=".widget.TimeTableWidget" >
+        android:theme="@style/AppTheme">
+        <receiver android:name=".widget.TimeTableWidget">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
 
@@ -25,9 +24,11 @@
         <activity
             android:name=".Activity.TimeTableMain"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -36,34 +37,25 @@
             android:name=".Activity.Splash"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" >
-        </activity>
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name=".Activity.login"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity android:name=".Activity.CampusMap" >
-        </activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activity.CampusMap" />
         <activity
             android:name=".Activity.DeveloperInformTab"
-            android:configChanges="keyboardHidden|orientation|screenSize" >
-        </activity>
-        <activity android:name=".Activity.Memo" >
-        </activity>
-        <activity android:name=".Activity.easteregg" >
-        </activity>
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name=".Activity.Memo" />
+        <activity android:name=".Activity.easteregg" />
         <activity
             android:name=".Activity.MainAppSettingActivity"
-            android:parentActivityName=".Activity.TimeTableMain" >
-        </activity>
+            android:parentActivityName=".Activity.TimeTableMain" />
         <activity
             android:name=".Activity.ExtraTime"
-            android:label="@string/title_activity_extra_time" >
-        </activity>
+            android:label="@string/title_activity_extra_time" />
         <activity
             android:name=".Activity.MapsActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -74,9 +66,9 @@
 
         <receiver
             android:name=".Gcm.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
-                <!-- Receives the actual messages. -->
+            <!-- Receives the actual messages. -->
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <!-- Receives the registration id. -->
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
@@ -87,7 +79,10 @@
 
     </application>
 
-    <permission android:name="com.hyeok.kangnamunivtimetable.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <permission
+        android:name="com.hyeok.kangnamunivtimetable.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
     <uses-permission android:name="com.hyeok.kangnamunivtimetable.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />

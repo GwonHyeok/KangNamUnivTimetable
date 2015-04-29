@@ -1,28 +1,23 @@
 package com.hyeok.kangnamunivtimetable.Activity;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hyeok.kangnamunivtimetable.CustomViews.IButton;
 import com.hyeok.kangnamunivtimetable.R;
 import com.hyeok.kangnamunivtimetable.Utils.ControlSharedPref;
 
@@ -35,7 +30,6 @@ public class FullTimetableFragment extends Fragment implements View.OnClickListe
     private RelativeLayout mainLayout, tableLayout;
     private TextView[][] dayTextView = new TextView[5][10];
     private TextView[] timeTextView = new TextView[10];
-    private IButton closebutton;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -73,14 +67,14 @@ public class FullTimetableFragment extends Fragment implements View.OnClickListe
         for (TextView[] aDayTextView : dayTextView) {
             for (TextView anADayTextView : aDayTextView) {
                 ViewGroup.LayoutParams layoutParamss = anADayTextView.getLayoutParams();
-                layoutParamss.height = 100;
+                layoutParamss.height = checkDensityHeight();
                 anADayTextView.setLayoutParams(layoutParamss);
             }
         }
 
         for (TextView aTimeTextView : timeTextView) {
             ViewGroup.LayoutParams layoutParamses = aTimeTextView.getLayoutParams();
-            layoutParamses.height = 100;
+            layoutParamses.height = checkDensityHeight();
             aTimeTextView.setLayoutParams(layoutParamses);
         }
 
@@ -93,7 +87,7 @@ public class FullTimetableFragment extends Fragment implements View.OnClickListe
         for (TextView atimeTextView : timeTextView) {
             atimeTextView.setGravity(Gravity.CENTER);
         }
-        for(int i=0; i<5; i++) {
+        for (int i = 0; i < 5; i++) {
             drawTimeTable(i);
         }
     }
@@ -101,7 +95,7 @@ public class FullTimetableFragment extends Fragment implements View.OnClickListe
     private void drawTimeTable(int index) {
         ControlSharedPref pref = new ControlSharedPref(getActivity(), "timetable.pref");
         String TimeTableValueKey;
-        switch(index) {
+        switch (index) {
             case 0:
                 TimeTableValueKey = "mon_";
                 break;
@@ -137,54 +131,31 @@ public class FullTimetableFragment extends Fragment implements View.OnClickListe
     }
 
     private void addTableBitmap(int day, int startposition, int size, String value) {
+        ControlSharedPref settingpref = new ControlSharedPref(getActivity(), "Setting.pref");
+        int textSize = settingpref.getValue(MainAppSettingActivity.TTB_TABLE_TEXT_SIZE, 14);
         int height = dayTextView[0][0].getLayoutParams().height;
         int width = dayTextView[0][0].getLayoutParams().width;
         int timewidth = timeTextView[0].getWidth();
         int newsize;
-        if(size % 2 == 0) {
+        if (size % 2 == 0) {
             newsize = size / 2 * height;
         } else {
             newsize = (size / 2 * height) + height / 2;
         }
-        Log.d("tag", "size : "+size);
-        Log.d("tag", "newsize : "+newsize);
-        // Make Bitmap
-        Bitmap bitmap = Bitmap.createBitmap(width, newsize, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        Paint paint = new Paint();
+        // Set TextView
         Random random = new Random();
         int r = random.nextInt(255);
         int g = random.nextInt(255);
         int b = random.nextInt(255);
-        int color = Color.rgb(r,g,b);
-        paint.setColor(color);
-        canvas.drawRect(0, 0, width, newsize, paint);
-
-        Paint textpaint = new Paint();
-        textpaint.setColor(Color.WHITE);
-        textpaint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        textpaint.setTextSize(40);
-        textpaint.setAntiAlias(true);
-        String str_sub = value.split(" ")[0];
-        String str_class = value.split(" ")[1];
-        int textheight = 0;
-        Log.d("tag", "sub : " + str_sub.length() + " class : " + str_class.length());
-        if(str_sub.length() > 4) {
-            canvas.drawText(str_sub.substring(0, 4) , 10, textheight+=40, textpaint);
-            canvas.drawText(str_sub.substring(4, str_sub.length() > 8 ? 8 : str_sub.length()) , 10, textheight+=50, textpaint);
-        }  else {
-            canvas.drawText(str_sub.substring(0, str_sub.length()) , 10, textheight+=40, textpaint);
-        }
-        //noinspection UnusedAssignment
-        canvas.drawText(str_class, 10, textheight+=50, textpaint);
-
-        ImageView view = new ImageView(getActivity().getApplicationContext());
-        if(Build.VERSION.SDK_INT >= 16) {
-            view.setBackground(new BitmapDrawable(getResources(), bitmap));
-        } else {
-            //noinspection deprecation
-            view.setBackgroundDrawable(new BitmapDrawable(getResources(), bitmap));
-        }
+        int color = Color.rgb(r, g, b);
+        TextView view = new TextView(getActivity());
+        view.setText(value);
+        view.setHeight(newsize);
+        view.setWidth(width);
+        view.setBackgroundColor(color);
+        view.setGravity(Gravity.CENTER);
+        view.setTextColor(Color.WHITE);
+        view.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
         if (startposition % 2 == 0) {
             view.setX(timewidth + (day * width));
             view.setY(height + (startposition / 2) * height);
@@ -212,9 +183,32 @@ public class FullTimetableFragment extends Fragment implements View.OnClickListe
         }
     }
 
+    private int checkDensityHeight() {
+        int dpi = getResources().getDisplayMetrics().densityDpi;
+        /*
+         * 0 < dpi <= 160  == LDPI == 32
+         * 160 < dpi <= 240 == HDPI == 50
+         * 240 < dpi <= 320 == XHDPI == 66
+         * 320 < dpi <= 480 == XXHDPI == 100
+         * 480 < dpi <= 640 == XXXHDPI == 134
+         */
+        if (0 < dpi && dpi <= DisplayMetrics.DENSITY_MEDIUM) {
+            return 32;
+        } else if (DisplayMetrics.DENSITY_MEDIUM < dpi && dpi <= DisplayMetrics.DENSITY_HIGH) {
+            return 50;
+        } else if (DisplayMetrics.DENSITY_HIGH < dpi && dpi <= DisplayMetrics.DENSITY_XHIGH) {
+            return 66;
+        } else if (DisplayMetrics.DENSITY_XHIGH < dpi && dpi <= DisplayMetrics.DENSITY_XXHIGH) {
+            return 100;
+        } else if (DisplayMetrics.DENSITY_XXHIGH < dpi && dpi <= DisplayMetrics.DENSITY_XXXHIGH) {
+            return 134;
+        }
+        return 100;
+    }
+
     private void viewInit(View view) {
         Context mContext = view.getContext();
-        tableLayout = (RelativeLayout)view.findViewById(R.id.FULL_TIME_TABLE_LAYOUT);
+        tableLayout = (RelativeLayout) view.findViewById(R.id.FULL_TIME_TABLE_LAYOUT);
         // TextView Init
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 10; j++) {
@@ -246,10 +240,6 @@ public class FullTimetableFragment extends Fragment implements View.OnClickListe
             int textViewId = getResources().getIdentifier(TextViewname, "id", mContext.getPackageName());
             timeTextView[i] = (TextView) view.findViewById(textViewId);
         }
-
-        // Button Init
-        closebutton = (IButton) view.findViewById(R.id.FullTTBButton);
-        closebutton.setOnClickListener(this);
 
         // MainLayout Init
         mainLayout = (RelativeLayout) view.findViewById(R.id.FULL_TIME_TABLE_MAIN);
@@ -290,7 +280,6 @@ public class FullTimetableFragment extends Fragment implements View.OnClickListe
 
     private void setDarkTheme() {
         mainLayout.setBackgroundColor(getResources().getColor(R.color.background_main_dark));
-        closebutton.setImageResource(R.drawable.ic_btn_point_close_dark);
         for (TextView[] aDayTextView : dayTextView) {
             for (TextView anADayTextView : aDayTextView) {
                 anADayTextView.setTextColor(getResources().getColor(R.color.fontcolor_main_dark));

@@ -166,127 +166,125 @@ public class SuperAwesomeCardFragment extends Fragment {
         return fl;
     }
 
+    class CustomListAdapter extends ArrayAdapter<ListViewData> {
 
-}
+        private ArrayList<ListViewData> items;
+        private ControlSharedPref settingpref;
+        private boolean IS_DARK_THEME = false;
 
-class CustomListAdapter extends ArrayAdapter<ListViewData> {
-
-    private ArrayList<ListViewData> items;
-    private ControlSharedPref settingpref;
-    private boolean IS_DARK_THEME = false;
-
-    public CustomListAdapter(Context context, int textViewResourceId,
-                             ArrayList<ListViewData> items) {
-        super(context, textViewResourceId, items);
-        this.items = items;
-        settingpref = new ControlSharedPref(context, "Setting.pref");
-        IS_DARK_THEME = settingpref.getValue(MainAppSettingActivity.TTB_THEME, 0) == 1;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
-        if (v == null) {
-
-            LayoutInflater vi = (LayoutInflater) getContext().getSystemService(
-                    Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.listview_layout, null);
-        }
-        ListViewData custom_list_data = items.get(position);
-
-        if (custom_list_data != null) {
-            TextView tv_Time = (TextView) v.findViewById(R.id.listview_textview_time);
-            TextView tv_Subject = (TextView) v.findViewById(R.id.listview_textview_subject);
-            TextView tv_class = (TextView) v.findViewById(R.id.listview_textview_class);
-            View color_view = v.findViewById(R.id.listview_ColorView);
-            RelativeLayout layout = (RelativeLayout) v.findViewById(R.id.listview_relativelayout);
-
-            int timesize = settingpref.getValue(MainAppSettingActivity.TTB_TIME_SIZE_data, 16);
-            int subjectsize = settingpref.getValue(MainAppSettingActivity.TTB_SUBJECT_SIZE_data, 18);
-            int classtsize = settingpref.getValue(MainAppSettingActivity.TTB_CLASS_SIZE_data, 14);
-
-            tv_Time.setText(custom_list_data.gettime());
-            tv_Time.setTextSize(TypedValue.COMPLEX_UNIT_SP, timesize);
-            tv_Subject.setText(custom_list_data.getsubject());
-            tv_Subject.setTextSize(TypedValue.COMPLEX_UNIT_SP, subjectsize);
-            tv_class.setText(custom_list_data.getClassName());
-            tv_class.setTextSize(TypedValue.COMPLEX_UNIT_SP, classtsize);
-            color_view.setBackgroundColor(custom_list_data.getColor());
-
-            /**
-             *  리스트뷰 레이아웃 테두리 처리.
-             */
-            RectShape rect = new RectShape();
-            ShapeDrawable rectShapeDrawable = new ShapeDrawable(rect);
-            Paint paint = rectShapeDrawable.getPaint();
-            paint.setColor(custom_list_data.getColor());
-            paint.setStyle(Paint.Style.STROKE);
-            paint.setStrokeWidth(5);
-            if (Build.VERSION.SDK_INT >= 16) {
-                layout.setBackground(rectShapeDrawable);
-            } else {
-                //noinspection deprecation
-                layout.setBackgroundDrawable(rectShapeDrawable);
-            }
-
-            /**
-             * 다크 테마 처리.
-             */
-            if (IS_DARK_THEME) {
-                tv_Time.setTextColor(v.getResources().getColor(R.color.fontcolor_main_dark));
-                tv_class.setTextColor(v.getResources().getColor(R.color.fontcolor_main_dark));
-                tv_Subject.setTextColor(v.getResources().getColor(R.color.fontcolor_main_dark));
-            }
+        public CustomListAdapter(Context context, int textViewResourceId,
+                                 ArrayList<ListViewData> items) {
+            super(context, textViewResourceId, items);
+            this.items = items;
+            settingpref = new ControlSharedPref(context, "Setting.pref");
+            IS_DARK_THEME = settingpref.getValue(MainAppSettingActivity.TTB_THEME, 0) == 1;
         }
 
-        return v;
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View v = convertView;
+            if (v == null) {
+
+                LayoutInflater vi = (LayoutInflater) getContext().getSystemService(
+                        Context.LAYOUT_INFLATER_SERVICE);
+                v = vi.inflate(R.layout.listview_layout, null);
+            }
+            ListViewData custom_list_data = items.get(position);
+
+            if (custom_list_data != null) {
+                TextView tv_Time = (TextView) v.findViewById(R.id.listview_textview_time);
+                TextView tv_Subject = (TextView) v.findViewById(R.id.listview_textview_subject);
+                TextView tv_class = (TextView) v.findViewById(R.id.listview_textview_class);
+                View color_view = v.findViewById(R.id.listview_ColorView);
+                RelativeLayout layout = (RelativeLayout) v.findViewById(R.id.listview_relativelayout);
+
+                int timesize = settingpref.getValue(MainAppSettingActivity.TTB_TIME_SIZE_data, 16);
+                int subjectsize = settingpref.getValue(MainAppSettingActivity.TTB_SUBJECT_SIZE_data, 18);
+                int classtsize = settingpref.getValue(MainAppSettingActivity.TTB_CLASS_SIZE_data, 14);
+
+                tv_Time.setText(custom_list_data.gettime());
+                tv_Time.setTextSize(TypedValue.COMPLEX_UNIT_SP, timesize);
+                tv_Subject.setText(custom_list_data.getsubject());
+                tv_Subject.setTextSize(TypedValue.COMPLEX_UNIT_SP, subjectsize);
+                tv_class.setText(custom_list_data.getClassName());
+                tv_class.setTextSize(TypedValue.COMPLEX_UNIT_SP, classtsize);
+                color_view.setBackgroundColor(custom_list_data.getColor());
+
+                /**
+                 *  리스트뷰 레이아웃 테두리 처리.
+                 */
+                RectShape rect = new RectShape();
+                ShapeDrawable rectShapeDrawable = new ShapeDrawable(rect);
+                Paint paint = rectShapeDrawable.getPaint();
+                paint.setColor(custom_list_data.getColor());
+                paint.setStyle(Paint.Style.STROKE);
+                paint.setStrokeWidth(5);
+                if (Build.VERSION.SDK_INT >= 16) {
+                    layout.setBackground(rectShapeDrawable);
+                } else {
+                    //noinspection deprecation
+                    layout.setBackgroundDrawable(rectShapeDrawable);
+                }
+
+                /**
+                 * 다크 테마 처리.
+                 */
+                if (IS_DARK_THEME) {
+                    tv_Time.setTextColor(v.getResources().getColor(R.color.fontcolor_main_dark));
+                    tv_class.setTextColor(v.getResources().getColor(R.color.fontcolor_main_dark));
+                    tv_Subject.setTextColor(v.getResources().getColor(R.color.fontcolor_main_dark));
+                }
+            }
+
+            return v;
+        }
+
     }
 
-}
+    @SuppressWarnings("unused")
+    class ListViewData {
+        private String time;
+        private String classname;
+        private String subject;
+        private int color;
 
-@SuppressWarnings("unused")
-class ListViewData {
-    private String time;
-    private String classname;
-    private String subject;
-    private int color;
+        public ListViewData(String time, String subject, String classname, int color) {
+            this.time = time;
+            this.classname = classname;
+            this.subject = subject;
+            this.color = color;
+        }
 
-    public ListViewData(String time, String subject, String classname, int color) {
-        this.time = time;
-        this.classname = classname;
-        this.subject = subject;
-        this.color = color;
-    }
+        public void setTime(String time) {
+            this.time = time;
+        }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
+        public void setClassName(String classname) {
+            this.classname = classname;
+        }
 
-    public void setClassName(String classname) {
-        this.classname = classname;
-    }
+        public void setSubject(String subject) {
+            this.subject = subject;
+        }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
+        public void setColor(int color) {
+            this.color = color;
+        }
 
-    public void setColor(int color) {
-        this.color = color;
-    }
+        public String gettime() {
+            return time;
+        }
 
-    public String gettime() {
-        return time;
-    }
+        public String getClassName() {
+            return classname;
+        }
 
-    public String getClassName() {
-        return classname;
-    }
+        public String getsubject() {
+            return subject;
+        }
 
-    public String getsubject() {
-        return subject;
-    }
-
-    public int getColor() {
-        return color;
+        public int getColor() {
+            return color;
+        }
     }
 }

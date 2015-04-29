@@ -27,6 +27,8 @@
         android:summary="@string/SETTING_TIMETABLE_GONGGANG_MESSAGE_SUMMARY"
         android:title="@string/SETTING_TIMETABLE_GONGGANG_MESSAGE_TITLE" />
 
+    <PreferenceCategory android:title="@string/SETTING_TIMETABLE_LIST_CATEGORY" />
+
     <com.hyeok.kangnamunivtimetable.CustomViews.DialogSeekBarPreference
         android:defaultValue="12"
         android:key="key_time_text_size"
@@ -74,6 +76,16 @@
         android:key="key_color_fri"
         android:summary="@string/SETTING_TIMETABLE_COLOR_SUMMARY"
         android:title="@string/SETTING_TIMETABLE_COLOR_FIR" />
+
+    <PreferenceCategory android:title="@string/SETTING_TIMETABLE_TABLE_CATEGORY">
+        <com.hyeok.kangnamunivtimetable.CustomViews.DialogSeekBarPreference
+            android:defaultValue="12"
+            android:key="key_table_text_size"
+            android:max="30"
+            android:persistent="false"
+            android:summary="@string/SETTING_TIMETABLE_TABLE_TEXT_SIZE_SUMMARY"
+            android:title="@string/SETTING_TIMETABLE_TEXT_SIZE" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/SETTING_TIMETABLE_WIDGET_CATEGORY">
         <ListPreference
             android:entries="@array/widget_update_interval_entries"
@@ -91,11 +103,11 @@
             android:key="key_widget_text_color"
             android:summary="@string/SETTING_WIDGET_TEXT_COLOR_SUMMARY"
             android:title="@string/SETTING_WIDGET_TEXT_COLOR" />
-        <net.margaritov.preference.colorpicker.ColorPickerPreference
-            android:defaultValue="0x00FFFFFF"
-            android:key="key_widget_background_color"
-            android:summary="@string/SETTING_WIDGET_BACKGROUND_COLOR_MSG"
-            android:title="@string/SETTING_WIDGET_BACKGROUND_COLOR" />
+        <!--<net.margaritov.preference.colorpicker.ColorPickerPreference-->
+        <!--android:defaultValue="0x00FFFFFF"-->
+        <!--android:key="key_widget_background_color"-->
+        <!--android:summary="@string/SETTING_WIDGET_BACKGROUND_COLOR_MSG"-->
+        <!--android:title="@string/SETTING_WIDGET_BACKGROUND_COLOR" />-->
         <Preference
             android:key="key_widget_update_time"
             android:title="@string/SETTING_WIDGET_UPDATE_TIME_TITLE" />

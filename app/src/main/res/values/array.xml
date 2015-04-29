@@ -5,9 +5,9 @@
         <item>@string/DAY_tuesday</item>
         <item>@string/DAY_wendsday</item>
         <item>@string/DAY_thursday</item>
-        <item>@string/DAY_friday</item> 
+        <item>@string/DAY_friday</item>
     </string-array>
-    
+
     <string-array name="widget_update_interval_entries">
         <item>@string/SETTING_TIMETABLE_WIDGET_INTERVAL_1</item>
         <item>@string/SETTING_TIMETABLE_WIDGET_INTERVAL_6</item>
@@ -25,6 +25,11 @@
     <string-array name="time_table_theme_entries">
         <item>흰색</item>
         <item>검은색</item>
+    </string-array>
+
+    <string-array name="time_table_type_entries">
+        <item>리스트</item>
+        <item>표</item>
     </string-array>
 
     <string-array name="time_table_theme_values">

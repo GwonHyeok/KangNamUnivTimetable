@@ -29,6 +29,8 @@
     <string name="SETTING_ACCOUT_NAME">학생 이름</string>
     <string name="SETTING_ACCOUT_NULLNAME">NULL</string>
     <string name="SETTING_TIMETABLE_CATEGORY">시간표 설정</string>
+    <string name="SETTING_TIMETABLE_LIST_CATEGORY">리스트 시간표 설정</string>
+    <string name="SETTING_TIMETABLE_TABLE_CATEGORY">표 시간표 설정</string>
     <string name="SETTING_TIMETABLE_STARTDAY_TITLE">어플 실행시 현재 요일의 시간표 보기.</string>
     <string name="SETTING_TIMETABLE_COLOR_MON">월요일 색상</string>
     <string name="SETTING_TIMETABLE_COLOR_TUE">화요일 색상</string>
@@ -47,10 +49,12 @@
     <string name="SETTING_TIMETABLE_REFRESH">새로고침</string>
     <string name="SETTING_TIMETABLE_REFRESH_DOING">새로고침 중입니다...</string>
     <string name="SETTING_TIMETABLE_REFRESH_SUBTITLE">시간표를 새로고침 합니다.</string>
+    <string name="SETTING_TIMETABLE_TEXT_SIZE">텍스트 크기</string>
     <string name="SETTING_TIMETABLE_TIME_TEXT_SIZE">시간 텍스트 크기</string>
     <string name="SETTING_TIMETABLE_CLASS_TEXT_SIZE">강의실 텍스트 크기</string>
     <string name="SETTING_TIMETABLE_SUBJECT_TEXT_SIZE">과목 텍스트 크기</string>
     <string name="SETTING_TIMETABLE_TEXT_SIZE_SUMMARY">시간표의 텍스트 크기를 조절합니다.</string>
+    <string name="SETTING_TIMETABLE_TABLE_TEXT_SIZE_SUMMARY">시간표의 텍스트 크기를 조절합니다.</string>
     <string name="SETTING_WIDGET_TEXT_SIZE">위젯 텍스트 크기</string>
     <string name="SETTING_WIDGET_TEXT_COLOR">위젯 텍스트 색상</string>
     <string name="SETTING_WIDGET_TEXT_COLOR_SUMMARY">위젯 텍스트 색상을 설정합니다.</string>
@@ -68,6 +72,7 @@
     <string name="SETTING_DEVELOPER_FEEDBACK_SUBJECT">강남대학교 시간표 피드백</string>
     <string name="SETTING_TIMETABLE_THEME_TITLE">테마설정</string>
     <string name="SETTING_TIMETABLE_THEME_SUMMARY">기본으로 제공하는 테마를 설정합니다.</string>
+    <string name="SETTING_TIMETABLE_STYLE_TITLE">시간표 타입설정</string>
     <string name="DOUBLE_BACK_KILL_APP">뒤로가기키를 한번 더 눌러 종료해주세요.</string>
     <string name="SHARE_TIMETABLE_OK">공유</string>
     <string name="SHARE_TIMETABLE_CANCEL">취소</string>
@@ -115,4 +120,7 @@
     <string name="EXTRATIME_SHARE_TEXT">%1$S\n%2$S\n%3$S\n다음 수업까지 %4$S 남았습니다.</string>
     <string name="MAIN_ALARM_TITLE">Alarm</string>
     <string name="MAIN_SHUTTLE_TITLE">Shuttle Bus</string>
+    <!-- Drawer Layout -->
+    <string name="DRAWER_SHARE">공유</string>
+    <string name="DRAWER_SETTING">설정</string>
 </resources>
